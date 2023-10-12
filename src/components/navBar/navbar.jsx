@@ -44,12 +44,12 @@ const NavBar = () => {
             Calendrier
           </p>
         </NavLink>
-        <NavLink to="/stagiaires" activeclassname="active" id="row">
+{/*         <NavLink to="/stagiaires" activeclassname="active" id="row">
           <IoIosPeople id="home-icon" />
           <p id="nav-title" className="bold">
             Stagiaires
           </p>
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/archives" activeclassname="active" id="row">
           <HiDocumentDuplicate id="home-icon" />
           <p id="nav-title" className="bold">Archives</p>
