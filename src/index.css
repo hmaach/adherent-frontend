@@ -1,0 +1,51 @@
+:root {
+  --color-text: #2F3A44;
+  --color-text-light: #6C757D;
+  --color-bg: #E8EDF0;
+  --color-primary: #3d78d2;
+  --color-primary-variant: #4f6d7a;
+  --color-primary-variant2: rgba(77, 181, 255, 0.4);
+  --color-white: #FFFFFF;
+  --color--green-light: #F4F9FE;
+  --color-light: #F4F9FE;
+
+  --transition: all 400ms ease;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: visible !important;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.first-letter{
+  text-transform: capitalize;
+}
+
+@media (min-width: 200px) and (max-width: 499px) {
+  body {
+    margin: 0;
+    padding: 0;
+    display: contents;
+    flex-direction: unset;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1005px) {
+  #root {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}

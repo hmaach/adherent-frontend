@@ -1,0 +1,30 @@
+.calendrier {
+    border: red 1px solid;
+    width: 80%;
+}
+
+#minCalendrier-box {
+    width: 90%;
+    height: auto;
+    transition: var(--transition);
+    border-radius: 16px;
+    background: rgb(255, 255, 255);
+    box-shadow: #e2e2e2c4 0px 0px 4px;
+    border: #e2e2e2c4 solid 1px;
+    margin-top: 20px;
+}
+#title-minCalendrier {
+    font-size: 20px;
+    text-align: left;
+    padding: 6px 12px 1px;
+    flex-direction: column;
+  }
+
+@media screen and (min-width: 1005px) and (max-width: 1281px) {
+
+    #minCalendrier-box {
+        /* border: red 1px solid; */
+        width: 80%;
+
+    }
+}

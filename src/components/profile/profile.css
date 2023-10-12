@@ -1,0 +1,27 @@
+.profile-container {
+  padding-top: 200px;
+  padding-bottom: 50px;
+  padding-left: 200px;
+  width: 1500px;
+  display: flex;
+  justify-content: center;
+}
+
+.card-media {
+  position: relative;
+  background-color: var(--color-primary);
+  height: 200px;
+}
+
+.card-media img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@media (max-width: 599px) {
+  .card-media {
+    height: 150px;
+  }
+}

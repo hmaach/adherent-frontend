@@ -1,0 +1,10 @@
+.linkto{
+    margin-top: 5rem;
+    /* border: red 1px solid; */
+    color: var(--color-primary);;
+}
+.hh1{
+    color: var(--color-primary);
+    margin-top: 5rem;
+    float: right;
+}

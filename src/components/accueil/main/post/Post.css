@@ -1,0 +1,376 @@
+.filtrage_audience {
+    display: flex;
+    gap: 5px;
+}
+
+::selection {
+    color: #fff;
+    background: #1da1f2;
+}
+
+.wrapper {
+    padding: 5px 10px 0px 10px;
+    /* border: red 1px solid; */
+    min-width: 500px;
+
+}
+
+.img_post_pub {
+    width: 90%;
+    margin: auto;
+    display: block;
+    border-radius: 15px;
+    overflow: hidden;
+
+}
+
+.pdf_box {
+    border: var(--color-primary) 2px solid;
+    max-width: 44%;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    cursor: pointer;
+    /* padding: 5px; */
+    float: right;
+    margin-right: 2rem;
+    color: var(--color-primary);
+    background-color: var(--color-white);
+
+}
+
+.pdf_box:hover {
+    background-color: #e6e6e6;
+}
+
+.pdf_span {
+    /* border: rgb(81, 255, 0) 1px solid; */
+    padding: 5px 10px;
+
+}
+
+.tele_pdf_span {
+    padding: 5px 10px;
+    border-left: var(--color-primary) 2px solid;
+}
+
+.pdf_span span {
+    font-weight: 600;
+}
+
+.post_lien {
+    margin-left: 3rem;
+}
+
+
+.voir_plus {
+    color: var(--color-primary);
+    cursor: pointer;
+    /* text-decoration: underline; */
+    font-size: 0.9rem;
+    /* font-weight: 600; */
+}
+
+.css-15v22id-MuiAccordionDetails-root {
+    padding: 0 !important;
+}
+
+.css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded {
+    /* border: red 1px solid; */
+
+    margin-bottom: 10px !important;
+}
+
+.css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root.Mui-expanded:hover {
+    background-color: #e7f5fe;
+
+}
+
+.css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root:hover:not(.Mui-disabled) {
+    background-color: #e7f5fe;
+}
+
+.css-o4b71y-MuiAccordionSummary-content.Mui-expanded {
+    margin: 0 !important;
+}
+
+.input-box {
+    margin-top: 15px;
+    padding: 10px;
+    padding-top: 10px;
+    border: 1px solid #e6e6e6;
+    border-radius: 10px;
+    width: 100%;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+.input-box:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: none;
+
+}
+
+
+.input-box .tweet-area {
+    position: relative;
+    min-height: 130px;
+    max-height: 170px;
+    overflow-y: auto;
+}
+
+.tweet-area::-webkit-scrollbar {
+    width: 0px;
+}
+
+.tweet-area .placeholder {
+    position: absolute;
+    margin-top: -3px;
+    font-size: 22px;
+    color: #98A5B1;
+    pointer-events: none;
+}
+
+.tweet-area .input {
+    outline: none;
+    font-size: 17px;
+    min-height: inherit;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.tweet-area .editable {
+    position: relative;
+    z-index: 5;
+}
+
+.tweet-area .readonly {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    color: transparent;
+    background: transparent;
+}
+
+.readonly .highlight {
+    background: #fd9bb0;
+}
+
+/* .input-box .privacy {
+    color: var(--color-primary);
+    display:flex;
+    align-items: center;
+    padding: 7px 10px;
+    border-radius: 50px;
+    transition: background 0.2s ease;
+} */
+
+
+.pdfPost:hover {
+    background: #e7f5fe;
+}
+
+.pdf_file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 5px 0;
+}
+
+.pdf_name {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    height: 70%;
+
+}
+
+.remove_pdf {
+    color: rgb(255, 44, 44);
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 3px;
+    transition: var(--transition);
+}
+
+.label_archive_pdf {
+    color: #0d8bd9;
+    user-select: none;
+    cursor: pointer;
+}
+
+.remove_pdf:hover {
+
+    background-color: #ffd3d3;
+}
+
+.css-1wuilmg-MuiAutocomplete-root {
+    width: 90% !important;
+    margin: auto;
+}
+
+.imgs_post {
+    display: flex;
+    justify-content: start;
+    gap: 3px;
+    flex-wrap: wrap;
+}
+
+.img_post {
+    height: 80px;
+    border-radius: 1px !important;
+    margin: 2px;
+    object-fit: contain;
+}
+
+.remove_img {
+    color: rgb(207, 23, 23);
+    background-color: rgba(219, 4, 4, 0.089);
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 3px;
+    transition: var(--transition);
+    position: absolute;
+}
+
+.remove_img:hover {
+
+    background-color: rgba(219, 4, 4, 0.342);
+}
+
+.plus_img {
+    width: 80px;
+    height: 80px;
+    background-color: #29292988;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    margin-top: 2px;
+    border-radius: 3px;
+    transition: var(--transition);
+}
+
+.plus_img {
+    color: white;
+    font-size: large;
+
+}
+
+.plus_img:hover {
+    box-shadow: #333 2px 2px 4px;
+    padding: 0 1px 1px 0;
+}
+
+.privacy i {
+    font-size: 18px;
+}
+
+.privacy span {
+    font-size: 15px;
+    font-weight: 600;
+    margin-left: 7px;
+}
+
+.bottom_post {
+    display: flex;
+    margin-top: 13px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* .image_post{
+        border: red 1px solid;
+        height: 300px !important;
+    } */
+
+.icons li {
+
+    list-style: none;
+    cursor: pointer;
+    margin-top: 16px;
+}
+
+.pdfPost {
+    color: #1da1f2;
+    font-size: 20px;
+    margin: 0 17px;
+    height: 38px;
+    width: 38px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s ease;
+}
+
+.bottom-add-post {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+    width: 90% !important;
+    margin: auto !important;
+}
+#type_poste{
+    margin-left: 3rem;
+}
+.pdf_categorie {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+}
+
+.icons-add-post {
+    display: flex;
+}
+
+.icons-add-post li {
+    list-style: none;
+}
+
+
+.bottom-add-post .content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottom-add-post .counter {
+    color: #333;
+    display: none;
+    font-weight: 500;
+    margin-right: 15px;
+    padding-right: 15px;
+    border-right: 1px solid #aab8c2;
+}
+
+.bottom-add-post button {
+    padding: 9px 18px;
+    border: none;
+    outline: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 700;
+    background: #1da1f2;
+    color: #fff;
+    cursor: pointer;
+    opacity: 0.5;
+    pointer-events: none;
+    transition: background 0.2s ease;
+}
+
+.bottom-add-post button.active_poster {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.bottom-add-post button:hover {
+    background: #0d8bd9;
+}

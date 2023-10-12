@@ -1,0 +1,45 @@
+.social-links {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    background-color: #ccc;
+    color: #fff;
+    font-size: 1.25rem;
+    transition: all 0.2s ease-in-out;
+  }
+  
+  .social-link:hover {
+    transform: scale(1.2);
+  }
+  
+  .social-link svg {
+    width: 1.25rem;
+    height: 1.25rem;
+    fill: currentColor;
+  }
+  
+  .social-link.edit {
+    background-color: #007bff;
+  }
+  
+  .social-link.edit:hover {
+    background-color: #0062cc;
+  }
+  
+  .social-link.delete {
+    background-color: #dc3545;
+  }
+  
+  .social-link.delete:hover {
+    background-color: #c82333;
+  }
+  

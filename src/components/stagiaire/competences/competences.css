@@ -1,0 +1,25 @@
+.competence{
+    margin-bottom: 2rem !important;
+}
+
+.add-icon-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+.add-icon {
+    font-size: 48px;
+    color: blue;
+    transition: color 0.3s ease;
+    cursor: pointer;
+  }
+  
+.add-text {
+    font-size: 16px;
+    color: gray;
+    margin-top: 8px;
+  }
+  
