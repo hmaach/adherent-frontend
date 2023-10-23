@@ -28,9 +28,12 @@ const RatingAlert = (props) => {
       sx={{ minWidth: "70%" }}
     >
       <DialogTitle>{"Votre avis"}</DialogTitle>
-      <DialogContent sx={{ margin: " 10px 70px" }}>
+      <DialogContent sx={{ margin: " 10px 5px",minWidth:"180px",display:"flex",justifyContent:"center" }}>
         <Rating
-          sx={{ fontSize: "70px" }}
+          className="votre-avis-rating"
+          sx={{
+            fontSize:"40px"
+          }}
           name="simple-controlled"
           value={value}
           onChange={(event, newValue) => {

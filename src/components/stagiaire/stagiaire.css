@@ -1,5 +1,9 @@
-.apropos-detail{
+.apropos-detail {
   margin-top: 5rem !important;
+}
+
+.votre-avis-rating {
+  font-size: 70px;
 }
 
 @media screen and (min-width: 200px) and (max-width: 499px) {
@@ -8,8 +12,8 @@
     font-size: small;
     text-align: justify;
   }
-  
-  .apropos-detail{
+
+  .apropos-detail {
     margin-top: 0rem !important;
   }
 
@@ -30,6 +34,9 @@
   .MuiTypography-body1 {
     font-size: small !important;
   }
+  .votre-avis-rating {
+    font-size: 30px;
+  }  
 }
 
 @media screen and (min-width: 500px) and (max-width: 1005px) {

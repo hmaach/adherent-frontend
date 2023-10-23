@@ -246,6 +246,7 @@
   }
 
   .nav-box {
+    width: 0 !important;
     border: rgb(0, 255, 55) solid 1px !important;
     background-color: aqua !important;
     margin-left: 0 !important;
