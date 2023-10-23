@@ -6,10 +6,10 @@ const Logo = () => {
   return (
     <div className="logo_div">
       <NavLink to="/" className="logo">
-        <img src="/Logo_ofppt.png" alt="logo" />
+        <img src="/logo.png" alt="logo" />
         <span>
-          <span className="ista">ISTA </span>
-          <span className='berkane'>Berkane</span>
+          <span className="ista">SOBOL </span>
+          <span className='berkane'>Digital</span>
         </span>
       </NavLink>
       <hr className="hr" />

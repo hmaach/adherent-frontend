@@ -62,19 +62,19 @@ const NavBar = () => {
             </p>
           </NavLink>
         )}
-        {user?.role === "admin" && (
+        {/* {user?.role === "admin" && (
           <NavLink to="/admin" activeclassname="active" id="row">
             <AdminPanelSettingsIcon id="home-icon" />
             <p className="bold" id="nav-title">
               Admin
             </p>
           </NavLink>
-        )}
+        )} */}
         {user && (
-          <NavLink to="/Monprofile" activeclassname="active" id="row">
+          <NavLink to="/profil" activeclassname="active" id="row">
             <CgProfile id="home-icon" />
             <p className="bold" id="nav-title">
-              Profile
+              Profil
             </p>
           </NavLink>
         )}

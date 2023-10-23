@@ -2,7 +2,7 @@
 /* Inputs */
 /* Timeline custom component */
 .timeline {
-  border-left: 2px solid #E6E9ED;
+  border-left: 2px solid #e6e9ed;
   padding: 1rem 0;
 }
 
@@ -16,9 +16,12 @@
 .timeline-card:last-child {
   margin-bottom: 1rem;
 }
+.apropos-detail {
+  margin-top: "4.8rem";
+}
 
 .timeline-card:before {
-  content: '';
+  content: "";
   display: inline-block;
   position: absolute;
   background-color: #fff;
@@ -32,7 +35,7 @@
 }
 
 .timeline-card:after {
-  content: '';
+  content: "";
   display: inline-block;
   position: absolute;
   background-color: currentColor;
@@ -44,27 +47,27 @@
 }
 
 .timeline-card-primary {
-  border-left-color: #4A89DC;
+  border-left-color: #4a89dc;
 }
 
 .timeline-card-primary:before {
-  border-color: #4A89DC;
+  border-color: #4a89dc;
 }
 
 .timeline-card-primary:after {
-  background-color: #4A89DC;
+  background-color: #4a89dc;
 }
 
 .timeline-card-success {
-  border-left-color: #37BC9B;
+  border-left-color: #37bc9b;
 }
 
 .timeline-card-success:before {
-  border-color: #37BC9B;
+  border-color: #37bc9b;
 }
 
 .timeline-card-success:after {
-  background-color: #37BC9B;
+  background-color: #37bc9b;
 }
 
 html {
@@ -89,7 +92,7 @@ html {
   color: rgba(0, 0, 0, 0.8);
 }
 
-.nav-item+.nav-item {
+.nav-item + .nav-item {
   margin-left: 1rem;
 }
 
@@ -112,7 +115,7 @@ html {
   margin-bottom: 2rem;
 }
 
-.mb-3{
+.mb-3 {
   margin-top: 2.3rem !important;
 }
 footer a:not(.nav-link) {
@@ -188,7 +191,7 @@ footer a:not(.nav-link) {
   transform: translate(0) scale(1) !important;
 }
 
-#cv{
+#cv {
   /* border: red solid 1px; */
   margin-top: 4rem;
   margin-bottom: 4rem;
@@ -197,16 +200,30 @@ footer a:not(.nav-link) {
   float: right;
   margin-right: 1rem;
 }
-@media screen and (min-width: 200px) and (max-width: 499px){
-  #cv{
+@media screen and (min-width: 200px) and (max-width: 499px) {
+  #cv {
     /* border: rgb(30, 255, 0) solid 1px; */
     max-width: 100%;
     float: right;
     margin-right: 0;
   }
+  .mb-3 {
+    margin-top: 0.6rem !important;
+  }
+  .rating-ad {
+    justify-content: center;
+    margin-bottom: 7px;
+  }
+  .qr-code-profil {
+    margin-top: 1rem !important;
+  }
+  .apropos-detail {
+    margin-top: "1rem";
+    font-size: small;
+  }
 }
 @media screen and (min-width: 500px) and (max-width: 1005px) {
-  #cv{
+  #cv {
     /* border: rgb(38, 0, 255) solid 1px; */
     max-width: 89%;
     float: right;
@@ -214,8 +231,8 @@ footer a:not(.nav-link) {
   }
 }
 
-@media screen and (min-width: 1005px) and (max-width: 1281px){
-  #cv{
+@media screen and (min-width: 1005px) and (max-width: 1281px) {
+  #cv {
     /* border: rgb(255, 0, 242) solid 1px; */
     max-width: 89%;
     /* float: right; */

@@ -1,0 +1,139 @@
+.swiper {
+  width: 100%;
+  height: 450px;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* border: red 1px solid; */
+
+  /* Center slide text vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.announce-alert-label {
+  font-size: 13px;
+  margin-top: 18px;
+}
+.input-image-announce {
+  cursor: pointer;
+  color: rgb(124, 194, 221);
+  padding: 30px 0;
+  width: 100%;
+  display: block;
+}
+.announce-edit-item {
+  margin-bottom: 8px;
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+.desc-annoounce-edit {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.date-annoounce-edit {
+  font-size: 0.8rem;
+  font-weight: 400;
+}
+.img-annoounce-edit {
+  width: 50px;
+  height: 50px;
+}
+.icon-annoounce-edit {
+  margin-left: 7px;
+}
+
+.swiper-slide img {
+  display: block;
+  /* width: 100%; */
+  /* height: 100%; */
+  object-fit: cover;
+}
+.announce-image {
+  width: auto;
+  height: auto;
+  object-fit: cover;
+}
+
+.announces-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.announce-footer {
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  width: 100%;
+}
+
+.announces-menu {
+  height: fit-content;
+  margin-top: 2rem;
+}
+
+@media screen and (min-width: 200px) and (max-width: 499px) {
+  .swiper {
+    width: 100%;
+    height: 250px;
+  }
+
+  .swiper-slide {
+    font-size: small;
+    /* border: rgb(51, 255, 0) solid 1px; */
+  }
+
+  .announce-image {
+    width: auto;
+    max-height: 150px;
+    object-fit: cover;
+    /* border: red solid 1px; */
+  }
+
+  .desc-annoounce {
+    font-size: small !important;
+    margin-bottom: 0.5rem !important;
+  }
+  .announces-h3 {
+    margin-bottom: 0 !important;
+  }
+  .announces-h3 {
+    margin-top: 2rem !important;
+  }
+  .announce-footer {
+    padding: 5px;
+    width: 100%;
+    margin-bottom: 1.6rem;
+  }
+  .desc-annoounce-edit {
+    font-size: 0.6rem;
+    font-weight: 600;
+  }
+
+  .date-annoounce-edit {
+    font-size: 0.45rem;
+    font-weight: 400;
+  }
+  .img-annoounce-edit {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1005px) {
+}
+
+@media screen and (min-width: 1005px) and (max-width: 1281px) {
+}

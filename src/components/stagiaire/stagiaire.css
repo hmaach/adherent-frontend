@@ -1,0 +1,39 @@
+.apropos-detail{
+  margin-top: 5rem !important;
+}
+
+@media screen and (min-width: 200px) and (max-width: 499px) {
+  .apropos {
+    /* color: red ; */
+    font-size: small;
+    text-align: justify;
+  }
+  
+  .apropos-detail{
+    margin-top: 0rem !important;
+  }
+
+  .apropos-h3 {
+    margin-top: 0;
+  }
+  .textearea-propos {
+    font-size: small;
+    /* width: 60% !important; */
+  }
+  .apropos-inputs {
+    /* width: 60% !important; */
+    font-size: small !important;
+  }
+  .agree-terms {
+    font-size: small !important;
+  }
+  .MuiTypography-body1 {
+    font-size: small !important;
+  }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1005px) {
+}
+
+@media screen and (min-width: 1005px) and (max-width: 1281px) {
+}

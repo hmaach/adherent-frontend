@@ -1,309 +1,192 @@
 import React, { useState, useEffect } from "react";
-import { updateCv, addPropos } from "../../../app/api/stagiaireAxios";
+import { selectCurrentUser } from "../../../features/auth/authSlice";
+import EditNoteIcon from "@mui/icons-material/EditNote";
 import GetCookie from "../../../cookies/JWT/GetCookie";
+import StarIcon from "@mui/icons-material/Star";
+import { useSelector } from "react-redux";
+import QRCodeReact from "qrcode.react";
+import { toast } from "react-toastify";
 import "./header.css";
-import Profile from "../assets/ayadi_oussama.png";
-import Stagiaire from "../Stagiaire";
+import { Box, Button, IconButton, Rating } from "@mui/material";
 import {
   Edit as EditIcon,
   Add as AddIcon,
   PhotoCamera as PhotoCameraIcon,
 } from "@mui/icons-material";
-import { toast } from 'react-toastify';
-
-import { selectCurrentUser  } from "../../../features/auth/authSlice";
-import DownloadForOfflineIcon from "@mui/icons-material/DownloadForOffline";
-
-import { useSelector } from "react-redux";
-
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  IconButton,
-  TextField,
-} from "@mui/material";
-import { styled } from "@mui/system";
-import { downloadCV } from "../../../app/api/cvPdfAxios";
-
-const StyledEditIcon = styled(EditIcon)`
-  font-size: 24px;
-  color: blue;
-  transition: color 0.3s ease;
-  cursor: pointer;
-  &:hover {
-    color: red;
-  }
-`;
-
-const StyledAddIcon = styled(AddIcon)`
-  font-size: 48px;
-  color: blue;
-  transition: color 0.3s ease;
-  cursor: pointer;
-  &:hover {
-    color: red;
-  }
-`;
-
-const StyledPhotoCameraIcon = styled(PhotoCameraIcon)`
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  font-size: 24px;
-  color: white;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 4px;
-  border-radius: 50%;
-  transition: background-color 0.3s ease;
-  cursor: pointer;
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.8);
-  }
-`;
+import ProposAlert from "./ProposAlert";
+import RatingAlert from "./RatingAlert";
+import BadgeAlert from "./BadgeAlert";
 
 const Header = (props) => {
-  const { authId } = props;
+  const [data, setData] = useState({
+    propos:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde explicabo praesentium possimus ut voluptates! Eaque quidem accusantium ex. Eos, similique repudiandae aperiam adipisci dolores odio dolorum consequuntur ab veritatis sunt quibusdam quod quos laboriosam voluptatem? In labore voluptatem incidunt vero libero necessitatibus, impedit accusamus ea dolores nam? Non, rerum ipsa.",
+    ville: "Berkane",
+    secteur: "Lorem ipsum dolor sit",
+    profession: "Lorem ipsum",
+  });
+  const [showproposAlert, setShowproposAlert] = useState(false);
+  const [showRatingAlert, setShowRatingAlert] = useState(false);
+  const [showBadgeAlert, setShowBadgeAlert] = useState(false);
+  // rating of the adherent
+  const [rating, setRating] = useState(1.4);
+  // rating of the user
+  const [ratingValue, setRatingValue] = useState(3);
 
-  const [editFormOpen, setEditFormOpen] = useState(false);
-
-  const [aproposDeMoi, setAproposDeMoi] = useState(props.header.propos);
-  const [age, setAge] = useState(props.header.age);
-
-  const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState("");
-
-
-  const user = useSelector(selectCurrentUser);
-
-  const [id, setId] = useState(props.header.id);
-  // console.log(props.header.id);
-  useEffect(() => {
-    setAproposDeMoi(props.header.propos);
-    setAge(props.header.age); // Update the value when the prop changes
-  }, [props.header.propos, props.header.age]);
-  const token = GetCookie("jwt");
-
-  useEffect(() => {
-    setAproposDeMoi(props.header.propos); // Update the value when the prop changes
-  }, [props.header.propos]);
-
-  const handleEditFormOpen = () => {
-    setAproposDeMoi(props.header.propos);
-    setEditFormOpen(true);
+  const handleOpenRatingAlert = () => {
+    setShowRatingAlert(true);
   };
 
-  const handleEditFormClose = () => {
-    setEditFormOpen(false);
+  const handleSubmitRating = (value) => {
+    setRatingValue(value);
   };
 
-  const handleDownload = async (id) => {
-    // try {
-    //   const cvBlob = await downloadCV(id);
-    // } catch (error) {
-    //   console.error('Error:', error.message);
-    // }
-    downloadCV(id)
-      .then((response) => {
-        const url = window.URL.createObjectURL(new Blob([response]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute(
-          "download",
-          `${props.header.nom}_${props.header.prenom}.pdf`
-        );
-        document.body.appendChild(link);
-        link.click();
-      })
-      .catch((error) => {
-        console.error("Error downloading PDF:", error);
-      });
+  const handleClose = () => {
+    setShowproposAlert(false);
   };
 
-  const handleAproposDeMoiChange = (event) => {
-    setAproposDeMoi(event.target.value);
+  const handleUpdateHeader = (newData) => {
+    setData((prevData) => ({ ...prevData, ...newData }));
+    toast.success("Les changements sont enregistrés", {
+      position: "top-center",
+      autoClose: 4000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
   };
-
-  const handleSaveAproposDeMoi = async () => {
-    try {
-      const id = props.header.id;
-      const data = { propos: aproposDeMoi };
-  
-      if (id) {
-        // Update the profile if it already exists
-        await updateCv(id, data, token);
-      } else {
-        // Add a new profile if it doesn't exist
-        await addPropos(id, data, token);
-      }
-  
-      setAproposDeMoi(data.propos);
-      toast.success("CV mis à jour avec succès"); // Display success toast
-    } catch (error) {
-      console.error(error);
-      toast.error("Une erreur s'est produite"); // Display error toast
-    }
-    setEditFormOpen(false);
-  };
-  
-
-
-  const handleSnackbarClose = () => {
-    setSnackbarOpen(false);
-  };
-
-  const header = props.header;
   return (
     <div>
       <div className="cover-bg p-3 p-lg-4 text-white">
         <div className="row">
-          <div className="col-lg-8 col-md-7 text-center text-md-start">
+          <div className="col-lg-3 col-md-5">
+            <div className="avatar hover-effect bg-white shadow-sm p-1">
+              <img
+                src="https://blog-fr.orson.io/wp-content/uploads/2020/07/logostarbuck.png"
+                width="200"
+                height="200"
+              />
+            </div>
+          </div>
+          <div className="col-lg-7 col-md-7 text-center text-md-start">
             <h2 className="h1 mt-2" data-aos="fade-left" data-aos-delay="0">
-              {header.nom} {header.prenom}
+              {/* {header.nom} {header.prenom} */} 2345678909876
             </h2>
             <p
               data-aos="fade-left"
               data-aos-delay="100"
               className="first-letter"
             >
-              {header.filiere}
+              {data?.profession}
             </p>
-            <div
-              className="d-print-none"
-              data-aos="fade-left"
-              data-aos-delay="200"
-            >
-              <Button
-                variant="outlined"
-                endIcon={<DownloadForOfflineIcon />}
-                sx={{
-                  backgroundColor: "white",
-                  "&:hover": {
-                    backgroundColor: "white",
-                  },
-                }}
-                onClick={() => handleDownload(props.header.id)}
-              >
-                CV sous forme PDF
-              </Button>
-              {/* <Button
-                  className="btn btn-light text-dark shadow-sm mt-1 me-1"
-                >
-                  CV sous forme PDF
-                </Button> */}
+            <div style={{ display: "flex" }} className="rating-ad">
+              <Rating
+                name="text-feedback"
+                value={rating}
+                readOnly
+                precision={0.5}
+                emptyIcon={
+                  <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                }
+              />
+              <Box sx={{ ml: 2, color: "gold" }}>{rating}</Box>
             </div>
+            <Button
+              variant="contained"
+              sx={{ marginTop: "6px" }}
+              size="small"
+              onClick={handleOpenRatingAlert}
+            >
+              Votre avis
+            </Button>
+          </div>
+          <div
+            className="col-lg-2 col-md-7 text-center text-md-start qr-code-profil"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <QRCodeReact
+              onClick={() => {
+                setShowBadgeAlert(true);
+              }}
+              value={"https://adherent-sobol.vercel.app/profil"}
+              style={{
+                cursor: "pointer",
+                padding: "8px",
+                background: "white",
+                borderRadius: "10px",
+              }}
+            />
           </div>
         </div>
       </div>
+
       <div className="about-section pt-4 px-3 px-lg-4 mt-1">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-5">
             <div className="propos-de-moi-section mb-4">
-              <h2 className="h3 mb-3">
-              À propos de moi
-
-                {header.propos && header.id === user?.id && (
-                  <IconButton
-                    aria-label="Edit"
-                    className="edit-icon"
-                    onClick={handleEditFormOpen}
-                  >
-                    <StyledEditIcon />
-                  </IconButton>
-                )}
+              <h2 className="h3 mb-3 apropos-h3">
+                À propos{" "}
+                <IconButton
+                  aria-label="Modifier"
+                  style={{
+                    // position: "absolute",
+                    width: "fit-content",
+                    // right: "40px",
+                  }}
+                  onClick={() => setShowproposAlert(true)}
+                >
+                  <EditNoteIcon style={{ fontSize: "2rem" }} />
+                </IconButton>
               </h2>
-              {header.propos ? (
-                <p>{header.propos}</p>
-              ) : (
-                <div className="add-icon-container">
-                  {header.id === user?.id && (
-                    <StyledAddIcon
-                      className="add-icon"
-                      onClick={handleEditFormOpen}
-                    />
-                  )}
-                  <p className="add-text">Ce champ est vide</p>
-                </div>
-              )}
-              <Dialog
-                open={editFormOpen}
-                onClose={handleEditFormClose}
-                fullWidth
-                maxWidth="sm"
-              >
-                <DialogTitle>Edit Profil </DialogTitle>
-                <DialogContent>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      handleSaveAproposDeMoi();
-                    }}
-                  >
-                    <TextField
-                      label="A propos de moi"
-                      variant="outlined"
-                      fullWidth
-                      value={aproposDeMoi}
-                      onChange={handleAproposDeMoiChange}
-                      sx={{ mt: 2 }}
-                      required
-                    />
-                    <DialogActions>
-                      <Button onClick={handleEditFormClose}>Cancel</Button>
-                      <Button type="submit" color="primary">
-                        Save
-                      </Button>
-                    </DialogActions>
-                  </form>
-                </DialogContent>
-              </Dialog>
+              <p className="apropos"> {data?.propos} </p>
             </div>
           </div>
-          <div className="col-md-5 offset-md-1">
-            <div className="row mt-2">
-              <div className="col-sm-4">
-                <div className="pb-1">Filière</div>
-              </div>
-              <div className="col-sm-8 first-letter">{header.filiere}</div>
-              <div className="col-sm-4">
-                <div className="pb-1">Statut</div>
-              </div>
-              <div className="col-sm-8">
-                <div className="pb-1 text-secondary">{header.statut}</div>
-              </div>
-              <div className="col-sm-4">
-                <div className="pb-1">Groupe</div>
-              </div>
-              <div className="col-sm-8">
-                <div className="pb-1 text-secondary">{header.groupe}</div>
-              </div>
-              <div className="col-sm-4">
-                <div className="pb-1">Age</div>
-              </div>
-              <div className="col-sm-8">
-                <div className="pb-1 text-secondary">{age}</div>
-              </div>
-              <div className="col-sm-4">
-                <div className="pb-1">Email</div>
-              </div>
-              <div className="col-sm-8">
-                <div className="pb-1 text-secondary">{header.email}</div>
-              </div>
-              <div className="col-sm-4">
-                <div className="pb-1">Phone</div>
-              </div>
-              <div className="col-sm-8">
-                <div className="pb-1 text-secondary">{header.tel}</div>
-              </div>
+          <div className="col-md-6 offset-md-1 apropos-detail">
+            <div className="pb-1 mb-3">
+              <bold>SECTEUR D'ACTIVITEE :</bold>{" "}
+              <span className="first-letter text-secondary">
+                {data?.secteur}
+              </span>
+            </div>
+            <div className="pb-1 mb-3">
+              <bold>PROFESSION :</bold>{" "}
+              <span className="first-letter text-secondary">
+                {data?.profession}
+              </span>
+            </div>
+            <div className="pb-1 mb-3">
+              <bold>VILLE :</bold>{" "}
+              <span className="first-letter text-secondary">{data?.ville}</span>
             </div>
           </div>
         </div>
       </div>
-
-
-
+      {showproposAlert && (
+        <ProposAlert
+          open={true}
+          handleClose={handleClose}
+          data={data}
+          onUpdate={handleUpdateHeader}
+        />
+      )}
+      {showRatingAlert && (
+        <RatingAlert
+          open={true}
+          handleClose={() => setShowRatingAlert(false)}
+          ratingValue={ratingValue}
+          onSubmit={handleSubmitRating}
+        />
+      )}
+      {showBadgeAlert && (
+        <BadgeAlert open={true} handleClose={() => setShowBadgeAlert(false)} />
+      )}
     </div>
   );
 };
