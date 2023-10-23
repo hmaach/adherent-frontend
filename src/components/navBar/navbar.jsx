@@ -8,9 +8,8 @@ import { IoIosPeople } from "react-icons/io";
 
 import { Link, NavLink, useLocation } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
-import AssignmentIndIcon from '@mui/icons-material/AssignmentInd';
-
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 
 import Logo from "./Logo";
 import User from "./User";
@@ -44,7 +43,7 @@ const NavBar = () => {
             Calendrier
           </p>
         </NavLink>
-{/*         <NavLink to="/stagiaires" activeclassname="active" id="row">
+        {/*         <NavLink to="/stagiaires" activeclassname="active" id="row">
           <IoIosPeople id="home-icon" />
           <p id="nav-title" className="bold">
             Stagiaires
@@ -52,7 +51,9 @@ const NavBar = () => {
         </NavLink> */}
         <NavLink to="/archives" activeclassname="active" id="row">
           <HiDocumentDuplicate id="home-icon" />
-          <p id="nav-title" className="bold">Archives</p>
+          <p id="nav-title" className="bold">
+            Archives
+          </p>
         </NavLink>
         {user?.role === "stagiaire" && (
           <NavLink to={`/profile/${user.id}`} activeclassname="active" id="row">
@@ -70,14 +71,14 @@ const NavBar = () => {
             </p>
           </NavLink>
         )} */}
-        {user && (
-          <NavLink to="/profil" activeclassname="active" id="row">
-            <CgProfile id="home-icon" />
-            <p className="bold" id="nav-title">
-              Profil
-            </p>
-          </NavLink>
-        )}
+        {/* {user && ( */}
+        <NavLink to="/profil" activeclassname="active" id="row">
+          <CgProfile id="home-icon" />
+          <p className="bold" id="nav-title">
+            Profil
+          </p>
+        </NavLink>
+        {/* )} */}
       </div>
       <div id="bottom-nav">
         {!user ? (
