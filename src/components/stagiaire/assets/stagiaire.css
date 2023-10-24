@@ -101,7 +101,8 @@ html {
 }
 
 .cover-bg {
-  background-color: #5a8dfa;
+  /* background-color: #5a8dfa; */
+  background-color: var(--color-primary);
   border-radius: 10px 10px 0 0;
 }
 
