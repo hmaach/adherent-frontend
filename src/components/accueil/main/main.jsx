@@ -277,12 +277,28 @@ const Main = () => {
           <div className="main-post-filter">
             <ButtonGroup
               disableElevation
-              style={{ borderRadius: "10px" }}
+              sx={{
+                borderRadius: "10px",
+              }}
               aria-label="Disabled elevation buttons"
             >
               <Button
                 size="small"
-                style={{ borderRadius: "20px 0 0 20px" }}
+                sx={{
+                  borderRadius: "20px 0 0 20px",
+                  borderColor: "#e86928",
+                  color: activeButton === "all" ? "white" : "#e86928",
+                  "&:hover": {
+                    borderColor: "#e86928",
+                    bgcolor: "#fff8f2",
+                  },
+                  bgcolor: activeButton === "all" ? "#e86928" : "white",
+                  ...(activeButton === "all" && {
+                    "&:hover": {
+                      bgcolor: "#d46025",
+                    },
+                  }),
+                }}
                 variant={activeButton === "all" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("all")}
               >
@@ -290,6 +306,21 @@ const Main = () => {
               </Button>
               <Button
                 size="small"
+                sx={{
+                  borderRadius: "20px 0 0 20px",
+                  borderColor: "#e86928",
+                  color: activeButton === "announce" ? "white" : "#e86928",
+                  bgcolor: activeButton === "announce" ? "#e86928" : "white",
+                  "&:hover": {
+                    borderColor: "#e86928",
+                    bgcolor: "#fff8f2",
+                  },
+                  ...(activeButton === "announce" && {
+                    "&:hover": {
+                      bgcolor: "#d46025",
+                    },
+                  }),
+                }}
                 variant={activeButton === "announce" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("announce")}
               >
@@ -297,6 +328,21 @@ const Main = () => {
               </Button>
               <Button
                 size="small"
+                sx={{
+                  borderRadius: "20px 0 0 20px",
+                  borderColor: "#e86928",
+                  color: activeButton === "cour" ? "white" : "#e86928",
+                  bgcolor: activeButton === "cour" ? "#e86928" : "white",
+                  "&:hover": {
+                    borderColor: "#e86928",
+                    bgcolor: "#fff8f2",
+                  },
+                  ...(activeButton === "cour" && {
+                    "&:hover": {
+                      bgcolor: "#d46025",
+                    },
+                  }),
+                }}
                 variant={activeButton === "cour" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("cour")}
               >
@@ -304,6 +350,21 @@ const Main = () => {
               </Button>
               <Button
                 size="small"
+                sx={{
+                  borderRadius: "20px 0 0 20px",
+                  borderColor: "#e86928",
+                  color: activeButton === "exercice" ? "white" : "#e86928",
+                  bgcolor: activeButton === "exercice" ? "#e86928" : "white",
+                  "&:hover": {
+                    borderColor: "#e86928",
+                    bgcolor: "#fff8f2",
+                  },
+                  ...(activeButton === "exercice" && {
+                    "&:hover": {
+                      bgcolor: "#d46025",
+                    },
+                  }),
+                }}
                 variant={activeButton === "exercice" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("exercice")}
                 style={{ borderRadius: " 0 20px  20px 0" }}

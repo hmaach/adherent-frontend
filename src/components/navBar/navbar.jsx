@@ -87,8 +87,13 @@ const NavBar = () => {
               variant="contained"
               size="small"
               endIcon={<PersonIcon />}
-              style={{
+              sx={{
                 borderRadius: "20px",
+                color: "white",
+                bgcolor: "#e86928",
+                "&:hover": {
+                  bgcolor: "#d46025",
+                },
               }}
             >
               Connexion

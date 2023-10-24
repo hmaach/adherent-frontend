@@ -87,16 +87,24 @@ const Header = (props) => {
                 name="text-feedback"
                 value={rating}
                 readOnly
+                style={{ color:"white" }}
                 precision={0.5}
                 emptyIcon={
                   <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
                 }
               />
-              <Box sx={{ ml: 2, color: "gold" }}>{rating}</Box>
+              <Box sx={{ ml: 2, color: "white" }}>{rating}</Box>
             </div>
             <Button
               variant="contained"
-              sx={{ marginTop: "6px" }}
+              sx={{
+                marginTop: "6px",
+                bgcolor: "white",
+                color: "#e86928",
+                "&:hover": {
+                  bgcolor: "#ebebeb",
+                },
+              }}
               size="small"
               onClick={handleOpenRatingAlert}
             >
@@ -150,19 +158,19 @@ const Header = (props) => {
           </div>
           <div className="col-md-6 offset-md-1 apropos-detail">
             <div className="pb-1 mb-3">
-              <bold>SECTEUR D'ACTIVITEE :</bold>{" "}
+              SECTEUR D'ACTIVITEE :{" "}
               <span className="first-letter text-secondary">
                 {data?.secteur}
               </span>
             </div>
             <div className="pb-1 mb-3">
-              <bold>PROFESSION :</bold>{" "}
+              PROFESSION :{" "}
               <span className="first-letter text-secondary">
                 {data?.profession}
               </span>
             </div>
             <div className="pb-1 mb-3">
-              <bold>VILLE :</bold>{" "}
+              VILLE :{" "}
               <span className="first-letter text-secondary">{data?.ville}</span>
             </div>
           </div>

@@ -78,10 +78,10 @@ const BadgeAlert = (props) => {
             }}
           >
             <h6>ID : 23456789</h6>
-            <p style={{fontSize:"9px"}}>
+            <p style={{ fontSize: "9px" }}>
               <span>Profession :</span> Développeur web
             </p>
-            <p style={{fontSize:"9px"}}>
+            <p style={{ fontSize: "9px" }}>
               <span>Ville :</span> Berkane
             </p>
             <div style={{ display: "flex", justifyContent: "center" }}>
@@ -91,8 +91,8 @@ const BadgeAlert = (props) => {
                   cursor: "pointer",
                   background: "white",
                   borderRadius: "3px",
-                  width:'40px',
-                  height:'40px'
+                  width: "40px",
+                  height: "40px",
                 }}
               />
             </div>
@@ -108,14 +108,30 @@ const BadgeAlert = (props) => {
             aria-labelledby="demo-row-radio-buttons-group-label"
             name="row-radio-buttons-group"
           >
-            <FormControlLabel value="png" control={<Radio />} label="png" />
-            <FormControlLabel value="pdf" control={<Radio />} label="pdf" />
+            <FormControlLabel
+              value="png"
+              control={<Radio sx={{ "&.Mui-checked": { color: "#e86928" } }} />}
+              label="png"
+            />
+
+            <FormControlLabel
+              value="pdf"
+              control={<Radio sx={{ "&.Mui-checked": { color: "#e86928" } }} />}
+              label="pdf"
+            />
           </RadioGroup>
         </FormControl>
         <Button
           onClick={handleDownloadBadge}
           component="label"
-          sx={{ borderRadius: "20px" }}
+          sx={{
+            borderRadius: "20px",
+            color: "white",
+            bgcolor: "#e86928",
+            "&:hover": {
+              bgcolor: "#d46025",
+            },
+          }}
           variant="contained"
           endIcon={<DownloadIcon />}
         >
