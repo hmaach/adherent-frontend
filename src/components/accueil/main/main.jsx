@@ -346,7 +346,7 @@ const Main = () => {
                 variant={activeButton === "cour" ? "contained" : "outlined"}
                 onClick={() => setActiveButton("cour")}
               >
-                Cours
+                Professionnel
               </Button>
               <Button
                 size="small"
@@ -369,7 +369,7 @@ const Main = () => {
                 onClick={() => setActiveButton("exercice")}
                 style={{ borderRadius: " 0 20px  20px 0" }}
               >
-                Exercices
+                Evénements
               </Button>
             </ButtonGroup>
           </div>
