@@ -369,7 +369,7 @@ const Main = () => {
                 onClick={() => setActiveButton("exercice")}
                 style={{ borderRadius: " 0 20px  20px 0" }}
               >
-                Evénements
+                événements
               </Button>
             </ButtonGroup>
           </div>
