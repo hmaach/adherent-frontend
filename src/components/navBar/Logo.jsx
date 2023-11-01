@@ -9,7 +9,7 @@ const Logo = () => {
         <img src="/logo.png" alt="logo" />
         <span>
           <span className="ista">SOBOL </span>
-          <span className='berkane'>Digital</span>
+          <span className='berkane'>Numérique</span>
         </span>
       </NavLink>
       <hr className="hr" />
