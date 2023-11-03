@@ -7,18 +7,27 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
   FormControlLabel,
   InputLabel,
+  LinearProgress,
+  MenuItem,
+  Select,
   TextareaAutosize,
   TextField,
 } from "@mui/material";
+import url from "../../../app/api/url";
+import { toast } from "react-toastify";
 
 const ProposAlert = (props) => {
-  const { open, handleClose, data, onUpdate } = props;
+  const { open, handleClose, data, onUpdate ,loadingPropos,setLoadingPropos} = props;
 
   const [updatedData, setUpdatedData] = useState(data);
   const [hasChanges, setHasChanges] = useState(false);
   const [cities, setCities] = useState([]);
+  const [secteur, setSecteur] = useState([]);
+  const [selectedVille, setSelectedVille] = useState(updatedData.ville || "");
+  const [acceptVisible, setAcceptVisible] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -42,7 +51,7 @@ const ProposAlert = (props) => {
       const cityNames = data.results
         .map((city) => city.asciiname)
         .filter(Boolean);
-      console.log(cityNames);
+      // console.log(cityNames);
       setCities(cityNames);
       // return data;
     } catch (error) {
@@ -50,13 +59,35 @@ const ProposAlert = (props) => {
       return [];
     }
   };
-  useEffect(() => {
-    fetchCitiesFromAPI();
-  }, []);
+
+  const fetchSecteurs = async () => {
+    try {
+      const response = await fetch(url + "/api/public/secteur");
+      const data = await response.json();
+      const secteurs = data;
+      console.log(secteurs);
+      setSecteur(secteurs);
+      // return data;
+    } catch (error) {
+      console.error("Error fetching secteurs:", error);
+      return [];
+    }
+  };
+
+  const handleAcceptChange = (event) => {
+    setAcceptVisible(event.target.checked);
+  };
 
   const handleUpdate = () => {
+    if (!acceptVisible) {
+      toast.error(
+        "Veuillez accepter que vos informations seront visibles par tout le monde."
+      );
+      return;
+    }
+    setLoadingPropos(true)
     onUpdate(updatedData);
-    handleClose();
+    // handleClose();
   };
 
   const handleCancel = () => {
@@ -73,6 +104,11 @@ const ProposAlert = (props) => {
     setHasChanges(false);
   };
 
+  useEffect(() => {
+    fetchCitiesFromAPI();
+    fetchSecteurs();
+  }, []);
+
   return (
     <Dialog
       open={open}
@@ -81,83 +117,116 @@ const ProposAlert = (props) => {
       aria-describedby="alert-dialog-slide-description"
       fullWidth
     >
+      {loadingPropos && <LinearProgress />}
       <DialogTitle>{"Modifier vos informations"}</DialogTitle>
       <DialogContent>
         {/* <form className="wrapper"> */}
-          {/* Capture user inputs */}
-          <InputLabel htmlFor="propos" sx={{ fontSize: "15px" }}>
-            À propos
+        {/* Capture user inputs */}
+        <InputLabel htmlFor="propos" sx={{ fontSize: "15px" }}>
+          À propos
+        </InputLabel>
+        <TextareaAutosize
+          id="propos"
+          name="propos"
+          className="textearea-propos"
+          // minRows={3}
+          style={{
+            width: "100%",
+            borderColor: "blue",
+            borderRadius: "10px",
+            padding: "10px",
+          }}
+          value={updatedData.propos || ""}
+          onChange={handleInputChange}
+        />
+
+        <FormControl
+          required
+          fullWidth
+          sx={{ marginTop: "15px", minWidth: 120 }}
+        >
+          <InputLabel
+            id="demo-select-small-label"
+            sx={{ backgroundColor: "white", padding: "1px 5px" }}
+          >
+            Secteur d'activité
           </InputLabel>
-          <TextareaAutosize
-            id="propos"
-            name="propos"
-            className="textearea-propos"
-            // minRows={3}
-            style={{
-              width: "100%",
-              borderColor: "blue",
-              borderRadius: "10px",
-              padding: "10px",
-            }}
-            value={updatedData.propos || ""}
-            onChange={handleInputChange}
-          />
-          <TextField
-            className="apropos-inputs"
-            name="secteur"
-            label="Secteur d'activité"
-            sx={{ fontSize: "15px", marginTop: "15px" }}
-            fullWidth
-            variant="outlined"
-            value={updatedData.secteur || ""}
-            onChange={handleInputChange}
-          />
-          <TextField
-            className="apropos-inputs"
-            name="profession"
-            sx={{ fontSize: "15px", marginTop: "15px" }}
-            fullWidth
-            label="Profession"
-            variant="outlined"
-            value={updatedData.profession || ""}
-            onChange={handleInputChange}
-          />
-          <TextField
-            className="apropos-inputs"
-            name="ville"
-            sx={{ fontSize: "15px", marginTop: "15px" }}
-            fullWidth
-            label="Ville"
-            variant="outlined"
-            value={updatedData.ville || ""}
-            onChange={handleInputChange}
-          />
-          {/* <Autocomplete
-            id="ville"
-            options={cities || []} // Ensure cities is an array or provide an empty array as a fallback
-            getOptionLabel={(option) => option.asciiname || 'Default Label'} 
-            value={updatedData.ville || null}
-            onChange={(event, newValue) => {
-              setUpdatedData({ ...updatedData, ville: newValue });
+          <Select
+            labelId="demo-select-small-label"
+            id="demo-select-small"
+            value={updatedData.secteur ? updatedData.secteur.id : ""}
+            onChange={(event) => {
+              const { value } = event.target;
+              const selectedSecteur = secteur.find((item) => item.id === value);
+              setUpdatedData({
+                ...updatedData,
+                secteur: selectedSecteur,
+                secteur_id: selectedSecteur.id,
+              });
               setHasChanges(true);
             }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Ville"
-                variant="outlined"
-                fullWidth
-              />
-            )}
-          /> */}
-          <FormControlLabel
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {secteur?.map((item) => (
+              <MenuItem key={item.id} value={item.id} className="first-letter">
+                {item.lib}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <TextField
+          className="apropos-inputs"
+          name="profession"
+          sx={{ fontSize: "15px", marginTop: "15px" }}
+          fullWidth
+          label="Profession"
+          variant="outlined"
+          value={updatedData.profession || ""}
+          onChange={handleInputChange}
+        />
+        <FormControl
+          required
+          fullWidth
+          sx={{ marginTop: "15px", minWidth: 120 }}
+        >
+          <InputLabel id="demo-select-small-label">Ville</InputLabel>
+          <Select
+            labelId="demo-select-small-label"
+            id="demo-select-small"
+            value={selectedVille}
+            label="Ville"
+            onChange={(event) => {
+              const { value } = event.target;
+              setUpdatedData({ ...updatedData, ville: value });
+              setHasChanges(true);
+              setSelectedVille(value);
+            }}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {cities?.map((item, index) => (
+              <MenuItem key={index} value={item} className="first-letter">
+                {item}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControlLabel
           className="agree-terms"
-            sx={{ fontSize: "10px", marginTop: "10px" }}
-            required
-            control={<Checkbox required sx={{ fontSize: "15px" }} />}
-            label="J'accepte que ces informations soient visibles par tout le monde"
-          />
-        {/* </form> */}
+          sx={{ fontSize: "10px", marginTop: "10px" }}
+          control={
+            <Checkbox
+              required
+              sx={{ fontSize: "15px" }}
+              checked={acceptVisible}
+              onChange={handleAcceptChange}
+            />
+          }
+          label="J'accepte que ces informations soient visibles par tout le monde"
+        />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel}>Annuler</Button>

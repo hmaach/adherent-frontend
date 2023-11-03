@@ -1,21 +1,24 @@
 import React, { useState } from "react";
-import { Backdrop, CircularProgress, Dialog, DialogContent, DialogTitle, Rating } from "@mui/material";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  LinearProgress,
+  Rating,
+} from "@mui/material";
 
 const RatingAlert = (props) => {
-  const { open, handleClose, onSubmit, ratingValue } = props;
+  const {
+    open,
+    handleClose,
+    onSubmit,
+    ratingValue,
+    loadingRating,
+    setLoadingRating,
+  } = props;
   const [value, setValue] = useState(ratingValue);
-  const [openD, setOpenD] = useState(false);
-
-  const handleCloseD = () => {
-    setOpenD(false);
-  }; 
-
-  const handleOpen = () => {
-    setOpenD(true);
-  };
 
   const handleCancel = () => {
-    setOpenD(false);
     handleClose();
   };
 
@@ -27,31 +30,30 @@ const RatingAlert = (props) => {
       aria-describedby="alert-dialog-slide-description"
       sx={{ minWidth: "70%" }}
     >
+      {loadingRating && <LinearProgress />}
       <DialogTitle>{"Votre avis"}</DialogTitle>
-      <DialogContent sx={{ margin: " 10px 5px",minWidth:"180px",display:"flex",justifyContent:"center" }}>
+      <DialogContent
+        sx={{
+          margin: " 10px 5px",
+          minWidth: "180px",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
         <Rating
           className="votre-avis-rating"
           sx={{
-            fontSize:"40px"
+            fontSize: "40px",
           }}
           name="simple-controlled"
           value={value}
           onChange={(event, newValue) => {
-            handleOpen()
+            setLoadingRating(true);
             setValue(newValue);
             onSubmit(newValue);
-            handleClose();
-            handleCloseD()
           }}
         />
       </DialogContent>
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={openD}
-        onClick={handleCloseD}
-      >
-        <CircularProgress color="inherit" />
-      </Backdrop>
     </Dialog>
   );
 };

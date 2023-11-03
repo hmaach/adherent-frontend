@@ -71,14 +71,14 @@ const NavBar = () => {
             </p>
           </NavLink>
         )} */}
-        {/* {user && ( */}
-        <NavLink to="/profil" activeclassname="active" id="row">
-          <CgProfile id="home-icon" />
-          <p className="bold" id="nav-title">
-            Profil
-          </p>
-        </NavLink>
-        {/* )} */}
+        {user?.role === "adherent" && (
+          <NavLink to={`/profil/${user.id}`} activeclassname="active" id="row">
+            <CgProfile id="home-icon" />
+            <p className="bold" id="nav-title">
+              Profil
+            </p>
+          </NavLink>
+        )}
       </div>
       <div id="bottom-nav">
         {!user ? (

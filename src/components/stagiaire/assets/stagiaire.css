@@ -197,14 +197,14 @@ footer a:not(.nav-link) {
   margin-top: 4rem;
   margin-bottom: 4rem;
   padding-bottom: 3rem;
-  max-width: 80%;
+  width: 80%;
   float: right;
   margin-right: 1rem;
 }
 @media screen and (min-width: 200px) and (max-width: 499px) {
   #cv {
     /* border: rgb(30, 255, 0) solid 1px; */
-    max-width: 100%;
+    width: 100%;
     float: right;
     margin-right: 0;
   }

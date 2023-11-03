@@ -18,7 +18,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { jsPDF } from "jspdf";
 
 const BadgeAlert = (props) => {
-  const { open, handleClose } = props;
+  const { open, handleClose, data } = props;
   const badgeRef = useRef(null);
 
   const [badgeFormat, setBadgeFormat] = useState("png");
@@ -60,7 +60,7 @@ const BadgeAlert = (props) => {
       aria-describedby="alert-dialog-slide-description"
       sx={{ minWidth: "70%" }}
     >
-      <DialogTitle>{"Le badge de 23456789"}</DialogTitle>
+      <DialogTitle>{`Le badge de ${data.id}`}</DialogTitle>
       <DialogContent sx={{ margin: "10px 70px", border: "gray dotted" }}>
         <div
           ref={badgeRef}
@@ -77,12 +77,12 @@ const BadgeAlert = (props) => {
               background: "#FFF",
             }}
           >
-            <h6>ID : 23456789</h6>
+            <h6>ID : {data?.id}</h6>
             <p style={{ fontSize: "9px" }}>
-              <span>Profession :</span> Développeur web
+              <span>Profession :</span> {data?.profession}
             </p>
             <p style={{ fontSize: "9px" }}>
-              <span>Ville :</span> Berkane
+              <span>Ville :</span> {data?.ville}
             </p>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <QRCodeReact

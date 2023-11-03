@@ -1,9 +1,10 @@
 import { Avatar } from "@mui/material";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import url from "../../../../app/api/url";
 
 const AccountMight = (props) => {
-  const stagiaire = props.stagiaire
+  const adherent = props.adherent;
 
   const stringToColor = (string) => {
     let hash = 0;
@@ -14,7 +15,7 @@ const AccountMight = (props) => {
       hash = string.charCodeAt(i) + ((hash << 5) - hash);
     }
 
-    let color = '#';
+    let color = "#";
 
     for (i = 0; i < 3; i += 1) {
       const value = (hash >> (i * 8)) & 0xff;
@@ -23,35 +24,47 @@ const AccountMight = (props) => {
     /* eslint-enable no-bitwise */
 
     return color;
-  }
+  };
 
   const stringAvatar = (name) => {
     return {
       sx: {
         bgcolor: stringToColor(name),
       },
-      children: `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`,
+      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
     };
-  }
-
+  };
 
   return (
-    <Link to={`/profile/${stagiaire.id}`} id="box-account-might" key={stagiaire.id}>
+    <Link
+      to={`/profil/${adherent.user_id}`}
+      id="box-account-might"
+      key={adherent.user_id}
+    >
       <div id="container-might">
-        <span id="user-boxh" style={{ display: 'flex' }}>
-          {stagiaire.profile
-            ? <img
-              id="personr"
-              src="ayadi.jpeg"
-              alt="profile"
-            />
-            : <Avatar id="personr" {...stringAvatar(`${stagiaire?.prenom} ${stagiaire?.nom}`)} />
+        <span id="user-boxh" style={{ display: "flex" }}>
+          {
+            adherent.img_path ? (
+              <img
+                id="personr"
+                src={url + "/storage/" + adherent?.img_path}
+                alt="profile"
+              />
+            ) : (
+              // :null
+              <img src="no-img.jpg" alt="profil" id="personr" />
+            )
+            // : <Avatar id="personr" {...stringAvatar(`${adherent?.prenom} ${adherent?.nom}`)} />
           }
 
           <span className="four_stagiaires">
             {/* <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p> */}
-            <p id="namer"><span className='first-letter'>{stagiaire?.prenom}</span> <span className='first-letter'>{stagiaire?.nom}</span></p>
-            <p id="idr" className='first-letter'>{stagiaire?.groupe?.libelle} | {stagiaire?.groupe?.filiere?.libelle}</p>
+            <p id="namer">
+              <span className="first-letter">{adherent?.id}</span>
+            </p>
+            <p id="idr" className="first-letter">
+              {adherent?.profession}
+            </p>
           </span>
         </span>
       </div>

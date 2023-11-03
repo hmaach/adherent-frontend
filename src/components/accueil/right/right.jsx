@@ -7,11 +7,12 @@ import axios from "axios";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import MiniCalendar from "../../calandar/MiniCalendar";
+import { getRandomFourAdherents } from "../../../app/api/adherentAxios";
 // import MiniCalendrier from "../calendrier/MiniCalendrier";
 
 const Right = () => {
   const [notifs, setNotifs] = useState([]);
-  const [stagiaires, setStagiaires] = useState([]);
+  const [fourAdherents, setFourAdherents] = useState([]);
   const [isLoadingNotif, setIsLoadingNotif] = useState(true);
   const [isLoadingStag, setIsLoadingStag] = useState(true);
   const [errNotif, setErrNotif] = useState();
@@ -30,20 +31,20 @@ const Right = () => {
     }
   };
 
-  const fetchRandomStagiaires = async () => {
+  const fetchRandomFourAdherents = async () => {
     try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/api/fourstagiaires`
-      );
-      const data = response.data;
-      setStagiaires(data.stagiaires);
-      setIsLoadingStag(false);
+      getRandomFourAdherents().then((data)=>{
+        setFourAdherents(data)
+        setIsLoadingStag(false);
+      })
     } catch (error) {
       console.log(error);
       setErrStag(error);
       setIsLoadingStag(false);
     }
   };
+
+
   const events = [
     { id: 1, date: '2023-06-15', color: 'red' },
     { id: 2, date: '2023-06-20', color: 'blue' },
@@ -52,7 +53,7 @@ const Right = () => {
   ];
   useEffect(() => {
     // fetchNotifs();
-    fetchRandomStagiaires();
+    fetchRandomFourAdherents();
     const interval = setInterval(() => {
       // fetchNotifs();
     }, 5 * 60 * 1000);
@@ -94,11 +95,10 @@ const Right = () => {
         </div>
       )}
       {/* <MiniCalendrier/> */}
-      {stagiaires && (
+      {fourAdherents && (
         <div id="might-like-box">
-          <h2 id="title-might">Découvrez les stagiaires</h2>
+          <h2 id="title-might">Découvrez les adhérents</h2>
           {isLoadingStag ? (
-            // ? (<LoadingSpinner />)
             <div className="right_loading">
               <Box sx={{ width: 300 }}>
                 <Skeleton />
@@ -107,8 +107,8 @@ const Right = () => {
               </Box>
             </div>
           ) : (
-            stagiaires.map((stagiaire) => {
-              return <AccountMight key={stagiaire.id} stagiaire={stagiaire} />;
+            fourAdherents.map((adherent) => {
+              return <AccountMight key={adherent.id} adherent={adherent} />;
             })
           )}
           <div to="/stagiaires" id="show-more-box">

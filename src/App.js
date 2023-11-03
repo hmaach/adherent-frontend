@@ -113,8 +113,8 @@ const App = () => {
 
 
           <Route path='/c' element={<Calendar />} />
-          <Route path='/profile/:id' element={<Stagiaire />} />
-          <Route path='/profil' element={<Stagiaire />} />
+          <Route path='/profil/:id' element={<Stagiaire />} />
+          {/* <Route path='/profil' element={<Stagiaire />} /> */}
 
           {/* protected routes (require login) */}
           <Route element={<RequireAuth />}>

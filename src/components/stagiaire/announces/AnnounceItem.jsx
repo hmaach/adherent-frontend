@@ -1,20 +1,32 @@
 import React from "react";
 import {
-  Button,
   Card,
   CardContent,
   IconButton,
-  Typography,
 } from "@mui/material";
 import DehazeIcon from "@mui/icons-material/Dehaze";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { format } from "date-fns";
+import { fr } from "date-fns/locale";
+import url from "../../../app/api/url";
 
-const AnnounceItem = ({ announce, index, onDelete }) => {
+const AnnounceItem = ({ announce, onDelete }) => {
+  
+  const startDate = new Date(announce.debut);
+  const endDate = new Date(announce.fin);
+
+  const formattedStartDate = format(startDate, "HH:mm 'le' EEEE dd MMMM yyyy", {
+    locale: fr,
+  });
+  const formattedEndDate = format(endDate, "HH:mm 'le' EEEE dd MMMM yyyy", {
+    locale: fr,
+  });
+
   return (
     <Card className="announce-edit-item">
       <DehazeIcon className="icon-annoounce-edit" />
       {announce.img ? (
-        <img src={announce.img} alt="Announce" className="img-annoounce-edit" />
+        <img src={url + "/storage/" + announce.img} alt="Announce" className="img-annoounce-edit" />
       ) : (
         <img
           className="img-annoounce-edit"
@@ -27,7 +39,7 @@ const AnnounceItem = ({ announce, index, onDelete }) => {
           {announce.desc.substring(0, 100)}...
         </p>
         <p className="date-annoounce-edit">
-          Depuis {announce.debut} à {announce.debut}
+          Depuis {formattedStartDate} à {formattedEndDate}
         </p>
       </CardContent>
       <IconButton

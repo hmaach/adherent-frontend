@@ -12,6 +12,7 @@ import {
   TextField,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { toast } from "react-toastify";
 
 const AnnounceAlert = (props) => {
   const { open, handleClose, handleAddAnnouceCallback } = props;
@@ -20,10 +21,11 @@ const AnnounceAlert = (props) => {
   const [debut, setStartDate] = useState("");
   const [fin, setEndDate] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
-
+  const [image, setImage] = useState(null);
   const [descError, setDescError] = useState("");
   const [debutError, setDebutError] = useState("");
   const [finError, setFinError] = useState("");
+  const [acceptVisible, setAcceptVisible] = useState(false);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -33,17 +35,30 @@ const AnnounceAlert = (props) => {
         setSelectedImage(event.target.result);
       };
       reader.readAsDataURL(file);
+      setImage(file);
     }
   };
 
   const removeImage = () => {
     setSelectedImage(null);
   };
+  
+  const handleAcceptChange = (event) => {
+    setAcceptVisible(event.target.checked);
+  };
+
 
   const handleAddAnnouce = () => {
     setDescError("");
     setDebutError("");
     setFinError("");
+
+    if (!acceptVisible) {
+      toast.error(
+        "Veuillez accepter que vos informations seront visibles par tout le monde."
+      );
+      return;
+    }
 
     let hasError = false;
 
@@ -79,7 +94,7 @@ const AnnounceAlert = (props) => {
       desc,
       debut,
       fin,
-      img: selectedImage,
+      img: image,
     };
 
     handleAddAnnouceCallback(announceData);
@@ -113,7 +128,7 @@ const AnnounceAlert = (props) => {
             style={{ display: "none" }}
             onChange={handleImageChange}
           />
-          <label htmlFor="image-input" className="input-image-announce" >
+          <label htmlFor="image-input" className="input-image-announce">
             <p>Cliquez ici ou faites glisser et déposez une image ici</p>
           </label>
           {selectedImage && (
@@ -184,9 +199,16 @@ const AnnounceAlert = (props) => {
           helperText={finError}
         />
         <FormControlLabel
-          sx={{ fontSize: "15px", marginTop: "10px" }}
-          required
-          control={<Checkbox sx={{ fontSize: "15px" }} />}
+          className="agree-terms"
+          sx={{ fontSize: "10px", marginTop: "10px" }}
+          control={
+            <Checkbox
+              required
+              sx={{ fontSize: "15px" }}
+              checked={acceptVisible}
+              onChange={handleAcceptChange}
+            />
+          }
           label="J'accepte que ces informations soient visibles par tout le monde"
         />
       </DialogContent>

@@ -9,6 +9,10 @@ import {
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import AnnounceItem from "./AnnounceItem";
 import { toast } from "react-toastify";
+import { editAnnounces } from "../../../app/api/announceAxios";
+import GetCookie from "../../../cookies/JWT/GetCookie";
+import { useSelector } from "react-redux";
+import { selectCurrentUser } from "../../../features/auth/authSlice";
 
 const AnnouncesEdit = ({
   open,
@@ -19,6 +23,7 @@ const AnnouncesEdit = ({
   const [announces, setAnnouncesState] = useState(originalAnnounces);
   const [deletedAnnounces, setDeletedAnnounces] = useState([]);
   const [changesMade, setChangesMade] = useState(false);
+  const token = GetCookie("jwt");
 
   useEffect(() => {
     setAnnouncesState(originalAnnounces);
@@ -45,7 +50,7 @@ const AnnouncesEdit = ({
 
     setAnnouncesState(updatedAnnounces);
     setDeletedAnnounces([...deletedAnnounces, deletedAnnounce]);
-    setChangesMade(true); 
+    setChangesMade(true);
   };
 
   const handleSave = () => {
@@ -53,27 +58,56 @@ const AnnouncesEdit = ({
       ...announce,
       order: index + 1,
     }));
-    setAnnounces(updatedAnnounces);
-    console.log(updatedAnnounces);
-    handleClose();
-    toast.success("Les changements sont enregistrés", {
-      position: "top-center",
-      autoClose: 4000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    });
-    setChangesMade(false);
+    const extractedAnnounces = updatedAnnounces.map((announce) => ({
+      id: announce.id,
+      user_id: announce.user_id,
+      order: announce.order,
+    }));
+
+    const deletedAnnounceIds = deletedAnnounces.map(
+      (deletedAnnounce) => deletedAnnounce.id
+    );
+    // console.log(deletedAnnounceIds);
+
+    // console.log(extractedAnnounces);
+
+    try {
+      editAnnounces(extractedAnnounces, deletedAnnounceIds, token)
+        .then((data) => {
+          if (data.message === "success") {
+            setAnnounces(updatedAnnounces);
+            console.log(extractedAnnounces);
+            handleClose();
+            toast.success("Les changements sont enregistrés", {
+              position: "top-center",
+              autoClose: 4000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+            });
+            setChangesMade(false);
+          } else {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancel = () => {
     if (changesMade) {
-      const confirmDiscard = window.confirm("Des changements non enregistrés existent. Voulez-vous vraiment les ignorer ?");
+      const confirmDiscard = window.confirm(
+        "Des changements non enregistrés existent. Voulez-vous vraiment les ignorer ?"
+      );
       if (!confirmDiscard) {
-        return; 
+        return;
       }
     }
 
@@ -124,7 +158,9 @@ const AnnouncesEdit = ({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleCancel}>Annuler</Button>
-        <Button onClick={handleSave} disabled={!changesMade}>Enregistrer</Button>
+        <Button onClick={handleSave} disabled={!changesMade}>
+          Enregistrer
+        </Button>
       </DialogActions>
     </Dialog>
   );
