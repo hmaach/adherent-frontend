@@ -1,0 +1,126 @@
+.adherents {
+  /* border: red 1px solid; */
+  width: 80%;
+  margin-top: 6rem;
+}
+
+.adherents-list {
+  /* border: yellow solid 1px; */
+}
+
+.submit-adherents-filter-pc{
+/* border: red solid 1px; */
+display: flex;
+justify-content: center;
+padding: 20px;
+}
+
+.adherents-list-header{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    width: 60%;
+    align-items: center;
+}
+.adherents-sorting{
+    border-radius: 20px;
+    min-width: 150px;
+    max-height: 40px;
+}
+.adherents-pagination{
+/* border: red solid 1px; */
+width: 60%;
+display: flex;
+justify-content: center;
+margin: 15px 0;
+}
+.adherents-item {
+  min-height: 40px;
+  border-radius: 10px;
+  background-color: white;
+  margin-bottom: 8px;
+  width: 95%;
+  overflow: hidden;
+  border: 0.3px solid #e2e2e2c4;
+  box-shadow: #e2e2e2c4 3px 2px 4px;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  max-width: 60%;
+  align-items: center;
+  padding-bottom: 5px;
+  transition: var(--transition);
+}
+
+.adherents-item:hover {
+  background-color: #f1f1f1da;
+  box-shadow: #e2e2e2c4 4px 3px 4px;
+}
+
+.custom-link-style {
+  text-decoration: none;
+  color: inherit;
+}
+.adherent-img-info {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.rating-adherent {
+  margin-right: 1.3rem;
+}
+
+.adherent-img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 0 4px 0 10px;
+  border: #e2e2e2c4 solid 1px;
+}
+.adherent-id {
+  padding-bottom: 0 !important;
+  font-size: larger;
+  font-weight: 700;
+  display: block;
+  /* margin-left: 15px; */
+}
+.adherent-profession {
+  padding-bottom: 0 !important;
+  display: block;
+  color: var(--color-text-light);
+  font-size: 0.8rem;
+}
+.adherent-ville {
+  padding-bottom: 0 !important;
+  display: block;
+  color: var(--color-text-light);
+  font-size: 0.8rem;
+}
+
+/* .adherent-icons {
+  font-size: 0.5rem;
+} */
+
+.adherents-filrage-pc {
+  border-radius: 10px;
+  background-color: white;
+  overflow: hidden;
+  border: 0.3px solid #e2e2e2c4;
+  box-shadow: #e2e2e2c4 3px 2px 4px;
+  transition: var(--transition);
+  width: 29%;
+  position: fixed;
+  top: 6rem;
+  right: 2rem;
+}
+.adherents-filrage-pc h4 {
+    padding: 9px 9px;
+    border-bottom: 0.3px solid #e2e2e2c4;
+}
+.adherents-filter-pc-select{
+    border-bottom: 0.3px solid #e2e2e2c4;
+    padding-bottom: 1rem;
+    margin: auto;
+    width: 95%;
+}
