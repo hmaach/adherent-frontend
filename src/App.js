@@ -4,47 +4,26 @@ import "./App.css";
 import NavBar from "./components/navBar/navbar";
 import Header from "./components/header/Header";
 import Accueil from "./components/accueil/Accueil";
-import Calendrier from "./components/calendrier/Calendrier";
-import Stagiaires from "./components/stagiaires/Stagiaires";
 import Stagiaire from "./components/stagiaire/Stagiaire";
 import Login from "./features/auth/Login";
 import Layout from "./features/auth/Layout";
 import RequireAuth from "./features/auth/RequireAuth";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "./features/auth/authSlice";
+import { logOut, setCredentials } from "./features/auth/authSlice";
 import RequireAdmin from "./features/auth/RequireAdmin";
 import SearchAccueil from "./components/accueil/SearchAccueil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Profile from "./components/profile/Profile";
 import Archives from "./components/archives/Archives";
-// import Calendar from "./components/calandar/Calandar";
-// import Topbar from "./components/admin/scenes/global/Topbar";
-// import Sidebar from "./components/admin/scenes/global/Sidebar";
-// import Dashboard from "./components/admin/scenes/dashboard";
-// import Team from "./components/admin/scenes/team";
-// import Invoices from "./components/admin/scenes/invoices";
-// import Contacts from "./components/admin/scenes/contacts";
-// import Bar from "./components/admin/scenes/bar";
-// import Form from "./components/admin/scenes/form";
-// import Line from "./components/admin/scenes/line";
-// import Pie from "./components/admin/scenes/pie";
-// import FAQ from "./components/admin/scenes/faq";
-// import Geography from "./components/admin/scenes/geography";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ColorModeContext, useMode } from "./theme";
-// import Calendar1 from "./components/admin/scenes/calendar/calendar";
-// import AdminRoutes from "./components/admin/AdminRoutes";
 import Calendar from "./components/calandar/calendar";
-import { getFiliere } from "./features/filiere/filiereSlice";
 import { getFilieres } from "./app/api/filiereAxios";
+import { checkAuth } from "./app/api/checkAuthAxios";
+import RemoveCookie from "./cookies/JWT/RemoveCookie";
+import Adherents from "./components/adherents/Adherents";
 const { localStorage } = window;
 
 const App = () => {
   const dispatch = useDispatch();
-  const [theme, colorMode] = useMode();
-  const [isSidebar, setIsSidebar] = useState(true);
-  const [filieres, setFilieres] = useState([]);
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
@@ -62,25 +41,48 @@ const App = () => {
       dispatch(setCredentials(credentials));
     }
 
-    if (token) {
-      getFilieres(token)
-        .then((data) => {
-          setFilieres(data.filieres);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // if (token) {
+    //   getFilieres(token)
+    //     .then((data) => {
+    //       setFilieres(data.filieres);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getFiliere(filieres));
-  }, [filieres]);
+  const checkAuthFunction = async () => {
+    try {
+      checkAuth(token)
+        .then((data) => {
+          if (data.message === true) {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          dispatch(logOut());
+          RemoveCookie("jwt");
+          localStorage.removeItem("credentials");
+          localStorage.removeItem("token");
+        });
+    } catch (error) {
+      dispatch(logOut());
+      RemoveCookie("jwt");
+      localStorage.removeItem("credentials");
+      localStorage.removeItem("token");
+    }
+  };
 
   const user = JSON.parse(localStorage.getItem("user"));
   if (user && token) {
     dispatch(setCredentials({ user, token }));
   }
+
+  useEffect(() => {
+    checkAuthFunction();
+  }, []);
+
   return (
     <div id={containerId} style={containerStyle}>
       <ToastContainer
@@ -104,54 +106,23 @@ const App = () => {
           <Route index path="/recherche" element={<SearchAccueil />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Accueil />} />
-          <Route path="/stagiaires" element={<Stagiaires />} />
-          <Route path="/stagiaire" element={<Stagiaire />} />
+          <Route path="/adherents" element={<Adherents />} />
 
           <Route path="/archives" element={<Archives />} />
           <Route path="/calendrier" element={<Calendar />} />
           {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
 
-
-          <Route path='/c' element={<Calendar />} />
-          <Route path='/profil/:id' element={<Stagiaire />} />
+          <Route path="/c" element={<Calendar />} />
+          <Route path="/profil/:id" element={<Stagiaire />} />
           {/* <Route path='/profil' element={<Stagiaire />} /> */}
 
           {/* protected routes (require login) */}
-          <Route element={<RequireAuth />}>
-
-            
-          </Route>
+          <Route element={<RequireAuth />}></Route>
 
           {/* admin routes */}
           <Route element={<RequireAdmin />}></Route>
         </Route>
       </Routes>
-
-      {/* <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {/* <div className="app"> */}
-      {/* {isAdminRoute && <Sidebar isSidebar={isSidebar} />}
-
-          <main className={isAdminRoute ? "admin-content" : " content"}>
-            {isAdminRoute && <Topbar setIsSidebar={setIsSidebar} />}
-            <Routes>
-              <Route path="/admin" element={<Dashboard />} />
-              <Route path="/admin/team" element={<Team />} />
-              <Route path="/admin/contacts" element={<Contacts />} />
-              <Route path="/admin/invoices" element={<Invoices />} />
-              <Route path="/admin/form" element={<Form />} />
-              <Route path="/admin/bar" element={<Bar />} />
-              <Route path="/admin/pie" element={<Pie />} />
-              <Route path="/admin/line" element={<Line />} />
-              <Route path="/admin/faq" element={<FAQ />} />
-              <Route path="/admin/calendar" element={<Calendar1 />} />
-              <Route path="/admin/geography" element={<Geography />} />
-            </Routes>
-          </main> */}
-      {/* </div> */}
-      {/* </ThemeProvider> */}
-      {/* </ColorModeContext.Provider> */}
     </div>
   );
 };

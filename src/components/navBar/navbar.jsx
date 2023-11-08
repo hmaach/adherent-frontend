@@ -3,6 +3,7 @@ import "./navbar.css";
 import { FaCalendarAlt } from "react-icons/fa";
 import { BiHomeCircle } from "react-icons/bi";
 import { HiDocumentDuplicate } from "react-icons/hi";
+import HailIcon from '@mui/icons-material/Hail';
 import { CgProfile } from "react-icons/cg";
 import { IoIosPeople } from "react-icons/io";
 
@@ -35,6 +36,12 @@ const NavBar = () => {
           <BiHomeCircle id="home-icon" />
           <p id="nav-title" className="bold">
             Accueil
+          </p>
+        </NavLink>
+        <NavLink to="/adherents" activeclassname="active" id="row">
+          <HailIcon id="home-icon" />
+          <p id="nav-title" className="bold">
+            Adhérents
           </p>
         </NavLink>
         <NavLink to="/calendrier" activeclassname="active" id="row">

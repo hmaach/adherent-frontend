@@ -281,7 +281,7 @@ const Header = () => {
               />
               <Box sx={{ ml: 2, color: "white" }}>{rating}</Box>
             </div>
-            {user?.id === data?.user_id ? null : (
+            {!user && user?.id === data?.user_id ? null : (
               <Button
                 variant="contained"
                 sx={{
