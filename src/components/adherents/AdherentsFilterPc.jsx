@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./adherents.css";
-import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import DeleteIcon from '@mui/icons-material/Delete';
 import {
-    Button,
+  Button,
   Chip,
   FormControl,
   InputLabel,
@@ -10,10 +11,14 @@ import {
   Select,
   TextField,
 } from "@mui/material";
+import url from "../../app/api/url";
 
-const AdherentsFilterPc = () => {
+const AdherentsFilterPc = ({ onFilterChange }) => {
   const [cities, setCities] = useState([]);
   const [selectedCities, setSelectedCities] = useState([]);
+  const [selectedSecteur, setSelectedSecteur] = useState(null);
+  const [secteur, setSecteur] = useState([]);
+  const hasFilters = selectedCities.length > 0 || selectedSecteur !== null;
 
   const fetchCitiesFromAPI = async () => {
     try {
@@ -38,10 +43,26 @@ const AdherentsFilterPc = () => {
     }
   };
 
+  const fetchSecteurs = async () => {
+    try {
+      const response = await fetch(url + "/api/public/secteur");
+      const data = await response.json();
+      const secteurs = data;
+      //   console.log(secteurs);
+      setSecteur(secteurs);
+      // return data;
+    } catch (error) {
+      console.error("Error fetching secteurs:", error);
+      return [];
+    }
+  };
+
   const handleCityChange = (event) => {
     const selectedCity = event.target.value;
     if (!selectedCities.includes(selectedCity)) {
-      setSelectedCities([...selectedCities, selectedCity]);
+      const updatedCities = [...selectedCities, selectedCity];
+      setSelectedCities(updatedCities);
+      //   onFilterChange(updatedCities);
     }
   };
 
@@ -50,15 +71,23 @@ const AdherentsFilterPc = () => {
       (city) => city !== cityToDelete
     );
     setSelectedCities(updatedCities);
+    // onFilterChange(updatedCities);
+  };
+
+  const handleRemoveAllFilters = () => {
+    setSelectedCities([]);
+    setSelectedSecteur(null);
+    onFilterChange([], null);
   };
 
   useEffect(() => {
     fetchCitiesFromAPI();
+    fetchSecteurs();
   }, []);
 
-  useEffect(() => {
-    console.log(selectedCities);
-  }, [selectedCities]);
+  //   useEffect(() => {
+  //     console.log(selectedCities);
+  //   }, [selectedCities]);
 
   return (
     <div className="adherents-filrage-pc">
@@ -75,15 +104,23 @@ const AdherentsFilterPc = () => {
             sx={{ borderRadius: "20px" }}
             labelId="demo-select-small-label"
             id="demo-select-small"
+            value={selectedSecteur}
+            onChange={(event) => {
+              const { value } = event.target;
+              const selectedSecteurV = secteur.find(
+                (item) => item.id === value
+              );
+              setSelectedSecteur(selectedSecteurV.id);
+            }}
           >
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            {/* {secteur?.map((item) => (
+            {secteur?.map((item) => (
               <MenuItem key={item.id} value={item.id} className="first-letter">
-              {item.lib}
+                {item.lib}
               </MenuItem>
-            ))} */}
+            ))}
           </Select>
         </FormControl>
       </div>
@@ -103,26 +140,14 @@ const AdherentsFilterPc = () => {
               />
             ))
           : null}
-
-        {/* <Chip
-          sx={{
-            height: "55px",
-            marginTop: "15px",
-            marginRight: "7px",
-          }}
-          label="test"
-          onDelete={() => handleDeleteCity()}
-          variant="outlined"
-        /> */}
-
         <FormControl sx={{ marginTop: "15px", minWidth: 120 }}>
           <InputLabel id="demo-select-small-label">Ville</InputLabel>
           <Select
             sx={{ borderRadius: "20px" }}
             labelId="demo-select-small-label"
             id="demo-select-small"
-            value=""
             label="Ville"
+            value={selectedCities}
             onChange={(e) => handleCityChange(e)}
           >
             <MenuItem value="">
@@ -137,9 +162,23 @@ const AdherentsFilterPc = () => {
         </FormControl>
       </div>
       <div className="submit-adherents-filter-pc">
+        {hasFilters && (
+          <Button
+            variant="outlined"
+            color="secondary"
+            endIcon={<DeleteIcon />}
+            sx={{
+              borderRadius: "20px",
+              marginLeft: "10px",
+            }}
+            onClick={handleRemoveAllFilters}
+          >
+            Efface
+          </Button>
+        )}
         <Button
           variant="contained"
-        //   size="small"
+          //   size="small"
           endIcon={<FilterAltIcon />}
           sx={{
             borderRadius: "20px",
@@ -149,6 +188,7 @@ const AdherentsFilterPc = () => {
               bgcolor: "#d46025",
             },
           }}
+          onClick={() => onFilterChange(selectedCities, selectedSecteur)}
         >
           Rechercher
         </Button>
