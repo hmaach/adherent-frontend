@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, NavLink } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navBar/navbar";
 import Header from "./components/header/Header";
@@ -7,23 +7,40 @@ import Accueil from "./components/accueil/Accueil";
 import Stagiaire from "./components/stagiaire/Stagiaire";
 import Login from "./features/auth/Login";
 import Layout from "./features/auth/Layout";
+import HailIcon from "@mui/icons-material/Hail";
 import RequireAuth from "./features/auth/RequireAuth";
+import { CgProfile } from "react-icons/cg";
 import { useDispatch } from "react-redux";
-import { logOut, setCredentials } from "./features/auth/authSlice";
+import {
+  logOut,
+  selectCurrentUser,
+  setCredentials,
+} from "./features/auth/authSlice";
 import RequireAdmin from "./features/auth/RequireAdmin";
 import SearchAccueil from "./components/accueil/SearchAccueil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ForumIcon from '@mui/icons-material/Forum';
+import RestoreIcon from "@mui/icons-material/Restore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Archives from "./components/archives/Archives";
 import Calendar from "./components/calandar/calendar";
 import { getFilieres } from "./app/api/filiereAxios";
 import { checkAuth } from "./app/api/checkAuthAxios";
 import RemoveCookie from "./cookies/JWT/RemoveCookie";
 import Adherents from "./components/adherents/Adherents";
+import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
+import { BiHomeCircle } from "react-icons/bi";
+import { FaCalendarAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import Forum from "./components/forum/Forum";
 const { localStorage } = window;
 
 const App = () => {
   const dispatch = useDispatch();
+  const [value, setValue] = useState(0);
+
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
@@ -79,9 +96,9 @@ const App = () => {
     dispatch(setCredentials({ user, token }));
   }
 
-  useEffect(() => {
-    checkAuthFunction();
-  }, []);
+  // useEffect(() => {
+  //   checkAuthFunction();
+  // }, []);
 
   return (
     <div id={containerId} style={containerStyle}>
@@ -107,6 +124,7 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Accueil />} />
           <Route path="/adherents" element={<Adherents />} />
+          <Route path="/forum" element={<Forum />} />
 
           <Route path="/archives" element={<Archives />} />
           <Route path="/calendrier" element={<Calendar />} />
@@ -123,14 +141,33 @@ const App = () => {
           <Route element={<RequireAdmin />}></Route>
         </Route>
       </Routes>
+      {/* <div className="phone-nav">
+        <Box
+        // sx={{ width: "100%" }}
+        >
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+            <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+          </BottomNavigation>
+        </Box>
+      </div> */}
     </div>
   );
 };
 
 const NavBarWrapper = () => {
   const location = useLocation();
+  const [value, setValue] = useState(0);
   const isLoginRoute = location.pathname === "/login";
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const cur_user = useSelector(selectCurrentUser);
   if (isLoginRoute || isAdminRoute) {
     return (
       <div className="unableNav" id="nav-box">
@@ -139,9 +176,55 @@ const NavBarWrapper = () => {
     );
   }
   return (
-    <div id="nav-box">
-      <NavBar />
-    </div>
+    <>
+      <div id="nav-box">
+        <NavBar />
+      </div>
+      <div className="phone-nav">
+        <Box>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              component={NavLink}
+              to="/accueil"
+              label="Accueil"
+              icon={<BiHomeCircle />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/forum"
+              label="Forum"
+              icon={<ForumIcon />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/adherents"
+              label="Adhérents"
+              icon={<HailIcon />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/calendrier"
+              label="Calendrier"
+              icon={<FaCalendarAlt className="home-icon1" />}
+            />
+            {cur_user?.role === "adherent" && (
+              <BottomNavigationAction
+                component={NavLink}
+                to={`/profil/${cur_user.id}`}
+                label="Profil"
+                icon={<CgProfile id="home-icon" />}
+              />
+            )}
+          </BottomNavigation>
+        </Box>
+      </div>
+    </>
   );
 };
 const HeaderWrapper = () => {

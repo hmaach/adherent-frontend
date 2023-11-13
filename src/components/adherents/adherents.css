@@ -8,32 +8,37 @@
   /* border: yellow solid 1px; */
 }
 
-.submit-adherents-filter-pc{
-/* border: red solid 1px; */
-display: flex;
-justify-content: center;
-padding: 20px;
+.submit-adherents-filter-pc {
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
 }
 
-.adherents-list-header{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-    width: 60%;
-    align-items: center;
+.adherents-list-header {
+  /* border: red solid 1px; */
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  width: 60%;
+  align-items: center;
 }
-.adherents-sorting{
-    border-radius: 20px;
-    min-width: 150px;
-    max-height: 40px;
+.adherents-sorting {
+  border-radius: 20px;
+  min-width: 150px;
+  max-height: 40px;
 }
-.adherents-pagination{
-/* border: red solid 1px; */
-width: 60%;
-display: flex;
-justify-content: center;
-margin: 15px 0;
+.adherents-pagination {
+  /* border: red solid 1px; */
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0;
 }
+
+.adherents-filtrage-phone-button{
+    display: none;
+}
+
 .adherents-item {
   min-height: 40px;
   border-radius: 10px;
@@ -115,12 +120,58 @@ margin: 15px 0;
   right: 2rem;
 }
 .adherents-filrage-pc h4 {
-    padding: 9px 9px;
-    border-bottom: 0.3px solid #e2e2e2c4;
+  padding: 9px 9px;
+  border-bottom: 0.3px solid #e2e2e2c4;
 }
-.adherents-filter-pc-select{
-    border-bottom: 0.3px solid #e2e2e2c4;
-    padding-bottom: 1rem;
+.adherents-filter-pc-select {
+  border-bottom: 0.3px solid #e2e2e2c4;
+  padding-bottom: 1rem;
+  margin: auto;
+  width: 95%;
+}
+@media (min-width: 200px) and (max-width: 499px) {
+  .adherents {
+    width: 100%;
+  }
+  .adherents-item {
+    max-width: 95%;
     margin: auto;
-    width: 95%;
+    margin-bottom: 5px;
+  }
+  .adherent-img {
+    width: 45px;
+    height: 45px;
+  }
+  .adherent-profession {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px;
+  }
+  .adherent-item-rating-value {
+    font-size: 0.8rem;
+    display: inline-block;
+    width: 22px;
+    /* border: red solid 1px; */
+    display: flex;
+    justify-content: center;
+    margin-left: 3px;
+  }
+  .adherents-list-header {
+    /* border: red solid 1px; */
+    padding: 2px 5px 0;
+    width: 100%;
+  }
+  .adherents-sorting {
+    min-width: 100px;
+    margin-right:10px;
+  }
+  .adherents-pagination {
+    margin-bottom: 70px;
+    width: 100%;
+  }
+  .adherents-filtrage-phone-button{
+    display: block;
+}
 }
