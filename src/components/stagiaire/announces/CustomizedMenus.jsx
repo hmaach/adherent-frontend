@@ -10,17 +10,23 @@ import { AddBox, AddIcCallOutlined, Delete } from "@mui/icons-material";
 import Slide from "@mui/material/Slide";
 import GetCookie from "../../../cookies/JWT/GetCookie";
 
-export default function CustomizedMenus({handleAddCallback,handleUpdateCallback}) {
+export default function CustomizedMenus({
+  handleAddCallback,
+  handleUpdateCallback,
+  announcesLength,
+}) {
+
+  // console.log(announcesLength );
   const handleAdd = () => {
-      handleAddCallback();
-      handleClose();
+    handleAddCallback();
+    handleClose();
     // console.log('salam');
   };
   const handleUpdate = () => {
     handleUpdateCallback();
     handleClose();
-  // console.log('salam');
-};
+    // console.log('salam');
+  };
 
   const token = GetCookie("jwt");
   const [anchorEl, setAnchorEl] = useState(null);
@@ -66,20 +72,21 @@ export default function CustomizedMenus({handleAddCallback,handleUpdateCallback}
         open={open}
         onClose={handleClose}
       >
-        <MenuItem
-          onClick={handleAdd}
-          disableRipple
-        >
+        <MenuItem onClick={handleAdd} disableRipple>
           <AddBox />
           Ajouter
         </MenuItem>
-        <MenuItem
-          onClick={handleUpdate}
-          disableRipple
-        >
-          <EditIcon />
-          Modifier
-        </MenuItem>
+        {announcesLength != 0 ? (
+          <MenuItem  onClick={handleUpdate} disableRipple>
+            <EditIcon />
+            Modifier
+          </MenuItem>
+        ) : (
+          <MenuItem disabled disableRipple>
+            <EditIcon />
+            Modifier
+          </MenuItem>
+        )}
       </StyledMenu>
     </div>
   );

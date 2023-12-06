@@ -8,8 +8,8 @@ const Logo = () => {
       <NavLink to="/" className="logo">
         <img src="/logo.png" alt="logo" />
         <span>
-          <span className="ista">SOBOL </span>
-          <span className='berkane'>Numérique</span>
+          <span className="sobol">SOBOL </span>
+          <span className='digital'>Numérique</span>
         </span>
       </NavLink>
       <hr className="hr" />

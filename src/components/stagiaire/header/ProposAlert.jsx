@@ -65,7 +65,7 @@ const ProposAlert = (props) => {
       const response = await fetch(url + "/api/public/secteur");
       const data = await response.json();
       const secteurs = data;
-      console.log(secteurs);
+      // console.log(secteurs);
       setSecteur(secteurs);
       // return data;
     } catch (error) {

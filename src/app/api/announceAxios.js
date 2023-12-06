@@ -1,6 +1,6 @@
 import api from "./baseURL";
 
-export const getAnnounces = async (id, token=null) => {
+export const getAnnounces = async (id, token = null) => {
   try {
     if (token) {
       const headers = {
@@ -12,6 +12,25 @@ export const getAnnounces = async (id, token=null) => {
       const response = await api.get(`/public/announce/${id}`);
       return response.data;
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const getAccueilAnnounces = async (page) => {
+  try {
+    const response = await api.get(`/public/announces?page=${page}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const searchAccueilAnnounces = async (q, page) => {
+  try {
+    const response = await api.get(
+      `/public/announces/search/${q}/?page=${page}`
+    );
+    return response.data;
   } catch (error) {
     console.log(error);
   }

@@ -1,50 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, NavLink } from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navBar/navbar";
 import Header from "./components/header/Header";
 import Accueil from "./components/accueil/Accueil";
-import Calendrier from "./components/calendrier/Calendrier";
-import Stagiaires from "./components/stagiaires/Stagiaires";
 import Stagiaire from "./components/stagiaire/Stagiaire";
 import Login from "./features/auth/Login";
 import Layout from "./features/auth/Layout";
+import HailIcon from "@mui/icons-material/Hail";
 import RequireAuth from "./features/auth/RequireAuth";
+import { CgProfile } from "react-icons/cg";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "./features/auth/authSlice";
+import {
+  logOut,
+  selectCurrentUser,
+  setCredentials,
+} from "./features/auth/authSlice";
 import RequireAdmin from "./features/auth/RequireAdmin";
 import SearchAccueil from "./components/accueil/SearchAccueil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Profile from "./components/profile/Profile";
+import ForumIcon from '@mui/icons-material/Forum';
+import RestoreIcon from "@mui/icons-material/Restore";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import Archives from "./components/archives/Archives";
-// import Calendar from "./components/calandar/Calandar";
-// import Topbar from "./components/admin/scenes/global/Topbar";
-// import Sidebar from "./components/admin/scenes/global/Sidebar";
-// import Dashboard from "./components/admin/scenes/dashboard";
-// import Team from "./components/admin/scenes/team";
-// import Invoices from "./components/admin/scenes/invoices";
-// import Contacts from "./components/admin/scenes/contacts";
-// import Bar from "./components/admin/scenes/bar";
-// import Form from "./components/admin/scenes/form";
-// import Line from "./components/admin/scenes/line";
-// import Pie from "./components/admin/scenes/pie";
-// import FAQ from "./components/admin/scenes/faq";
-// import Geography from "./components/admin/scenes/geography";
-import { CssBaseline, ThemeProvider } from "@mui/material";
-import { ColorModeContext, useMode } from "./theme";
-// import Calendar1 from "./components/admin/scenes/calendar/calendar";
-// import AdminRoutes from "./components/admin/AdminRoutes";
 import Calendar from "./components/calandar/calendar";
-import { getFiliere } from "./features/filiere/filiereSlice";
 import { getFilieres } from "./app/api/filiereAxios";
+import { checkAuth } from "./app/api/checkAuthAxios";
+import RemoveCookie from "./cookies/JWT/RemoveCookie";
+import Adherents from "./components/adherents/Adherents";
+import { BottomNavigation, BottomNavigationAction, Box } from "@mui/material";
+import { BiHomeCircle } from "react-icons/bi";
+import { FaCalendarAlt } from "react-icons/fa";
+import { useSelector } from "react-redux";
+import Forum from "./components/forum/Forum";
 const { localStorage } = window;
 
 const App = () => {
   const dispatch = useDispatch();
-  const [theme, colorMode] = useMode();
-  const [isSidebar, setIsSidebar] = useState(true);
-  const [filieres, setFilieres] = useState([]);
+  const [value, setValue] = useState(0);
+
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
@@ -62,25 +58,48 @@ const App = () => {
       dispatch(setCredentials(credentials));
     }
 
-    if (token) {
-      getFilieres(token)
-        .then((data) => {
-          setFilieres(data.filieres);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    // if (token) {
+    //   getFilieres(token)
+    //     .then((data) => {
+    //       setFilieres(data.filieres);
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // }
   }, [dispatch]);
 
-  useEffect(() => {
-    dispatch(getFiliere(filieres));
-  }, [filieres]);
+  const checkAuthFunction = async () => {
+    try {
+      checkAuth(token)
+        .then((data) => {
+          if (data.message === true) {
+            console.log(data.message);
+          }
+        })
+        .catch((error) => {
+          dispatch(logOut());
+          RemoveCookie("jwt");
+          localStorage.removeItem("credentials");
+          localStorage.removeItem("token");
+        });
+    } catch (error) {
+      dispatch(logOut());
+      RemoveCookie("jwt");
+      localStorage.removeItem("credentials");
+      localStorage.removeItem("token");
+    }
+  };
 
   const user = JSON.parse(localStorage.getItem("user"));
   if (user && token) {
     dispatch(setCredentials({ user, token }));
   }
+
+  // useEffect(() => {
+  //   checkAuthFunction();
+  // }, []);
+
   return (
     <div id={containerId} style={containerStyle}>
       <ToastContainer
@@ -104,62 +123,51 @@ const App = () => {
           <Route index path="/recherche" element={<SearchAccueil />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Accueil />} />
-          <Route path="/stagiaires" element={<Stagiaires />} />
-          <Route path="/stagiaire" element={<Stagiaire />} />
+          <Route path="/adherents" element={<Adherents />} />
+          <Route path="/forum" element={<Forum />} />
 
           <Route path="/archives" element={<Archives />} />
           <Route path="/calendrier" element={<Calendar />} />
           {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
 
-
-          <Route path='/c' element={<Calendar />} />
-          <Route path='/profil/:id' element={<Stagiaire />} />
+          <Route path="/c" element={<Calendar />} />
+          <Route path="/profil/:id" element={<Stagiaire />} />
           {/* <Route path='/profil' element={<Stagiaire />} /> */}
 
           {/* protected routes (require login) */}
-          <Route element={<RequireAuth />}>
-
-            
-          </Route>
+          <Route element={<RequireAuth />}></Route>
 
           {/* admin routes */}
           <Route element={<RequireAdmin />}></Route>
         </Route>
       </Routes>
-
-      {/* <ColorModeContext.Provider value={colorMode}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {/* <div className="app"> */}
-      {/* {isAdminRoute && <Sidebar isSidebar={isSidebar} />}
-
-          <main className={isAdminRoute ? "admin-content" : " content"}>
-            {isAdminRoute && <Topbar setIsSidebar={setIsSidebar} />}
-            <Routes>
-              <Route path="/admin" element={<Dashboard />} />
-              <Route path="/admin/team" element={<Team />} />
-              <Route path="/admin/contacts" element={<Contacts />} />
-              <Route path="/admin/invoices" element={<Invoices />} />
-              <Route path="/admin/form" element={<Form />} />
-              <Route path="/admin/bar" element={<Bar />} />
-              <Route path="/admin/pie" element={<Pie />} />
-              <Route path="/admin/line" element={<Line />} />
-              <Route path="/admin/faq" element={<FAQ />} />
-              <Route path="/admin/calendar" element={<Calendar1 />} />
-              <Route path="/admin/geography" element={<Geography />} />
-            </Routes>
-          </main> */}
-      {/* </div> */}
-      {/* </ThemeProvider> */}
-      {/* </ColorModeContext.Provider> */}
+      {/* <div className="phone-nav">
+        <Box
+        // sx={{ width: "100%" }}
+        >
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+            <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+          </BottomNavigation>
+        </Box>
+      </div> */}
     </div>
   );
 };
 
 const NavBarWrapper = () => {
   const location = useLocation();
+  const [value, setValue] = useState(0);
   const isLoginRoute = location.pathname === "/login";
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const cur_user = useSelector(selectCurrentUser);
   if (isLoginRoute || isAdminRoute) {
     return (
       <div className="unableNav" id="nav-box">
@@ -168,9 +176,55 @@ const NavBarWrapper = () => {
     );
   }
   return (
-    <div id="nav-box">
-      <NavBar />
-    </div>
+    <>
+      <div id="nav-box">
+        <NavBar />
+      </div>
+      <div className="phone-nav">
+        <Box>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction
+              component={NavLink}
+              to="/accueil"
+              label="Accueil"
+              icon={<BiHomeCircle />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/forum"
+              label="Forum"
+              icon={<ForumIcon />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/adherents"
+              label="Adhérents"
+              icon={<HailIcon />}
+            />
+            <BottomNavigationAction
+              component={NavLink}
+              to="/calendrier"
+              label="Calendrier"
+              icon={<FaCalendarAlt className="home-icon1" />}
+            />
+            {cur_user?.role === "adherent" && (
+              <BottomNavigationAction
+                component={NavLink}
+                to={`/profil/${cur_user.id}`}
+                label="Profil"
+                icon={<CgProfile id="home-icon" />}
+              />
+            )}
+          </BottomNavigation>
+        </Box>
+      </div>
+    </>
   );
 };
 const HeaderWrapper = () => {

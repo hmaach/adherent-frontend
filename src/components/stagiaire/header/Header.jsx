@@ -22,14 +22,13 @@ import BadgeAlert from "./BadgeAlert";
 import {
   DeleteProfilImage,
   UpdateApropos,
-  UpdateProfilImage,
   getAdherent,
   rateAdherent,
   updateProfilAdherent,
 } from "../../../app/api/adherentAxios";
 import ImageAlert from "./ImageAlert";
 import url from "../../../app/api/url";
-import { Navigate, redirect, useNavigate, useParams } from "react-router";
+import {  useNavigate, useParams } from "react-router";
 import domain from "../../../app/api/domain";
 
 const Header = () => {
@@ -43,7 +42,6 @@ const Header = () => {
   const [showproposAlert, setShowproposAlert] = useState(false);
   const [showRatingAlert, setShowRatingAlert] = useState(false);
   const [showBadgeAlert, setShowBadgeAlert] = useState(false);
-  const [proposData, setProposData] = useState({});
   const token = GetCookie("jwt");
   // rating of the adherent
   const [rating, setRating] = useState(null);
@@ -138,9 +136,14 @@ const Header = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
-          setLoadingPropos(false);
           handleClose();
+          setLoadingPropos(false);
+          if (error?.response?.status === 401) {
+            console.log("Error 401: Unauthorized");
+          } else {
+            console.log(error);
+          }
+          // console.log(error);
         });
     } catch (error) {
       console.log(error);
@@ -227,6 +230,7 @@ const Header = () => {
                   onClick={() => {
                     setShowImg(true);
                   }}
+                  alt="Image de profil"
                   src={url + "/storage/" + data?.img_path}
                   style={{ cursor: "pointer" }}
                   width="200"
@@ -237,6 +241,7 @@ const Header = () => {
                   onClick={() => {
                     setShowImg(true);
                   }}
+                  alt="Image de profil"
                   src="no-img.jpg"
                   style={{ cursor: "pointer" }}
                   width="200"
