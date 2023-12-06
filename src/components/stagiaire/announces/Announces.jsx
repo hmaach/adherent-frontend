@@ -49,7 +49,7 @@ const Announces = () => {
   };
 
   announces.sort((a, b) => a.order - b.order);
-
+  // console.log(announces.length);
   const handleAddCallback = () => {
     setShowAnnounceAlert(true);
   };
@@ -66,10 +66,9 @@ const Announces = () => {
   };
 
   const handleAddAnnouce = (newAnnounce) => {
-    const maxIndex = Math.max(...announces.map((announce) => announce.order));
+    const maxIndex = announces.length > 0 ? Math.max(...announces.map((announce) => announce.order || 0)) : 0;
     newAnnounce.order = maxIndex + 1;
     newAnnounce.id = maxIndex + 1;
-    console.log(newAnnounce);
 
     try {
       PublierAnnounce(newAnnounce, token)
@@ -108,8 +107,9 @@ const Announces = () => {
     <div className="skills-section px-3 px-lg-4">
       <div className="announces-header">
         <h2 className="h3 mb-3 competence announces-h3">Announces</h2>
-        {user && user?.id === announces[0]?.user_id ? (
+        {user && user?.role === "adherent" ? (
           <CustomizedMenus
+            announcesLength={announces.length}
             handleAddCallback={handleAddCallback}
             handleUpdateCallback={handleUpdateCallback}
           />
@@ -123,7 +123,7 @@ const Announces = () => {
             sx={{ fontSize: "2rem", marginTop: "3px" }}
           />
         </>
-      ) : (
+      ) : announces?.length != 0 ? (
         <Swiper
           spaceBetween={40}
           centeredSlides={true}
@@ -153,6 +153,12 @@ const Announces = () => {
               );
             })}
         </Swiper>
+      ) : (
+        <div style={{ display:"flex",justifyContent:"center" }}>
+          <span className="main-no-posts" >
+          Il n'y a pas encore d'annonces !
+          </span>
+        </div>
       )}
       {showAnnounceAlert && (
         <AnnounceAlert
