@@ -118,7 +118,9 @@ const Main = () => {
 
   useEffect(() => {
     if (searchValue === "") {
-      fetchAnnounces(page, true);
+      setAnnounces([])
+      setPage(1)
+      fetchAnnounces(1, true);
     }
   }, [searchValue]);
   return (

@@ -20,7 +20,8 @@ import RequireAdmin from "./features/auth/RequireAdmin";
 import SearchAccueil from "./components/accueil/SearchAccueil";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ForumIcon from '@mui/icons-material/Forum';
+import ForumIcon from "@mui/icons-material/Forum";
+import Cookies from "js-cookie";
 import RestoreIcon from "@mui/icons-material/Restore";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -35,6 +36,7 @@ import { BiHomeCircle } from "react-icons/bi";
 import { FaCalendarAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Forum from "./components/forum/Forum";
+import InfoAlert from "./components/InfoAlert";
 const { localStorage } = window;
 
 const App = () => {
@@ -50,6 +52,14 @@ const App = () => {
   const localToken = localStorage.getItem("token");
   const token1 = localToken ? localToken.replace(`\"`, "") : null;
   const token = token1 ? token1.replace(`\"`, "") : null;
+
+  const [showDialog, setShowDialog] = useState(true);
+
+  const handleCloseDialog = () => {
+    Cookies.set("dialogClosed", "true", { expires: 30 });
+
+    setShowDialog(false);
+  };
 
   useEffect(() => {
     const storedCredentials = localStorage.getItem("credentials");
@@ -158,6 +168,9 @@ const App = () => {
           </BottomNavigation>
         </Box>
       </div> */}
+      {showDialog && !Cookies.get("dialogClosed") && (
+        <InfoAlert open={true} handleClose={handleCloseDialog} />
+      )}
     </div>
   );
 };
