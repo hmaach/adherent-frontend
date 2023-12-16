@@ -16,6 +16,7 @@
     "@fullcalendar/resource-timeline": "^6.1.8",
     "@fullcalendar/timegrid": "^6.1.8",
     "@mui/icons-material": "^5.11.16",
+    "@mui/lab": "^5.0.0-alpha.155",
     "@mui/material": "^5.13.0",
     "@mui/x-data-grid": "^6.7.0",
     "@mui/x-date-pickers": "^6.7.0",
