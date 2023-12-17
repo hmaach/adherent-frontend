@@ -37,6 +37,8 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import Forum from "./components/forum/Forum";
 import InfoAlert from "./components/InfoAlert";
+import Page404 from "./components/404/Page404";
+// import Login2 from "./features/auth/Login1";
 const { localStorage } = window;
 
 const App = () => {
@@ -132,6 +134,7 @@ const App = () => {
           <Route index path="/accueil" element={<Accueil />} />
           <Route index path="/recherche" element={<SearchAccueil />} />
           <Route path="/login" element={<Login />} />
+          {/* <Route path="/login2" element={<Login />} /> */}
           <Route path="/" element={<Accueil />} />
           <Route path="/adherents" element={<Adherents />} />
           <Route path="/forum" element={<Forum />} />
@@ -150,6 +153,7 @@ const App = () => {
           {/* admin routes */}
           <Route element={<RequireAdmin />}></Route>
         </Route>
+        <Route path="*" element={<Page404 />} />
       </Routes>
       {/* <div className="phone-nav">
         <Box
@@ -179,9 +183,10 @@ const NavBarWrapper = () => {
   const location = useLocation();
   const [value, setValue] = useState(0);
   const isLoginRoute = location.pathname === "/login";
+  const is404Route = location.pathname === "/404";
   const isAdminRoute = location.pathname.startsWith("/admin");
   const cur_user = useSelector(selectCurrentUser);
-  if (isLoginRoute || isAdminRoute) {
+  if (isLoginRoute || isAdminRoute || is404Route) {
     return (
       <div className="unableNav" id="nav-box">
         <NavBar />

@@ -34,17 +34,17 @@ const SliderLogin = () => {
   return (
     <div className="carousel">
       <div className="images-wrapper">
-        <img src="login_img/image1.png" className={`image img-1 ${currentSlide === 1 ? 'show' : ''}`} alt="" />
-        <img src="login_img/image2.png" className={`image img-2 ${currentSlide === 2 ? 'show' : ''}`} alt="" />
-        <img src="login_img/image3.png" className={`image img-3 ${currentSlide === 3 ? 'show' : ''}`} alt="" />
+        <img src="login_img/image1.jpg" className={`image img-1 ${currentSlide === 1 ? 'show' : ''}`} alt="" />
+        <img src="login_img/image2.jpg" className={`image img-2 ${currentSlide === 2 ? 'show' : ''}`} alt="" />
+        <img src="login_img/image3.jpg" className={`image img-3 ${currentSlide === 3 ? 'show' : ''}`} alt="" />
       </div>
 
       <div className="text-slider">
         <div className="text-wrap">
           <div className="text-group">
-            <h2>La communication est primordiale</h2>
-            <h2>Des opportunités éducatives</h2>
-            <h2>Des événements importants</h2>
+            <h2 className="h2-login-imgs">Voyages virtuels pour l'apprentissage</h2>
+            <h2 className="h2-login-imgs">Des événements importants</h2>
+            <h2 className="h2-login-imgs">Des opportunités éducatives</h2>
           </div>
         </div>
 
