@@ -200,8 +200,8 @@ const Secteurs = () => {
           >
             Ajouter un secteur
           </Button>
-          <Button endIcon={<PublishIcon />}>Importer un fichier Excel</Button>
-          <Button endIcon={<FileDownloadIcon />}>Exporter</Button>
+          <Button disabled endIcon={<PublishIcon />}>Importer un fichier Excel</Button>
+          <Button disabled endIcon={<FileDownloadIcon />}>Exporter</Button>
         </ButtonGroup>
       </div>
       <DataGrid

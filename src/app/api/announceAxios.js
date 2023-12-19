@@ -25,6 +25,21 @@ export const getAccueilAnnounces = async (page) => {
   }
 };
 
+export const getUnimprovedAnnounces = async (page, token) => {
+  try {
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    };
+    const response = await api.get(`/admin/announce?page=${page}`, {
+      headers,
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const searchAccueilAnnounces = async (q, page) => {
   try {
     const response = await api.get(
@@ -36,7 +51,7 @@ export const searchAccueilAnnounces = async (q, page) => {
   }
 };
 
-export const PublierAnnounce = async (announce, token) => {
+export const publierAnnounce = async (announce, token) => {
   try {
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -66,6 +81,34 @@ export const editAnnounces = async (announces, deletedAnnounce, token) => {
       headers,
     });
 
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const approveAnnounce = async (id, token) => {
+  try {
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await api.put(
+      `/admin/announce/approve/${id}`,
+      {},
+      {
+        headers,
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteAnnounce = async (id, token) => {
+  try {
+    const headers = { Authorization: `Bearer ${token}` };
+    const response = await api.delete(`/admin/announce/delete/${id}`, {
+      headers,
+    });
     return response.data;
   } catch (error) {
     console.log(error);

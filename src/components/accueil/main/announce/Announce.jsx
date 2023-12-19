@@ -44,7 +44,7 @@ const Announce = ({ announce, searchValue }) => {
         />
         {!showFullContent && announce?.desc.length > 70 && (
           <span className="voir_plus" onClick={handleToggleContent}>
-            ...Voir plus
+            ...voir plus
           </span>
         )}
       </div>
@@ -69,7 +69,7 @@ const Announce = ({ announce, searchValue }) => {
             <div className="publieur">
               <span id="flex-tweet">
                 <p id="tweet-name" className="first-letter no-margin">
-                  {/* {post.prenom} {post.nom} */}4567
+                  {/* {post.prenom} {post.nom} */}{ announce?.user_id}
                 </p>
 
                 <p id="type_poste" className="no-margin date_poste">

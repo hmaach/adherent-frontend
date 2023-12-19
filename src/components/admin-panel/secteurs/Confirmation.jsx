@@ -27,6 +27,7 @@ const Confirmation = ({ open, handleCancel,handleDeleteConfirmation }) => {
         <Button
           sx={{
             borderRadius: "20px",
+            borderColor:"#e86928",
             color: "#e86928",
             bgcolor: "white",
           }}
