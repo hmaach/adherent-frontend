@@ -38,6 +38,7 @@ import { useSelector } from "react-redux";
 import Forum from "./components/forum/Forum";
 import InfoAlert from "./components/InfoAlert";
 import Page404 from "./components/404/Page404";
+import AdminPanel from "./components/admin-panel/AdminPanel";
 // import Login2 from "./features/auth/Login1";
 const { localStorage } = window;
 
@@ -131,16 +132,15 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* public routes */}
+          <Route path="/" element={<Accueil />} />
           <Route index path="/accueil" element={<Accueil />} />
           <Route index path="/recherche" element={<SearchAccueil />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/login2" element={<Login />} /> */}
-          <Route path="/" element={<Accueil />} />
           <Route path="/adherents" element={<Adherents />} />
           <Route path="/forum" element={<Forum />} />
-
           <Route path="/archives" element={<Archives />} />
           <Route path="/calendrier" element={<Calendar />} />
+          <Route path="/admin" element={<AdminPanel />} />
           {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
 
           <Route path="/c" element={<Calendar />} />
@@ -186,7 +186,7 @@ const NavBarWrapper = () => {
   const is404Route = location.pathname === "/404";
   const isAdminRoute = location.pathname.startsWith("/admin");
   const cur_user = useSelector(selectCurrentUser);
-  if (isLoginRoute || isAdminRoute || is404Route) {
+  if (isLoginRoute || is404Route) {
     return (
       <div className="unableNav" id="nav-box">
         <NavBar />

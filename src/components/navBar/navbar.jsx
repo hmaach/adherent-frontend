@@ -4,7 +4,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { BiHomeCircle } from "react-icons/bi";
 import { HiDocumentDuplicate } from "react-icons/hi";
 import HailIcon from "@mui/icons-material/Hail";
-import ForumIcon from '@mui/icons-material/Forum';
+import ForumIcon from "@mui/icons-material/Forum";
 import { CgProfile } from "react-icons/cg";
 import { IoIosPeople } from "react-icons/io";
 import RestoreIcon from "@mui/icons-material/Restore";
@@ -47,6 +47,14 @@ const NavBar = () => {
             Accueil
           </p>
         </NavLink>
+        {user?.role === "admin" && (
+          <NavLink to="/admin" activeclassname="active" id="row">
+            <AdminPanelSettingsIcon id="home-icon" />
+            <p className="bold" id="nav-title">
+              Admin
+            </p>
+          </NavLink>
+        )}
         <NavLink to="/forum" activeclassname="active" id="row">
           <ForumIcon id="home-icon" />
           <p id="nav-title" className="bold">
@@ -85,14 +93,6 @@ const NavBar = () => {
             </p>
           </NavLink>
         )}
-        {/* {user?.role === "admin" && (
-          <NavLink to="/admin" activeclassname="active" id="row">
-            <AdminPanelSettingsIcon id="home-icon" />
-            <p className="bold" id="nav-title">
-              Admin
-            </p>
-          </NavLink>
-        )} */}
         {user?.role === "adherent" && (
           <NavLink to={`/profil/${user.id}`} activeclassname="active" id="row">
             <CgProfile id="home-icon" />
