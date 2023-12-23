@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation, NavLink } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  NavLink,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navBar/navbar";
 import Header from "./components/header/Header";
@@ -39,13 +45,14 @@ import Forum from "./components/forum/Forum";
 import InfoAlert from "./components/InfoAlert";
 import Page404 from "./components/404/Page404";
 import AdminPanel from "./components/admin-panel/AdminPanel";
+import GetCookie from "./cookies/JWT/GetCookie";
 // import Login2 from "./features/auth/Login1";
 const { localStorage } = window;
 
 const App = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
-
+  const navigate = useNavigate();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
@@ -55,7 +62,7 @@ const App = () => {
   const localToken = localStorage.getItem("token");
   const token1 = localToken ? localToken.replace(`\"`, "") : null;
   const token = token1 ? token1.replace(`\"`, "") : null;
-
+  const cookie_token = GetCookie("jwt");
   const [showDialog, setShowDialog] = useState(true);
 
   const handleCloseDialog = () => {
@@ -109,9 +116,15 @@ const App = () => {
     dispatch(setCredentials({ user, token }));
   }
 
-  // useEffect(() => {
-  //   checkAuthFunction();
-  // }, []);
+  useEffect(() => {
+    if (!cookie_token) {
+      dispatch(logOut());
+      RemoveCookie("jwt");
+      localStorage.removeItem("credentials");
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <div id={containerId} style={containerStyle}>

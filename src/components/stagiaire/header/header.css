@@ -1,0 +1,7 @@
+.champ-vide {
+  color: var(--color-text-light);
+  font-size: small;
+}
+.adherent-detail{
+    font-weight: 600;
+}

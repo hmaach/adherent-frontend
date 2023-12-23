@@ -9,6 +9,7 @@ import { LoadingButton } from "@mui/lab";
 const Announces = () => {
   const [page, setPage] = useState(1);
   const [announces, setAnnounces] = useState([]);
+  const [total, setTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [loadMore, setLoadMore] = useState(false);
   const [lastPage, setLastPage] = useState(null);
@@ -24,16 +25,24 @@ const Announces = () => {
       }
       getUnimprovedAnnounces(currentPage, token)
         .then((data) => {
-          const newDataArray = Object.values(data?.data);
-          setAnnounces((prevAnnounces) => [...prevAnnounces, ...newDataArray]);
-          setPage(data.current_page);
-          setLastPage(data.last_page);
-          // setPage(data?.current_page);
-          setIsLoading(false);
-          setLoadMore(false);
+          if (data.data) {
+            const newDataArray = Object.values(data?.data);
+            setAnnounces((prevAnnounces) => [
+              ...prevAnnounces,
+              ...newDataArray,
+            ]);
+            setTotal(data?.total)
+            setPage(data.current_page);
+            setLastPage(data.last_page);
+            setIsLoading(false);
+            setLoadMore(false);
+          }
         })
         .catch((error) => {
           console.log(error);
+          if (error.response && error.response.status === 401) {
+            // logoutRedirect();
+          }
         });
     } catch (error) {
       console.error(error);
@@ -45,12 +54,15 @@ const Announces = () => {
     try {
       getUnimprovedAnnounces(currentPage, token)
         .then((data) => {
-          const newDataArray = Object.values(data?.data);
-          setAnnounces(newDataArray);
-          setPage(data.current_page);
-          setLastPage(data.last_page);
-          setIsLoading(false);
-          setLoadMore(false);
+          if (data.data) {
+            const newDataArray = Object.values(data?.data);
+            setAnnounces(newDataArray);
+            setPage(data.current_page);
+            setLastPage(data.last_page);
+            setIsLoading(false);
+            setLoadMore(false);
+            setTotal(data?.total)
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -109,11 +121,12 @@ const Announces = () => {
   }, [refetch]);
 
   return (
-    <div id="container-main" style={{ margin: 0}}>
+    <div id="container-main" style={{ margin: 0 }}>
       {isLoading ? (
         <LoadingSpinner />
       ) : (
         <>
+        <h5 className="resultats-title">Annonces en attente d'acceptation <span className="resultats">( {total} Résultats )</span></h5>
           {announces.map((item, index) => (
             // item?.id
             <Announce

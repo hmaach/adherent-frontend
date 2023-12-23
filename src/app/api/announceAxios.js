@@ -36,7 +36,8 @@ export const getUnimprovedAnnounces = async (page, token) => {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    throw error
   }
 };
 

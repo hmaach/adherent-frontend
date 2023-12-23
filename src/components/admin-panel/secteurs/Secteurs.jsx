@@ -190,42 +190,33 @@ const Secteurs = () => {
     <div style={{ height: 400, width: "100%" }}>
       <div style={{ display: "flex", justifyContent: "center" }}>
         <ButtonGroup
+          color="warning"
           variant="outlined"
           aria-label="text button group"
           sx={{ margin: "0 auto 1rem" }}
+          size="small"
         >
           <Button
             onClick={() => handleShowForm("add")}
             endIcon={<PostAddIcon />}
           >
-            Ajouter un secteur
+            Ajouter
           </Button>
-          <Button disabled endIcon={<PublishIcon />}>Importer un fichier Excel</Button>
-          <Button disabled endIcon={<FileDownloadIcon />}>Exporter</Button>
+          <Button disabled endIcon={<PublishIcon />}>
+            Importer
+          </Button>
+          <Button disabled endIcon={<FileDownloadIcon />}>
+            Exporter
+          </Button>
         </ButtonGroup>
       </div>
       <DataGrid
-        rows={loading ? [] : secteurs} // Use an empty array for rows when loading
+        rows={loading ? [] : secteurs} 
         columns={columns}
         pageSize={5}
         autoHeight
         loading={loading}
-        components={{
-          NoRowsOverlay: () => (
-            // Custom overlay for the skeleton when there are no rows
-            <div
-              style={{
-                width: "100%",
-                height: 400,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Skeleton variant="rectangular" width={500} height={400} />
-            </div>
-          ),
-        }}
+
       />
       {showForm && (
         <Form

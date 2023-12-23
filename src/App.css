@@ -20,6 +20,19 @@
 .admin-content{
   width: 98%;
 }
+
+.resultats-title{
+  font-size: 20px;
+  text-align: left;
+  padding: 0px 3px 5px;
+  color: var(--color-text);
+  font-weight: 700;
+}
+.resultats{
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--color-text-light);
+}
 @media (min-width: 200px) and (max-width: 499px) {
   #container {
     width: 100%;

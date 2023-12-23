@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import TermsAlert from "../TermsAlert";
 import { toast } from "react-toastify";
-import { register } from "../../../app/api/registerAxios";
+import { register } from "../../../app/api/userAxios";
 
 const SingUp = ({ handleToggleClick, login }) => {
   // Form fields
