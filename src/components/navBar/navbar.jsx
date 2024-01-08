@@ -83,7 +83,7 @@ const NavBar = () => {
             Calendrier
           </p>
         </NavLink> */}
-        <div
+        {/* <div
           id="row"
           title="Cette section est en cours de développement"
           style={{ color: "gray" }}
@@ -92,7 +92,7 @@ const NavBar = () => {
           <p id="nav-title" className="bold">
             Calendrier
           </p>
-        </div>
+        </div> */}
         {/* <NavLink to="/archives" activeclassname="active" id="row">
           <HiDocumentDuplicate id="home-icon" />
           <p id="nav-title" className="bold">

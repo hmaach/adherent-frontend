@@ -10,8 +10,10 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import DynamicFeedIcon from "@mui/icons-material/DynamicFeed";
 import WorkIcon from "@mui/icons-material/Work";
 import Secteurs from "./secteurs/Secteurs";
+import { FaCalendarAlt } from "react-icons/fa";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import Dashboard from "./dashboard/Dashboard";
+import Calendar from "../calandar/calendar";
 
 const AdminPanel = () => {
   const [value, setValue] = useState("dashboard");
@@ -45,6 +47,13 @@ const AdminPanel = () => {
             />{" "}
             <Tab
               sx={{ minHeight: "30px" }}
+              icon={<FaCalendarAlt />}
+              iconPosition="start"
+              label="Calendrier"
+              value="calendrier"
+            />
+            <Tab
+              sx={{ minHeight: "30px" }}
               icon={<DynamicFeedIcon />}
               iconPosition="start"
               label="Annonces"
@@ -75,6 +84,9 @@ const AdminPanel = () => {
         </Box>
         <TabPanel value="dashboard">
           <Dashboard />
+        </TabPanel>
+        <TabPanel value="calendrier">
+          <Calendar />
         </TabPanel>
         <TabPanel value="announces">
           <Announces />

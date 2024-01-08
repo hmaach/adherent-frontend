@@ -179,18 +179,18 @@ const Calendar = () => {
   }, [user, refetch]);
 
   return (
-    <Box m="20px" marginTop={6} width={"100%"}>
-      <Header
+    <Box width={"100%"}>
+      {/* <Header
         title="Calendrier"
         // subtitle="Full Calendar Interactive Page"
-      />
+      /> */}
 
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
         <Box
           flex="1 1 20%"
           // backgroundColor={colors.primary[400]}
-          p="15px"
+          // p="15px"
           borderRadius="4px"
         >
           <Typography variant="h6">Evénements</Typography>
@@ -254,7 +254,7 @@ const Calendar = () => {
             selectMirror={true}
             dayMaxEvents={true}
             select={
-              user?.role === "admin" || user?.role === "formateur"
+              user?.role === "admin" 
                 ? handleDateClick
                 : null
             }

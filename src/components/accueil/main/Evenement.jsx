@@ -1,3 +1,4 @@
+import { Badge } from "@mui/material";
 import React from "react";
 
 const Evenement = ({ event, searchValue }) => {
@@ -55,12 +56,24 @@ const Evenement = ({ event, searchValue }) => {
         <div className="event-border" style={borderStyle}></div>
         <div className="event-details">
           <div>
-            <h5
-              className="event-titre"
-              dangerouslySetInnerHTML={{
-                __html: highlightSearchValue(event.titre),
-              }}
-            />
+            {event.color === "red" ? (
+              <Badge color="error"  badgeContent={"Annuler"} showZero>
+                <h5
+                  className="event-titre"
+                  dangerouslySetInnerHTML={{
+                    __html: highlightSearchValue(event.titre),
+                  }}
+                />
+              </Badge>
+            ) : (
+              <h5
+                className="event-titre"
+                dangerouslySetInnerHTML={{
+                  __html: highlightSearchValue(event.titre),
+                }}
+              />
+            )}
+
             <p
               className="event-desc"
               dangerouslySetInnerHTML={{

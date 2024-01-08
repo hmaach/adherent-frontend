@@ -19,7 +19,7 @@ import GetCookie from "../../cookies/JWT/GetCookie";
 import { format } from "date-fns";
 
 const AddEventAlert = (props) => {
-  const { open, handleClose, selected, onSubmit, filieres } = props;
+  const { open, handleClose, selected, onSubmit } = props;
   const selectedStart = format(new Date(selected.start), "yyyy-MM-dd'T'HH:mm");
   const selectedEnd = format(new Date(selected.end), "yyyy-MM-dd'T'HH:mm");
   const [title, setTitle] = useState("");
@@ -48,8 +48,7 @@ const AddEventAlert = (props) => {
     const newEvent = {
       titre: title,
       description: description,
-      audience: audience,
-      audience_id: filiere_id,
+      audience: "public",
       dateDeb: startDate,
       dateFin: endDate,
       color: color,
@@ -65,7 +64,7 @@ const AddEventAlert = (props) => {
       aria-describedby="alert-dialog-slide-description"
     >
       <DialogTitle>{"Ajouter une événement"}</DialogTitle>
-      <form onSubmit={handleSubmit}>
+      <form className="add-event-alert" onSubmit={handleSubmit}>
         <DialogContent>
           <Container maxWidth="sm">
             <Box sx={{ my: 4 }}>
@@ -113,7 +112,7 @@ const AddEventAlert = (props) => {
                 </MenuItem>
                   </Select>
                 </FormControl>
-                <FormControl sx={{ m: 0, minWidth: 130 }}>
+                {/* <FormControl sx={{ m: 0, minWidth: 130 }}>
                   <InputLabel
                     id="demo-simple-select-autowidth-label "
                     sx={{ fontSize: "17px", marginTop: "-11px" }}
@@ -135,8 +134,8 @@ const AddEventAlert = (props) => {
                     <MenuItem value="filiere">Filière</MenuItem>
                     <MenuItem value="formateurs">Formateurs</MenuItem>
                   </Select>
-                </FormControl>
-                {audience === "groupe" || audience === "filiere" ? (
+                </FormControl> */}
+                {/* {audience === "groupe" || audience === "filiere" ? (
                   <FormControl sx={{ m: 0, minWidth: 100 }}>
                     <InputLabel
                       id="demo-simple-select-autowidth-label "
@@ -164,7 +163,7 @@ const AddEventAlert = (props) => {
                         })}
                     </Select>
                   </FormControl>
-                ) : null}
+                ) : null} */}
               </div>
               <Grid container spacing={2}>
                 <Grid item xs={12}>
