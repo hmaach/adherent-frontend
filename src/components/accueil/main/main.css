@@ -545,7 +545,8 @@
 .voir_plus {
   cursor: pointer;
   display: inline;
-  color: var(--color-primary);
+  color: rgb(109, 109, 255);
+  font-size: 0.9rem;
 }
 
 .highlight {
@@ -597,7 +598,7 @@
   }
   
   .image_post {
-    max-height: 200px;
+    max-height: 170px;
     max-width: 98%;
   }
   .date_poste {

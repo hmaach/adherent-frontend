@@ -28,7 +28,7 @@ import {
 } from "../../../app/api/adherentAxios";
 import ImageAlert from "./ImageAlert";
 import url from "../../../app/api/url";
-import {  useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import domain from "../../../app/api/domain";
 
 const Header = () => {
@@ -56,7 +56,6 @@ const Header = () => {
       getAdherent(id, token)
         .then((data) => {
           if (data) {
-            // console.log(data.user_id+" , "+user.id);
             setData(data);
             setRating(data.rating);
             // console.log(data);
@@ -242,7 +241,7 @@ const Header = () => {
                     setShowImg(true);
                   }}
                   alt="Image de profil"
-                  src="no-img.jpg"
+                  src="/no-img.jpg"
                   style={{ cursor: "pointer" }}
                   width="200"
                   height="200"
@@ -270,7 +269,7 @@ const Header = () => {
               </p>
             ) : (
               <Typography variant="h5">
-                {loading ? <Skeleton /> : "h5"}
+                {loading ? <Skeleton /> : null}
               </Typography>
             )}
             <div style={{ display: "flex" }} className="rating-ad">
@@ -338,9 +337,7 @@ const Header = () => {
                   <IconButton
                     aria-label="Modifier"
                     style={{
-                      // position: "absolute",
                       width: "fit-content",
-                      // right: "40px",
                     }}
                     onClick={() => setShowproposAlert(true)}
                   >
@@ -352,69 +349,79 @@ const Header = () => {
                 <p className="apropos"> {data?.propos} </p>
               ) : (
                 <>
-                  {skeleton.map((item) => {
-                    return (
+                  {loading ? (
+                    <>
+                      {skeleton.map((item) => (
+                        <Skeleton
+                          key={item}
+                          sx={{
+                            display: "inline-block",
+                            width: "100%",
+                            height: "1rem",
+                          }}
+                          animation="wave"
+                        />
+                      ))}
                       <Skeleton
-                        key={item}
                         sx={{
                           display: "inline-block",
-                          width: "100%",
+                          width: "60%",
                           height: "1rem",
                         }}
                         animation="wave"
                       />
-                    );
-                  })}
-                  <Skeleton
-                    sx={{
-                      display: "inline-block",
-                      width: "60%",
-                      height: "1rem",
-                    }}
-                    animation="wave"
-                  />
+                    </>
+                  ) : (
+                    <p className="apropos champ-vide">Ce champ est vide</p>
+                  )}
                 </>
               )}
             </div>
           </div>
           <div className="col-md-6 offset-md-1 apropos-detail">
             <div className="pb-1 mb-3">
-              SECTEUR D'ACTIVITEE :{" "}
+              <span className="adherent-detail">SECTEUR D'ACTIVITEE :</span>{" "}
               {data?.secteur?.lib ? (
                 <span className="first-letter text-secondary">
                   {data?.secteur?.lib}
                 </span>
-              ) : (
+              ) : loading ? (
                 <Skeleton
                   sx={{ display: "inline-block", width: "60%", height: "1rem" }}
                   animation="wave"
                 />
+              ) : (
+                <span className="champ-vide">Ce champ est vide</span>
               )}
             </div>
             <div className="pb-1 mb-3">
-              PROFESSION :{" "}
+              <span className="adherent-detail">PROFESSION : </span>{" "}
               {data?.profession ? (
                 <span className="first-letter text-secondary">
                   {data?.profession}
                 </span>
-              ) : (
+              ) : loading ? (
                 <Skeleton
                   sx={{ display: "inline-block", width: "60%", height: "1rem" }}
                   animation="wave"
                 />
+              ) : (
+                <span className="champ-vide">Ce champ est vide</span>
               )}
             </div>
             <div className="pb-1 mb-3">
-              VILLE :{" "}
+              <span className="adherent-detail">VILLE : </span>{" "}
               {data?.ville ? (
                 <span className="first-letter text-secondary">
                   {data?.ville}
                 </span>
-              ) : (
+              ) : loading ? (
                 <Skeleton
                   sx={{ display: "inline-block", width: "60%", height: "1rem" }}
                   animation="wave"
                 />
+              ) : (
+                <span className="champ-vide">Ce champ est vide</span>
               )}
             </div>
           </div>

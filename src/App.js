@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, useLocation, NavLink } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useLocation,
+  NavLink,
+  useNavigate,
+} from "react-router-dom";
 import "./App.css";
 import NavBar from "./components/navBar/navbar";
 import Header from "./components/header/Header";
@@ -38,13 +44,15 @@ import { useSelector } from "react-redux";
 import Forum from "./components/forum/Forum";
 import InfoAlert from "./components/InfoAlert";
 import Page404 from "./components/404/Page404";
+import AdminPanel from "./components/admin-panel/AdminPanel";
+import GetCookie from "./cookies/JWT/GetCookie";
 // import Login2 from "./features/auth/Login1";
 const { localStorage } = window;
 
 const App = () => {
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
-
+  const navigate = useNavigate();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
 
@@ -54,7 +62,7 @@ const App = () => {
   const localToken = localStorage.getItem("token");
   const token1 = localToken ? localToken.replace(`\"`, "") : null;
   const token = token1 ? token1.replace(`\"`, "") : null;
-
+  const cookie_token = GetCookie("jwt");
   const [showDialog, setShowDialog] = useState(true);
 
   const handleCloseDialog = () => {
@@ -108,9 +116,15 @@ const App = () => {
     dispatch(setCredentials({ user, token }));
   }
 
-  // useEffect(() => {
-  //   checkAuthFunction();
-  // }, []);
+  useEffect(() => {
+    if (!cookie_token) {
+      dispatch(logOut());
+      RemoveCookie("jwt");
+      localStorage.removeItem("credentials");
+      localStorage.removeItem("token");
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <div id={containerId} style={containerStyle}>
@@ -131,16 +145,15 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* public routes */}
+          <Route path="/" element={<Accueil />} />
           <Route index path="/accueil" element={<Accueil />} />
           <Route index path="/recherche" element={<SearchAccueil />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/login2" element={<Login />} /> */}
-          <Route path="/" element={<Accueil />} />
           <Route path="/adherents" element={<Adherents />} />
           <Route path="/forum" element={<Forum />} />
-
           <Route path="/archives" element={<Archives />} />
           <Route path="/calendrier" element={<Calendar />} />
+          <Route path="/admin" element={<AdminPanel />} />
           {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
 
           <Route path="/c" element={<Calendar />} />
@@ -186,7 +199,7 @@ const NavBarWrapper = () => {
   const is404Route = location.pathname === "/404";
   const isAdminRoute = location.pathname.startsWith("/admin");
   const cur_user = useSelector(selectCurrentUser);
-  if (isLoginRoute || isAdminRoute || is404Route) {
+  if (isLoginRoute || is404Route) {
     return (
       <div className="unableNav" id="nav-box">
         <NavBar />

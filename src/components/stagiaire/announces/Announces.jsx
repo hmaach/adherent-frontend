@@ -11,7 +11,7 @@ import AnnounceAlert from "./AnnounceAlert";
 import AnnouncesEdit from "./AnnouncesEdit";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
-import { PublierAnnounce, getAnnounces } from "../../../app/api/announceAxios";
+import { publierAnnounce, getAnnounces } from "../../../app/api/announceAxios";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../../features/auth/authSlice";
 import { Avatar, CardHeader, IconButton, Skeleton } from "@mui/material";
@@ -71,7 +71,7 @@ const Announces = () => {
     newAnnounce.id = maxIndex + 1;
 
     try {
-      PublierAnnounce(newAnnounce, token)
+      publierAnnounce(newAnnounce, token)
         .then((data) => {
           if (data.message === "success") {
             newAnnounce.img = data.path;

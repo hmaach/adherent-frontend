@@ -19,6 +19,7 @@ import { selectCurrentUser } from "../../../features/auth/authSlice";
 import GetCookie from "../../../cookies/JWT/GetCookie";
 import "./main.css";
 import Evenement from "./Evenement";
+import { LoadingButton } from "@mui/lab";
 
 const Main = () => {
   const [announces, setAnnounces] = useState([]);
@@ -28,6 +29,7 @@ const Main = () => {
   const [lastPage, setLastPage] = useState(null);
   const [curPage, setCurPage] = useState(null);
   const [searchValue, setSearchValue] = useState("");
+  const [loadMore, setLoadMore] = useState(false);
   const curUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
 
@@ -44,13 +46,18 @@ const Main = () => {
           setLastPage(data.last_page);
           // setPage(data?.current_page);
           setIsLoading(false);
+          setLoadMore(false);
         })
         .catch((error) => {
           console.log(error);
+          setLoadMore(false);
+          setIsLoading(false);
         });
     } catch (error) {
       console.error(error);
       toast.error("Error fetching announcements");
+      setLoadMore(false);
+      setIsLoading(false);
     }
   };
 
@@ -78,18 +85,24 @@ const Main = () => {
           setCurPage(data.current_page);
           setLastPage(data.last_page);
           setIsLoading(false);
+          setLoadMore(false);
           // setPage(data?.current_page);
         })
         .catch((error) => {
           console.log(error);
+          setIsLoading(false);
+          setLoadMore(false);
         });
     } catch (error) {
       console.error(error);
       toast.error("Error fetching announcements");
+      setIsLoading(false);
+      setLoadMore(false);
     }
   };
 
   const handleLoadMore = () => {
+    setLoadMore(true);
     setPage((prevPage) => {
       const nextPage = prevPage + 1;
       fetchAnnounces(nextPage, false);
@@ -118,8 +131,8 @@ const Main = () => {
 
   useEffect(() => {
     if (searchValue === "") {
-      setAnnounces([])
-      setPage(1)
+      setAnnounces([]);
+      setPage(1);
       fetchAnnounces(1, true);
     }
   }, [searchValue]);
@@ -161,7 +174,7 @@ const Main = () => {
           )}
 
           <div className="div_get_more">
-            {announces.length !== 0 ? (
+            {/* {announces.length !== 0 ? (
               curPage !== lastPage ? (
                 <Button
                   variant="outlined"
@@ -182,6 +195,37 @@ const Main = () => {
               <span className="main-no-posts">
                 Aucune publication trouvée !
               </span>
+            )} */}
+            {announces.length !== 0 ? (
+              curPage !== lastPage ? (
+                <LoadingButton
+                  size="small"
+                  onClick={handleLoadMore}
+                  loading={loadMore}
+                  variant="outlined"
+                  sx={{
+                    borderRadius: "20px",
+                    borderColor: "#e86928",
+                    color: "#e86928",
+                    bgcolor: "white",
+                    marginTop: "0.5rem",
+                    "&:hover": {
+                      borderColor: "#e86928",
+                      color: "#e86928",
+                      bgcolor: "white",
+                      boxShadow: "3px 2px 3px #e7dfcf",
+                    },
+                  }}
+                >
+                  <span>Avoir plus</span>
+                </LoadingButton>
+              ) : (
+                <span className="main-no-posts">
+                  Pas d'autres announces disponibles.
+                </span>
+              )
+            ) : (
+              <span className="main-no-posts">Aucune announce trouvée !</span>
             )}
           </div>
         </>

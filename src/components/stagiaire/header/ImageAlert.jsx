@@ -72,7 +72,7 @@ const ImageAlert = (props) => {
                 ? selectedImage
                 : img
                 ? url + "/storage/" + img
-                : "no-img.jpg"
+                : "/no-img.jpg"
             }
             style={{ width: "100%" }}
             alt="image"

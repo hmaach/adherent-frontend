@@ -4,7 +4,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { BiHomeCircle } from "react-icons/bi";
 import { HiDocumentDuplicate } from "react-icons/hi";
 import HailIcon from "@mui/icons-material/Hail";
-import ForumIcon from '@mui/icons-material/Forum';
+import ForumIcon from "@mui/icons-material/Forum";
 import { CgProfile } from "react-icons/cg";
 import { IoIosPeople } from "react-icons/io";
 import RestoreIcon from "@mui/icons-material/Restore";
@@ -47,36 +47,68 @@ const NavBar = () => {
             Accueil
           </p>
         </NavLink>
-        <NavLink to="/forum" activeclassname="active" id="row">
+        {user?.role === "admin" && (
+          <NavLink to="/admin" activeclassname="active" id="row">
+            <AdminPanelSettingsIcon id="home-icon" />
+            <p className="bold" id="nav-title">
+              Admin
+            </p>
+          </NavLink>
+        )}
+        {/* <NavLink to="/forum" activeclassname="active" id="row">
           <ForumIcon id="home-icon" />
           <p id="nav-title" className="bold">
             Forum
           </p>
-        </NavLink>
+        </NavLink> */}
+        <div
+          id="row"
+          title="Cette section est en cours de développement"
+          style={{ color: "gray" }}
+        >
+          <ForumIcon id="home-icon" />
+          <p id="nav-title" className="bold">
+            Forum
+          </p>
+        </div>
         <NavLink to="/adherents" activeclassname="active" id="row">
           <HailIcon id="home-icon" />
           <p id="nav-title" className="bold">
             Adhérents
           </p>
         </NavLink>
-        <NavLink to="/calendrier" activeclassname="active" id="row">
+        {/* <NavLink to="/calendrier" activeclassname="active" id="row">
           <FaCalendarAlt id="home-icon" className="home-icon1" />
           <p id="nav-title" className="bold">
             Calendrier
           </p>
-        </NavLink>
-        {/*         <NavLink to="/stagiaires" activeclassname="active" id="row">
-          <IoIosPeople id="home-icon" />
-          <p id="nav-title" className="bold">
-            Stagiaires
-          </p>
         </NavLink> */}
-        <NavLink to="/archives" activeclassname="active" id="row">
+        {/* <div
+          id="row"
+          title="Cette section est en cours de développement"
+          style={{ color: "gray" }}
+        >
+          <FaCalendarAlt id="home-icon" />
+          <p id="nav-title" className="bold">
+            Calendrier
+          </p>
+        </div> */}
+        {/* <NavLink to="/archives" activeclassname="active" id="row">
           <HiDocumentDuplicate id="home-icon" />
           <p id="nav-title" className="bold">
             Archives
           </p>
-        </NavLink>
+        </NavLink> */}
+        <div
+          id="row"
+          title="Cette section est en cours de développement"
+          style={{ color: "gray" }}
+        >
+          <HiDocumentDuplicate id="home-icon" />
+          <p id="nav-title" className="bold">
+            Archives
+          </p>
+        </div>
         {user?.role === "stagiaire" && (
           <NavLink to={`/profile/${user.id}`} activeclassname="active" id="row">
             <AssignmentIndIcon id="home-icon" />
@@ -85,14 +117,6 @@ const NavBar = () => {
             </p>
           </NavLink>
         )}
-        {/* {user?.role === "admin" && (
-          <NavLink to="/admin" activeclassname="active" id="row">
-            <AdminPanelSettingsIcon id="home-icon" />
-            <p className="bold" id="nav-title">
-              Admin
-            </p>
-          </NavLink>
-        )} */}
         {user?.role === "adherent" && (
           <NavLink to={`/profil/${user.id}`} activeclassname="active" id="row">
             <CgProfile id="home-icon" />
