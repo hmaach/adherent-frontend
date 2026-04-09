@@ -18,6 +18,7 @@ import { Avatar, CardHeader, IconButton, Skeleton } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import GetCookie from "../../../cookies/JWT/GetCookie";
 import { useParams } from "react-router";
+import { DEMO_MODE, mockGetAnnouncesByAdherent } from "../../../app/api/mockApi";
 
 const Announces = () => {
   const user = useSelector(selectCurrentUser);
@@ -30,18 +31,17 @@ const Announces = () => {
 
   const fetchData = async () => {
     try {
-      getAnnounces(id, token)
-        .then((data) => {
-          if (data) {
-            // console.log(data);
-            setAnnounces(data);
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
-        });
+      let data;
+      if (DEMO_MODE) {
+        data = await mockGetAnnouncesByAdherent(id);
+      } else {
+        data = await getAnnounces(id, token);
+      }
+      
+      if (data) {
+        setAnnounces(data);
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
       setLoading(false);

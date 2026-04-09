@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import { fr } from "date-fns/locale";
 import url from "../../../app/api/url";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
@@ -13,6 +13,21 @@ import {
 } from "../../../app/api/announceAxios";
 import { toast } from "react-toastify";
 import GetCookie from "../../../cookies/JWT/GetCookie";
+
+
+
+// Helper function to safely format dates
+const safeFormatDate = (dateValue, formatStr) => {
+  try {
+    if (!dateValue) return "Date non disponible";
+    const date = new Date(dateValue);
+    if (!isValid(date)) return "Date non disponible";
+    return format(date, formatStr, { locale: fr });
+  } catch (e) {
+    return "Date non disponible";
+  }
+};
+
 
 const Announce = ({
   announce,
@@ -90,15 +105,8 @@ const Announce = ({
     );
   };
 
-  const startDate = new Date(announce.debut);
-  const endDate = new Date(announce.fin);
-
-  const formattedStartDate = format(startDate, "HH:mm 'le' EEEE dd MMMM yyyy", {
-    locale: fr,
-  });
-  const formattedEndDate = format(endDate, "HH:mm 'le' EEEE dd MMMM yyyy", {
-    locale: fr,
-  });
+  const formattedStartDate = safeFormatDate(announce?.debut, "EEEE dd MMMM yyyy");
+  const formattedEndDate = safeFormatDate(announce?.fin, "HH:mm 'le' EEEE dd MMMM yyyy");
 
   const renderContent = () => {
     const content = showFullContent

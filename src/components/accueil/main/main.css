@@ -529,6 +529,7 @@
   width: 5px;
   /* background-color: #f4511e; */
   margin: 20px 10px;
+  background-color: var(--color-primary) !important;
 }
 
 #box-tweet-event {
@@ -536,6 +537,7 @@
 }
 
 .event-date {
+  color: var(--color-primary) !important;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -545,7 +547,7 @@
 .voir_plus {
   cursor: pointer;
   display: inline;
-  color: rgb(109, 109, 255);
+  color: var(--color-primary);
   font-size: 0.9rem;
 }
 

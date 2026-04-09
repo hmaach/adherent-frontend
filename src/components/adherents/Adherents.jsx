@@ -26,6 +26,8 @@ import { Link } from "react-router-dom";
 import GetCookie from "../../cookies/JWT/GetCookie";
 import { getAdherents } from "../../app/api/adherentAxios";
 import AdherentsFilterPhone from "./AdherentsFilterPhone";
+import { DEMO_MODE } from "../../app/api/mockApi";
+import { mockGetAdherents } from "../../app/api/mockApi";
 
 const Adherents = () => {
   const [query, setQuery] = useState({
@@ -45,25 +47,24 @@ const Adherents = () => {
 
   const fetchData = async () => {
     try {
-      getAdherents(search, query, token);
-      getAdherents({
-        search: search,
-        sort: query.sort,
-        cities: query.cities,
-        secteur_id: query.secteur_id,
-        // token: token,
-      })
-        .then((data) => {
-          if (data) {
-            setAdherents(data.data);
-            setTotalPages(data.last_page);
-            setLoading(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
+      let data;
+      if (DEMO_MODE) {
+        data = await mockGetAdherents(search, query, token);
+      } else {
+        await getAdherents(search, query, token);
+        data = await getAdherents({
+          search: search,
+          sort: query.sort,
+          cities: query.cities,
+          secteur_id: query.secteur_id,
         });
+      }
+      
+      if (data) {
+        setAdherents(data.data);
+        setTotalPages(data.last_page);
+        setLoading(false);
+      }
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -238,7 +239,7 @@ const Adherents = () => {
                 className="custom-link-style adherents-item"
               >
                 <div className="adherent-img-info">
-                  <img src={item.img} className="adherent-img" alt="" />
+                  <img src={item.img || "/no-img.jpg"} className="adherent-img" alt="" />
                   <div className="adherents-info">
                     <span className="adherent-id">{item.id}</span>
                     <span className="adherent-profession">
@@ -252,7 +253,7 @@ const Adherents = () => {
                 <div style={{ display: "flex" }} className="rating-adherent">
                   <Rating
                     name="text-feedback"
-                    value={item.rating}
+                    value={item.rating || 0}
                     readOnly
                     size="small"
                     precision={0.5}
@@ -264,7 +265,7 @@ const Adherents = () => {
                     className="adherent-item-rating-value"
                     sx={{ color: "gold" }}
                   >
-                    {item.rating}
+                    {item.rating || 0}
                   </Box>
                 </div>
               </Link>

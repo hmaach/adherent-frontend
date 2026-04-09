@@ -223,7 +223,7 @@
   border: none;
   outline: none;
   background: transparent;
-  color: #0099ff;
+  color: var(--color-primary);
   font-size: 14px;
   padding-left: 10px;
 }

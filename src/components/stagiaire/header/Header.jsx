@@ -30,6 +30,8 @@ import ImageAlert from "./ImageAlert";
 import url from "../../../app/api/url";
 import { useNavigate, useParams } from "react-router";
 import domain from "../../../app/api/domain";
+import { DEMO_MODE } from "../../../app/api/mockApi";
+import { mockGetAdherent, mockRateAdherent } from "../../../app/api/mockApi";
 
 const Header = () => {
   const [data, setData] = useState({});
@@ -52,27 +54,25 @@ const Header = () => {
   let navigate = useNavigate();
 
   const fetchData = async () => {
+    setLoading(true);
     try {
-      getAdherent(id, token)
-        .then((data) => {
-          if (data) {
-            setData(data);
-            setRating(data.rating);
-            // console.log(data);
-            setRatingValue(data.myRating);
-            setLoading(false);
-            setShowRatingAlert(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-          setLoading(false);
-        });
+      let data;
+      if (DEMO_MODE) {
+        data = await mockGetAdherent(id);
+      } else {
+        data = await getAdherent(id, token);
+      }
+      
+      if (data) {
+        setData(data);
+        setRating(data.rating);
+        setRatingValue(data.myRating);
+        setLoading(false);
+        setShowRatingAlert(false);
+      }
     } catch (error) {
       console.log(error);
       setLoading(false);
-      // setIsLoading(false);
-      // setOpenBackdrop(false);
     }
   };
 
@@ -85,8 +85,16 @@ const Header = () => {
   };
 
   const handleSubmitRating = (value) => {
+    setLoadingRating(true);
     try {
-      rateAdherent(id, value, token)
+      let dataPromise;
+      if (DEMO_MODE) {
+        dataPromise = mockRateAdherent(id, value, token);
+      } else {
+        dataPromise = rateAdherent(id, value, token);
+      }
+      
+      dataPromise
         .then((data) => {
           if (data.message === "success") {
             setRatingValue(value);
@@ -212,6 +220,8 @@ const Header = () => {
 
   useEffect(() => {
     fetchData();
+    console.log(user);
+    
   }, [user]);
 
   return (
@@ -230,7 +240,7 @@ const Header = () => {
                     setShowImg(true);
                   }}
                   alt="Image de profil"
-                  src={url + "/storage/" + data?.img_path}
+                  src="https://i.pravatar.cc/300?img=1"
                   style={{ cursor: "pointer" }}
                   width="200"
                   height="200"
@@ -241,7 +251,7 @@ const Header = () => {
                     setShowImg(true);
                   }}
                   alt="Image de profil"
-                  src="/no-img.jpg"
+                  src="https://i.pravatar.cc/300?img=1"
                   style={{ cursor: "pointer" }}
                   width="200"
                   height="200"
@@ -252,7 +262,7 @@ const Header = () => {
           <div className="col-lg-7 col-md-7 text-center text-md-start">
             {data.id ? (
               <h2 className="h1 mt-2" data-aos="fade-left" data-aos-delay="0">
-                {data.id}
+                {data.id_name}
               </h2>
             ) : (
               <Typography className="h1 mt-2" variant="h2">
@@ -433,7 +443,7 @@ const Header = () => {
           user_id={data.user_id}
           open={true}
           handleClose={() => setShowImg(false)}
-          img={data?.img_path}
+          img="https://i.pravatar.cc/300?img=1"
           onUpdate={handleUpdateImage}
           onDelete={handleDeleteImage}
         />

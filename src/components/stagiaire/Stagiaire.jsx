@@ -7,11 +7,26 @@ import { useParams } from "react-router-dom";
 import { Backdrop, CircularProgress } from "@mui/material";
 import Announces from "./announces/Announces";
 import Location from "./Location/Location";
+import { DEMO_MODE } from "../../app/api/mockApi";
+import { mockGetAdherent } from "../../app/api/mockApi";
 
 const Stagiaire = () => {
   const { id } = useParams();
   const [stagiaireData, setStagiaireData] = useState({});
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (DEMO_MODE && id) {
+      // In demo mode, fetch from mock API
+      mockGetAdherent(id)
+        .then((data) => {
+          setStagiaireData(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  }, [id]);
 
   const handleAproposDeMoiChange = (newAproposDeMoi) => {
     setStagiaireData((prevState) => ({

@@ -21,6 +21,8 @@ import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../authApiSlice";
 import SetCookie from "../../../cookies/JWT/SetCookie";
 import { setCredentials } from "../authSlice";
+import { DEMO_MODE, DEMO_CREDENTIALS } from "../../../app/api/mockApi";
+import { mockLogin } from "../../../app/api/mockApi";
 const { localStorage } = window;
 
 const SingIn = ({ handleToggleClick, firstLogin, loginData }) => {
@@ -57,7 +59,15 @@ const SingIn = ({ handleToggleClick, firstLogin, loginData }) => {
     setShowLoginPassword(false);
 
     try {
-      const userData = await login({ email, password }).unwrap();
+      let userData;
+      
+      // In demo mode, use mock login
+      if (DEMO_MODE) {
+        userData = await mockLogin(email, password);
+      } else {
+        userData = await login({ email, password }).unwrap();
+      }
+      
       if (userData.user && userData.token) {
         dispatch(setCredentials(userData));
         SetCookie("jwt", userData.token);
@@ -69,12 +79,13 @@ const SingIn = ({ handleToggleClick, firstLogin, loginData }) => {
       navigate("/accueil");
     } catch (err) {
       console.log(err);
-      if (err.data.error === "email") {
+      const errorData = err.data || err;
+      if (errorData.error === "email") {
         setPassword("");
-        setEmailErrorLogin(err.data.message);
-      } else if (err.data.error === "password") {
+        setEmailErrorLogin(errorData.message);
+      } else if (errorData.error === "password") {
         setPassword("");
-        setPasswordErrorLogin(err.data.message);
+        setPasswordErrorLogin(errorData.message);
       }
       setLoginLoading(false);
     }
@@ -203,6 +214,31 @@ const SingIn = ({ handleToggleClick, firstLogin, loginData }) => {
             <span>Connexion</span>
           </LoadingButton>
         </div>
+        {DEMO_MODE && (
+          <div className="demo-credentials" style={{ marginTop: '20px', padding: '15px', backgroundColor: '#f5f5f5', borderRadius: '8px', border: '1px dashed #1DA1F2' }}>
+            <p style={{ margin: '0 0 10px 0', fontWeight: 'bold', color: '#1DA1F2', textAlign: 'center' }}>
+              🔑 Identifiants de démonstration
+            </p>
+            <p style={{ margin: '5px 0', fontSize: '14px' }}>
+              <strong>Email:</strong> {DEMO_CREDENTIALS.email}
+            </p>
+            <p style={{ margin: '5px 0', fontSize: '14px' }}>
+              <strong>Mot de passe:</strong> {DEMO_CREDENTIALS.password}
+            </p>
+            <Button 
+              variant="outlined" 
+              size="small" 
+              fullWidth
+              onClick={() => {
+                setEmail(DEMO_CREDENTIALS.email);
+                setPassword(DEMO_CREDENTIALS.password);
+              }}
+              sx={{ mt: 1 }}
+            >
+              Utiliser ces identifiants
+            </Button>
+          </div>
+        )}
       </div>
     </form>
   );

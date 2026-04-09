@@ -20,6 +20,8 @@ import GetCookie from "../../../cookies/JWT/GetCookie";
 import "./main.css";
 import Evenement from "./Evenement";
 import { LoadingButton } from "@mui/lab";
+import { DEMO_MODE } from "../../../app/api/mockApi";
+import { mockGetAnnouncements, mockGetEvents } from "../../../app/api/mockApi";
 
 const Main = () => {
   const [announces, setAnnounces] = useState([]);
@@ -30,6 +32,7 @@ const Main = () => {
   const [curPage, setCurPage] = useState(null);
   const [searchValue, setSearchValue] = useState("");
   const [loadMore, setLoadMore] = useState(false);
+  const [events, setEvents] = useState([]);
   const curUser = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
 
@@ -38,6 +41,54 @@ const Main = () => {
       if (loading) {
         setIsLoading(true);
       }
+      
+      if (DEMO_MODE) {
+        // Use mock data in demo mode
+        const [announceData, eventData] = await Promise.all([
+          mockGetAnnouncements(),
+          mockGetEvents()
+        ]);
+        
+        const mockAnnounces = announceData.map((item, index) => ({
+          ...item,
+          id: item.id || index + 1,
+          type: "announce",
+          desc: item.description,
+          debut: item.created_at,
+          fin: item.created_at,
+          user_id: item.adherent_id,
+          nom: item.nom,
+          prenom: item.prenom,
+          adherent_img: item.adherent_img,
+          img: item.img,
+          title: item.title
+        }));
+        
+        const mockEvents = eventData.map((item, index) => ({
+          ...item,
+          id: item.id || index + 100,
+          type: "event",
+          titre: item.title,
+          description: item.description,
+          dateDeb: item.date,
+          color: "blue"
+        }));
+        
+        // Combine events and announcements, then sort by created_at descending
+        const combined = [...mockEvents, ...mockAnnounces].sort((a, b) => {
+          const dateA = a.created_at || a.debut || a.dateDeb || '2025-01-01';
+          const dateB = b.created_at || b.debut || b.dateDeb || '2025-01-01';
+          return new Date(dateB) - new Date(dateA);
+        });
+        
+        setAnnounces(combined);
+        setCurPage(1);
+        setLastPage(1);
+        setIsLoading(false);
+        setLoadMore(false);
+        return;
+      }
+      
       getAccueilAnnounces(currentPage)
         .then((data) => {
           const newDataArray = Object.values(data?.data);

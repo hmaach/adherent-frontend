@@ -8,8 +8,7 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useState } from "react";
-
-// ... (imports remain unchanged)
+import { DEMO_MODE } from "../app/api/mockApi";
 
 const InfoAlert = (props) => {
   const { open, handleClose } = props;
@@ -31,67 +30,132 @@ const InfoAlert = (props) => {
   };
 
   const getDialogContent = () => {
-    switch (selectedLanguage) {
-      case "arabic":
-        return (
-          <DialogContent style={{ direction: "rtl" }}>
-            أهلا أيها الزائر ،<br /> مرحبا بك في موقعنا، هذه المنصة قيد الإنشاء،
-            قد تواجهك بعض المشاكل في رؤية الصور أو في بعض الخاصيات، وذلك قد يكون
-            إما بسبب الخادم الذي المستضيف للمنصة ، أو بسبب إشكاليات تتعلق
-            بالتواصل بين الواجهة والخلفية.
-            <br /> للإستفسار أو التواصل معنا يمكنكم التواصل عبر:
-            <br /> الواتساب :{" "}
-            <a
-              href="https://wa.me/+212706265024"
-              style={{ unicodeBidi: "plaintext", direction: "ltr" }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              +212 7062-65024
-            </a>
-          </DialogContent>
-        );
-      case "english":
-        return (
-          <DialogContent>
-            Hello, dear visitor!
-            <br /> Welcome to our site. This platform is currently under
-            construction. You may encounter issues with image display or certain
-            features. This could be due to the server hosting the backend or
-            CORS problems. To contact us or inquire, you can reach us via:{" "}
-            <br /> WhatsApp :{" "}
-            <a
-              href="https://wa.me/+212706265024"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              +212 7062-65024
-            </a>
-          </DialogContent>
-        );
-      default:
-        return (
-          <DialogContent>
-            Bonjour cher visiteur, <br />
-            Bienvenue sur notre site. Cette plateforme est actuellement en
-            construction. Vous pourriez rencontrer des problèmes d'affichage
-            d'images ou de certaines fonctionnalités. Cela pourrait être dû soit
-            au serveur hébergeant de Back-End, soit à des problèmes CORS. Pour
-            nous contacter ou vous renseigner, vous pouvez le faire via : <br />{" "}
-            WhatsApp :{" "}
-            <a
-              href="https://wa.me/+212706265024"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              +212 7062-65024
-            </a>
-          </DialogContent>
-        );
+    // Demo mode content
+    if (DEMO_MODE) {
+      switch (selectedLanguage) {
+        case "arabic":
+          return (
+            <DialogContent style={{ direction: "rtl" }}>
+              أهلاً بك في <strong>نسخة التجريب</strong> من منصة Sobol Digital!
+              <br />
+              هذه النسخة تتيح لك استكشاف المنصة دون الحاجة للخادم.
+              <br />
+              يمكنك:
+              <ul>
+                <li>تصفح ملفي الشخصي والأعضاء</li>
+                <li>استكشاف الخدمات المقدمة</li>
+                <li>تجربة ميزات المنصة المختلفة</li>
+              </ul>
+              للاستفسار أو التواصل: واتساب: +212 7062-65024
+            </DialogContent>
+          );
+        case "english":
+          return (
+            <DialogContent>
+              Welcome to the <strong>Demo Version</strong> of Sobol Digital Platform!
+              <br />
+              This version allows you to explore the platform without a backend server.
+              <br />
+              You can:
+              <ul>
+                <li>Browse profiles and members</li>
+                <li>Explore available services</li>
+                <li>Experience the platform features</li>
+              </ul>
+              For inquiries: WhatsApp: +212 7062-65024
+            </DialogContent>
+          );
+        default:
+          return (
+            <DialogContent>
+              Bienvenue dans la <strong>Version Démo</strong> de la plateforme Sobol Digital !
+              <br />
+              Cette version vous permet d'explorer la plateforme sans avoir besoin du serveur backend.
+              <br />
+              Vous pouvez:
+              <ul>
+                <li>Parcourir les profils et les membres</li>
+                <li>Découvrir les services proposés</li>
+                <li>Tester les fonctionnalités de la plateforme</li>
+              </ul>
+              Pour toute question: WhatsApp: +212 7062-65024
+            </DialogContent>
+          );
+      }
     }
+    
+    // Original content for non-demo mode
+    if (selectedLanguage === "arabic") {
+      return (
+        <DialogContent style={{ direction: "rtl" }}>
+          أهلا أيها الزائر ،<br /> مرحبا بك في موقعنا، هذه المنصة قيد الإنشاء،
+          قد تواجهك بعض المشاكل في رؤية الصور أو في بعض الخاصيات، وذلك قد يكون
+          إما بسبب الخادم الذي المستضيف للمنصة ， أو بسبب إشكاليات تتعلق
+          بالتواصل بين الواجهة والخلفية.
+          <br /> للإستفسار أو التواصل معنا يمكنكم التواصل عبر:
+          <br /> الواتساب :{" "}
+          <a
+            href="https://wa.me/+212706265024"
+            style={{ unicodeBidi: "plaintext", direction: "ltr" }}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            +212 7062-65024
+          </a>
+        </DialogContent>
+      );
+    }
+    if (selectedLanguage === "english") {
+      return (
+        <DialogContent>
+          Hello, dear visitor!
+          <br /> Welcome to our site. This platform is currently under
+          construction. You may encounter issues with image display or certain
+          features. This could be due to the server hosting the backend or
+          CORS problems. To contact us or inquire, you can reach us via:{" "}
+          <br /> WhatsApp :{" "}
+          <a
+            href="https://wa.me/+212706265024"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            +212 7062-65024
+          </a>
+        </DialogContent>
+      );
+    }
+    return (
+      <DialogContent>
+        Bonjour cher visiteur, <br />
+        Bienvenue sur notre site. Cette plateforme est actuellement en
+        construction. Vous pourriez rencontrer des problèmes d'affichage
+        d'images ou de certaines fonctionnalités. Cela pourrait être dû soit
+        au serveur hébergeant de Back-End، soit à des problèmes CORS. Pour
+        nous contacter ou vous renseigner, vous pouvez le faire via : <br />{" "}
+        WhatsApp :{" "}
+        <a
+          href="https://wa.me/+212706265024"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          +212 7062-65024
+        </a>
+      </DialogContent>
+    );
   };
 
   const getTitle = () => {
+    if (DEMO_MODE) {
+      switch (selectedLanguage) {
+        case "arabic":
+          return "نسخة التجريب";
+        case "english":
+          return "Demo Version";
+        default:
+          return "Version Démo";
+      }
+    }
+    
     switch (selectedLanguage) {
       case "arabic":
         return "ترحيب ومعلومات";
@@ -103,6 +167,17 @@ const InfoAlert = (props) => {
   };
 
   const getActionText = () => {
+    if (DEMO_MODE) {
+      switch (selectedLanguage) {
+        case "arabic":
+          return "حسناً";
+        case "english":
+          return "Got it";
+        default:
+          return "Compris";
+      }
+    }
+    
     switch (selectedLanguage) {
       case "arabic":
         return "فهمت";

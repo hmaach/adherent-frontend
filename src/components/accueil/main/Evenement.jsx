@@ -11,19 +11,25 @@ const Evenement = ({ event, searchValue }) => {
   };
 
   const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-      hour: "numeric",
-      minute: "numeric",
-    };
-    const formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(
-      date
-    );
-    return formattedDate;
+    if (!dateString) return "Date non disponible";
+    try {
+      const date = new Date(dateString);
+      if (isNaN(date.getTime())) return "Date non disponible";
+      const options = {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      const formattedDate = new Intl.DateTimeFormat("fr-FR", options).format(
+        date
+      );
+      return formattedDate;
+    } catch (e) {
+      return "Date non disponible";
+    }
   };
 
   const highlightSearchValue = (text) => {
@@ -38,11 +44,23 @@ const Evenement = ({ event, searchValue }) => {
     );
   };
 
-  const dateDeb = new Date(event.dateDeb);
-  const day = dateDeb.getDate();
-  const monthOptions = { month: "long" };
-  const month = new Intl.DateTimeFormat("fr-FR", monthOptions).format(dateDeb);
-  const year = dateDeb.getFullYear();
+  // Safely handle date parsing
+  let day = "--";
+  let month = "--";
+  let year = "----";
+  try {
+    if (event.dateDeb) {
+      const dateDeb = new Date(event.dateDeb);
+      if (!isNaN(dateDeb.getTime())) {
+        day = dateDeb.getDate();
+        const monthOptions = { month: "long" };
+        month = new Intl.DateTimeFormat("fr-FR", monthOptions).format(dateDeb);
+        year = dateDeb.getFullYear();
+      }
+    }
+  } catch (e) {
+    // Keep default values
+  }
 
   return (
     <div id="tweet-box-event">

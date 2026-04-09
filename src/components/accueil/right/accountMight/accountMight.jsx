@@ -47,7 +47,7 @@ const AccountMight = (props) => {
             adherent.img_path ? (
               <img
                 id="personr"
-                src={url + "/storage/" + adherent?.img_path}
+                src={adherent?.img_path}
                 alt="profile"
               />
             ) : (
@@ -60,7 +60,7 @@ const AccountMight = (props) => {
           <span className="four_stagiaires">
             {/* <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p> */}
             <p id="namer">
-              <span className="first-letter">{adherent?.id}</span>
+              <span className="first-letter">{adherent?.id_name}</span>
             </p>
             <p id="idr" className="first-letter">
               {adherent?.profession}

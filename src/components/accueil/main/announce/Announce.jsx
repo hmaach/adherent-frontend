@@ -1,9 +1,21 @@
 import React from "react";
 import { useState } from "react";
-import { format } from "date-fns";
+import { format, isValid } from "date-fns";
 import { fr } from "date-fns/locale";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import url from "../../../../app/api/url";
+
+// Helper function to safely format dates
+const safeFormatDate = (dateValue, formatStr) => {
+  try {
+    if (!dateValue) return "Date non disponible";
+    const date = new Date(dateValue);
+    if (!isValid(date)) return "Date non disponible";
+    return format(date, formatStr, { locale: fr });
+  } catch (e) {
+    return "Date non disponible";
+  }
+};
 
 const Announce = ({ announce, searchValue }) => {
   const [showFullContent, setShowFullContent] = useState(false);
@@ -24,15 +36,8 @@ const Announce = ({ announce, searchValue }) => {
     );
   };
 
-  const startDate = new Date(announce.debut);
-  const endDate = new Date(announce.fin);
-
-  const formattedStartDate = format(startDate, "HH:mm 'le' EEEE dd MMMM yyyy", {
-    locale: fr,
-  });
-  const formattedEndDate = format(endDate, "HH:mm 'le' EEEE dd MMMM yyyy", {
-    locale: fr,
-  });
+  const formattedStartDate = safeFormatDate(announce?.debut, "EEEE dd MMMM yyyy");
+  const formattedEndDate = safeFormatDate(announce?.fin, "HH:mm 'le' EEEE dd MMMM yyyy");
   
   const renderContent = () => {
     const content = showFullContent ? announce?.desc : `${announce?.desc.substring(0, 70)}`;
@@ -61,7 +66,7 @@ const Announce = ({ announce, searchValue }) => {
                 post.profile ? (
                   <img src="ayadi.jpeg" alt="profile" id="image-profile" />
                 ) : ( */}
-              <img alt="Image de profil" src="no-img.jpg" id="image-profile" />
+              <img alt="Image de profil" src={announce?.adherent_img} id="image-profile" />
               {/* ) */}
               {/* // <Avatar id="image-profile" {...stringAvatar(`${post.prenom} ${post.nom}`)} /> */}
               {/* } */}
@@ -69,7 +74,7 @@ const Announce = ({ announce, searchValue }) => {
             <div className="publieur">
               <span id="flex-tweet">
                 <p id="tweet-name" className="first-letter no-margin">
-                  {/* {post.prenom} {post.nom} */}{ announce?.user_id}
+                 {announce?.prenom} {announce?.nom}  {/*{ announce?.user_id}*/} 
                 </p>
 
                 <p id="type_poste" className="no-margin date_poste">
@@ -82,16 +87,16 @@ const Announce = ({ announce, searchValue }) => {
                   /> */}
                   Depuis {formattedStartDate}
                 </p>
-                <p id="type_poste" className="no-margin date_poste">
-                  {/* <AccessTimeIcon
+                 {/* <p id="type_poste" className="no-margin date_poste">
+                 <AccessTimeIcon
                     style={{
                       fontSize: "13px",
                       marginBottom: "3px",
                       marginRight: "2px",
                     }}
-                  /> */}
+                  
                   à {formattedEndDate}
-                </p>
+                </p>/> */}
               </span>
             </div>
             {/* <div className="type">
@@ -144,7 +149,7 @@ const Announce = ({ announce, searchValue }) => {
         // !post.pdf_path
         <img
           className="image_post"
-          src={url + "/storage/" + announce?.img}
+          src={ announce?.img}
           alt="Image"
         />
       )}

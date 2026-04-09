@@ -67,13 +67,7 @@ const ImageAlert = (props) => {
       >
         <DialogContent>
           <img
-            src={
-              selectedImage
-                ? selectedImage
-                : img
-                ? url + "/storage/" + img
-                : "/no-img.jpg"
-            }
+            src="https://i.pravatar.cc/300?img=1"
             style={{ width: "100%" }}
             alt="image"
           />

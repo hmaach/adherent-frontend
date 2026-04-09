@@ -46,6 +46,8 @@ import InfoAlert from "./components/InfoAlert";
 import Page404 from "./components/404/Page404";
 import AdminPanel from "./components/admin-panel/AdminPanel";
 import GetCookie from "./cookies/JWT/GetCookie";
+import { DEMO_MODE } from "./app/api/mockApi";
+import { mockCheckAuth } from "./app/api/mockApi";
 // import Login2 from "./features/auth/Login1";
 const { localStorage } = window;
 
@@ -91,18 +93,15 @@ const App = () => {
 
   const checkAuthFunction = async () => {
     try {
-      checkAuth(token)
-        .then((data) => {
-          if (data.message === true) {
-            console.log(data.message);
-          }
-        })
-        .catch((error) => {
-          dispatch(logOut());
-          RemoveCookie("jwt");
-          localStorage.removeItem("credentials");
-          localStorage.removeItem("token");
-        });
+      let data;
+      if (DEMO_MODE) {
+        data = await mockCheckAuth(token);
+      } else {
+        data = await checkAuth(token);
+      }
+      if (data.message === true) {
+        console.log(data.message);
+      }
     } catch (error) {
       dispatch(logOut());
       RemoveCookie("jwt");
@@ -117,6 +116,16 @@ const App = () => {
   }
 
   useEffect(() => {
+    // In demo mode, check if credentials exist
+    if (DEMO_MODE) {
+      const storedCredentials = localStorage.getItem("credentials");
+      if (!storedCredentials) {
+        // First time visiting - redirect to login
+        navigate("/login");
+        return;
+      }
+    }
+    
     if (!cookie_token) {
       dispatch(logOut());
       RemoveCookie("jwt");
@@ -124,7 +133,7 @@ const App = () => {
       localStorage.removeItem("token");
       navigate("/login");
     }
-  }, []);
+  }, [navigate, dispatch]);
 
   return (
     <div id={containerId} style={containerStyle}>
