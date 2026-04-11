@@ -203,9 +203,7 @@ export const mockLogin = async (email, password) => {
     };
   }
 
-  throw {
-    data: { error: "email", message: "Email ou mot de passe incorrect" },
-  };
+  throw new Error("Email ou mot de passe incorrect");
 };
 
 /**
@@ -765,7 +763,7 @@ export const mockCheckAuth = async (token) => {
 // Export demo mode flag and credentials
 export { DEMO_MODE, DEMO_CREDENTIALS };
 
-export default {
+const mockApi = {
   mockLogin,
   mockGetAdherent,
   mockGetAdherents,
@@ -779,3 +777,5 @@ export default {
   DEMO_MODE,
   DEMO_CREDENTIALS,
 };
+
+export default mockApi;
