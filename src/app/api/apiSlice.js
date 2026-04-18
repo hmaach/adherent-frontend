@@ -1,9 +1,10 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { setCredentials, logOut } from '../../features/auth/authSlice'
+import url from './url'
 
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'https://adherent-app-783f8874404b.herokuapp.com/api',
+    baseUrl: url+ '/api',
     // baseUrl: 'http://127.0.0.1:8000/api',
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {

@@ -1,4 +1,2 @@
-// const url = "http://127.0.0.1:8000";
-const url = 'https://adherent-app-783f8874404b.herokuapp.com';
+const url = process.env.REACT_APP_BACKEND_URL || 'http://84.8.222.45';
 export default url;
-
