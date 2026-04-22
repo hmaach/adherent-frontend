@@ -19,11 +19,12 @@ main {
   width: 100%;
   min-height: 100vh;
   overflow: hidden;
-  background-color: var(--color-primary);
-  padding: 2rem;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  padding: var(--spacing-2xl);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: var(--font-sans);
 }
 
 .box {
@@ -31,9 +32,10 @@ main {
   width: 100%;
   max-width: 1020px;
   height: 640px;
-  background-color: #fff;
-  border-radius: 3.3rem;
-  box-shadow: 0 60px 40px -30px rgba(0, 0, 0, 0.27);
+  background-color: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-xl);
+  transition: var(--transition-fast);
 }
 
 .inner-box {
@@ -64,7 +66,7 @@ form {
   height: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: space-evenly; */
+  gap: var(--spacing-md);
   grid-column: 1 / 2;
   grid-row: 1 / 2;
   transition: opacity 0.02s 0.4s;
@@ -109,28 +111,46 @@ form.sign-up-form {
   background-color: var(--color-primary-hover);
 }
 .connexion-btn {
-  border-radius: 20px !important;
-  padding: 8px 24px !important;
-  color: white !important;
+  border-radius: var(--radius-full) !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  color: var(--color-white) !important;
   background-color: var(--color-primary) !important;
-  font-size: 0.9rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
   text-transform: none !important;
-  margin: auto !important;
-  margin-top: 1rem !important;
+  margin: var(--spacing-md) auto 0 !important;
+  border: none !important;
+  cursor: pointer !important;
+  transition: var(--transition-fast) !important;
+  min-height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
+
 .connexion-btn:hover {
-  background-color: #d46025 !important;
+  background-color: var(--color-primary-hover) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: var(--shadow-md) !important;
+}
+
+.connexion-btn:focus-visible {
+  outline: 2px solid var(--color-white) !important;
+  outline-offset: 2px !important;
 }
 
 .connexion-btn-disabled {
-  border-radius: 20px !important;
-  padding: 8px 24px !important;
-  color: white !important;
+  border-radius: var(--radius-full) !important;
+  padding: var(--spacing-md) var(--spacing-lg) !important;
+  color: var(--color-white) !important;
   background-color: #ee8d5c !important;
-  font-size: 0.9rem !important;
+  font-size: 0.95rem !important;
+  font-weight: 600 !important;
   text-transform: none !important;
-  margin: auto !important;
-  margin-top: 1rem !important;
+  margin: var(--spacing-md) auto 0 !important;
+  border: none !important;
+  cursor: not-allowed !important;
+  opacity: 0.6 !important;
 }
 
 .h2-login-imgs {

@@ -4,43 +4,52 @@
 }
 
 ::selection {
-    color: #fff;
-    background: #1da1f2;
+    color: var(--color-white);
+    background: var(--color-primary);
 }
 
 .wrapper {
-    padding: 5px 10px 0px 10px;
-    /* border: red 1px solid; */
+    padding: var(--spacing-sm) var(--spacing-md) 0 var(--spacing-md);
     min-width: 500px;
-
+    transition: var(--transition-fast);
 }
 
 .img_post_pub {
     width: 90%;
     margin: auto;
     display: block;
-    border-radius: 15px;
+    border-radius: var(--radius-md);
     overflow: hidden;
+    transition: var(--transition-fast);
+}
 
+.img_post_pub:hover {
+    box-shadow: var(--shadow-md);
 }
 
 .pdf_box {
-    border: var(--color-primary) 2px solid;
+    border: 2px solid var(--color-primary);
     max-width: 44%;
-    border-radius: 20px;
+    border-radius: var(--radius-full);
     overflow: hidden;
     display: flex;
     cursor: pointer;
-    /* padding: 5px; */
     float: right;
     margin-right: 2rem;
     color: var(--color-primary);
     background-color: var(--color-white);
-
+    transition: var(--transition-fast);
 }
 
 .pdf_box:hover {
-    background-color: #e6e6e6;
+    background-color: var(--color-primary-light);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+.pdf_box:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
 }
 
 .pdf_span {
@@ -95,21 +104,23 @@
 }
 
 .input-box {
-    margin-top: 15px;
-    padding: 10px;
-    padding-top: 10px;
-    border: 1px solid #e6e6e6;
-    border-radius: 10px;
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
     width: 100%;
-    background-color: #f8f8f8;
+    background-color: var(--color-bg);
     resize: none;
+    transition: var(--transition-fast);
+    font-family: inherit;
+    font-size: 16px;
 }
 
 .input-box:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: none;
-
+    background-color: var(--color-white);
+    box-shadow: 0 0 0 3px rgba(232, 105, 40, 0.1);
 }
 
 
