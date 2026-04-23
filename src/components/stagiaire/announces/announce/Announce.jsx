@@ -24,7 +24,7 @@ const Announce = (props) => {
       {props.img && (
         <img
           style={{ maxWidth: "100%", maxHeight: "100%" }}
-          src={url + "/storage/" + props.img}
+          src={props?.img?.startsWith('http') ? props.img : url + "/storage/" + props.img}
           alt="Announce"
           className={`announce-image ${
             props.approved === 0 ? "unapproved-announce" : ""
@@ -32,6 +32,10 @@ const Announce = (props) => {
         />
       )}
       <div className="announce-footer">
+        <h2 style={{ display: 'flex', justifyContent: 'space-between', marginTop: 0, fontSize: '1.5rem', borderBottom: '1px solid #eee', paddingBottom: '10px' }}>
+          {props.titre || "Sans Titre"}
+          <span style={{ color: '#1976d2' }}>{props.prix ? `${props.prix}$` : 'Sur demande'}</span>
+        </h2>
         {props.desc && <p>{props.desc}</p>}
         Depuis {formattedStartDate} à {formattedEndDate}
         {props.approved === 0 && (

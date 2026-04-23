@@ -69,10 +69,19 @@ export const getAdherent = async (id, token = null) => {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
   try {
     if (token) {
-      const response = await api.get(`/adherent/${id}`, {
-        headers,
-      });
-      return response.data;
+      try {
+        const response = await api.get(`/adherent/${id}`, {
+          headers,
+        });
+        return response.data;
+      } catch (innerError) {
+        if (innerError.response && innerError.response.status === 401) {
+          // Token is invalid/expired. Fallback to public route.
+          const fallbackResponse = await api.get(`/public/adherent/${id}`);
+          return fallbackResponse.data;
+        }
+        throw innerError;
+      }
     } else {
       const response = await api.get(`/public/adherent/${id}`);
       return response.data;

@@ -28,9 +28,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ForumIcon from "@mui/icons-material/Forum";
 import Cookies from "js-cookie";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+
 import Archives from "./components/archives/Archives";
 import Calendar from "./components/calandar/calendar";
 import { getFilieres } from "./app/api/filiereAxios";
@@ -60,8 +58,7 @@ const App = () => {
   const containerStyle = isAdminRoute ? { display: "flex" } : {};
 
   const localToken = localStorage.getItem("token");
-  const token1 = localToken ? localToken.replace(`\"`, "") : null;
-  const token = token1 ? token1.replace(`\"`, "") : null;
+  const token = typeof localToken === 'string' ? localToken.replace(/\"/g, "") : null;
   const cookie_token = GetCookie("jwt");
   const [showDialog, setShowDialog] = useState(true);
 
@@ -199,12 +196,9 @@ const NavBarWrapper = () => {
   const is404Route = location.pathname === "/404";
   const isAdminRoute = location.pathname.startsWith("/admin");
   const cur_user = useSelector(selectCurrentUser);
-  if (isLoginRoute || is404Route) {
-    return (
-      <div className="unableNav" id="nav-box">
-        <NavBar />
-      </div>
-    );
+  
+  if (isLoginRoute || is404Route || isAdminRoute) {
+    return null;
   }
   return (
     <>

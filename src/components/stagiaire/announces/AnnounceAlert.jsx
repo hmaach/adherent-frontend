@@ -17,11 +17,15 @@ import { toast } from "react-toastify";
 const AnnounceAlert = (props) => {
   const { open, handleClose, handleAddAnnouceCallback } = props;
 
+  const [titre, setTitre] = useState("");
+  const [prix, setPrix] = useState("");
   const [desc, setDescription] = useState("");
   const [debut, setStartDate] = useState("");
   const [fin, setEndDate] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [image, setImage] = useState(null);
+  const [titreError, setTitreError] = useState("");
+  const [prixError, setPrixError] = useState("");
   const [descError, setDescError] = useState("");
   const [debutError, setDebutError] = useState("");
   const [finError, setFinError] = useState("");
@@ -49,6 +53,8 @@ const AnnounceAlert = (props) => {
 
 
   const handleAddAnnouce = () => {
+    setTitreError("");
+    setPrixError("");
     setDescError("");
     setDebutError("");
     setFinError("");
@@ -61,6 +67,16 @@ const AnnounceAlert = (props) => {
     }
 
     let hasError = false;
+
+    if (!titre) {
+      setTitreError("Le titre est requis");
+      hasError = true;
+    }
+
+    if (!prix) {
+      setPrixError("Le prix est requis");
+      hasError = true;
+    }
 
     if (!desc) {
       setDescError("Ce champ est requis");
@@ -91,6 +107,8 @@ const AnnounceAlert = (props) => {
     }
 
     const announceData = {
+      titre,
+      prix,
       desc,
       debut,
       fin,
@@ -149,6 +167,31 @@ const AnnounceAlert = (props) => {
           )}
         </div>
 
+        <label className="announce-alert-label">
+          Titre du Service
+        </label>
+        <TextField
+          className="input-box"
+          fullWidth
+          value={titre}
+          onChange={(e) => setTitre(e.target.value)}
+          error={!!titreError}
+          helperText={titreError}
+        />
+
+        <label className="announce-alert-label">
+          Prix (en $)
+        </label>
+        <TextField
+          className="input-box"
+          fullWidth
+          type="number"
+          value={prix}
+          onChange={(e) => setPrix(e.target.value)}
+          error={!!prixError}
+          helperText={prixError}
+        />
+
         <label
           id="demo-simple-select-autowidth-label"
           // sx={{ fontSize: "15px", marginTop: "-1px" }}
@@ -159,6 +202,8 @@ const AnnounceAlert = (props) => {
         <TextField
           className="input-box"
           fullWidth
+          multiline
+          rows={3}
           value={desc}
           onChange={(e) => setDescription(e.target.value)}
           error={!!descError}

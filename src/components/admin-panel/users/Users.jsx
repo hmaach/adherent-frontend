@@ -170,7 +170,7 @@ const Users = () => {
   }, [rowsPerPage, role, refetch]);
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ width: "100%" }}>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         <OutlinedInput
           sx={{ maxHeight: 40, minWidth: 300 }}

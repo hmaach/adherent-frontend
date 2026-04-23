@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 import PasswordIcon from "@mui/icons-material/Password";
 import Visibility from "@mui/icons-material/Visibility";
@@ -32,7 +32,7 @@ const SingIn = ({ handleToggleClick, firstLogin, loginData }) => {
   const [showLoginPassword, setShowLoginPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [login, { isLoading }] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   const handleToggleClickCallback = () => {
     handleToggleClick();

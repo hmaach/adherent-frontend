@@ -36,6 +36,8 @@ const Announces = () => {
             // console.log(data);
             setAnnounces(data);
             setLoading(false);
+          } else {
+            setLoading(false);
           }
         })
         .catch((error) => {

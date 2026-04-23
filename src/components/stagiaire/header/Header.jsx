@@ -62,6 +62,8 @@ const Header = () => {
             setRatingValue(data.myRating);
             setLoading(false);
             setShowRatingAlert(false);
+          } else {
+            setLoading(false);
           }
         })
         .catch((error) => {
@@ -230,7 +232,7 @@ const Header = () => {
                     setShowImg(true);
                   }}
                   alt="Image de profil"
-                  src={url + "/storage/" + data?.img_path}
+                  src={data?.img_path?.startsWith('http') ? data.img_path : url + "/storage/" + data?.img_path}
                   style={{ cursor: "pointer" }}
                   width="200"
                   height="200"
@@ -241,8 +243,8 @@ const Header = () => {
                     setShowImg(true);
                   }}
                   alt="Image de profil"
-                  src="/no-img.jpg"
-                  style={{ cursor: "pointer" }}
+                  src={`https://ui-avatars.com/api/?name=${data?.user?.prenom || 'Utilisateur'}&background=random`}
+                  style={{ cursor: "pointer", borderRadius: '5px' }}
                   width="200"
                   height="200"
                 />
@@ -252,11 +254,11 @@ const Header = () => {
           <div className="col-lg-7 col-md-7 text-center text-md-start">
             {data.id ? (
               <h2 className="h1 mt-2" data-aos="fade-left" data-aos-delay="0">
-                {data.id}
+                {data?.user?.prenom} {data?.user?.nom}
               </h2>
             ) : (
               <Typography className="h1 mt-2" variant="h2">
-                {loading ? <Skeleton /> : "h2"}
+                {loading ? <Skeleton /> : "Utilisateur Introuvable"}
               </Typography>
             )}
             {data.profession ? (

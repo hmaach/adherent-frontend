@@ -139,26 +139,45 @@ const Main = () => {
   return (
     <div id="container-main">
       <div className="main-post-header">
-        <TextField
-          className="main-post-search"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          size="small"
-          id="outlined-search"
-          label="Chercher publications..."
-          type="search"
-          InputProps={{
-            style: { borderRadius: "20px" },
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-          sx={{
-            color: "#1DA1F2",
-          }}
-        />
+        <div style={{ display: "flex", gap: "10px", alignItems: "center", width: "100%", justifyContent: "center" }}>
+          <TextField
+            className="main-post-search"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            size="small"
+            id="outlined-search"
+            label="Chercher publications..."
+            type="search"
+            style={{ width: "70%" }}
+            InputProps={{
+              style: { borderRadius: "20px" },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              color: "#1DA1F2",
+            }}
+          />
+          <Button 
+            variant="contained" 
+            onClick={() => searchAnnounces(searchValue, searchPage, true)}
+            sx={{ 
+              borderRadius: "20px", 
+              bgcolor: "#e86928", 
+              color: "white",
+              textTransform: "none",
+              padding: "6px 20px",
+              height: "40px",
+              boxShadow: "none",
+              "&:hover": { bgcolor: "#d46025", boxShadow: "none" } 
+            }}
+          >
+            Chercher
+          </Button>
+        </div>
       </div>
 
       {isLoading ? (
