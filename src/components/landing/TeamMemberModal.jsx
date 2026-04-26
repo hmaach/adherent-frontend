@@ -21,15 +21,13 @@ const TeamMemberModal = ({ member, onClose }) => {
         <button className="modal-close" onClick={onClose}>
           ✕
         </button>
-        <div className="modal-image">{member.image}</div>
+        <img src={member.image} className="modal-image" />
         <h3 className="modal-title">
           {member.firstName} {member.lastName}
         </h3>
         <p className="modal-subtitle">{member.role}</p>
 
-        <div className="modal-description">
-          {member.bio}
-        </div>
+        <div className="modal-description">{member.bio}</div>
 
         <div className="modal-actions">
           <button className="modal-action-close" onClick={onClose}>

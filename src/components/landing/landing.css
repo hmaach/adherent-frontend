@@ -1,6 +1,21 @@
 /* Landing Page Styles */
+.landing-page {
+  width: 100%;
+}
 
 /* ============== HERO SECTION ============== */
+.landing-main {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: transparent;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
 .landing-hero {
   width: 100%;
   padding: 3rem 1.5rem;
@@ -427,7 +442,8 @@
 }
 
 .team-image {
-  font-size: 4rem;
+  width: 150px;
+  border-radius: 50%;
   margin-bottom: 1rem;
 }
 

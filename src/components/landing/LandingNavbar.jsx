@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useLanguage } from "../../context/LanguageContext";
 import { useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/auth/authSlice";
+import Logo from "../navBar/Logo";
 
 const LandingNavbar = () => {
   const { t, language, switchLanguage, languages } = useLanguage();
@@ -182,7 +183,7 @@ const LandingNavbar = () => {
 
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          Adherent
+          <img src="/logo.png" style={{ width: "50px" }} alt="" srcset="" />
         </Link>
 
         <div className="navbar-center">
@@ -194,9 +195,7 @@ const LandingNavbar = () => {
           <div className="language-selector">
             <button
               className="language-button"
-              onClick={() =>
-                setIsLanguageDropdownOpen(!isLanguageDropdownOpen)
-              }
+              onClick={() => setIsLanguageDropdownOpen(!isLanguageDropdownOpen)}
             >
               {language.toUpperCase()}
             </button>
@@ -222,10 +221,7 @@ const LandingNavbar = () => {
           </div>
 
           {user ? (
-            <button
-              className="nav-button"
-              onClick={() => navigate("/accueil")}
-            >
+            <button className="nav-button" onClick={() => navigate("/accueil")}>
               {t.navbar.home}
             </button>
           ) : (

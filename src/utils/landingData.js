@@ -163,10 +163,10 @@ export const teamData = [
   {
     id: 1,
     firstName: "Youness",
-    lastName: "Boutahar",
-    role: "Founder & CEO",
-    bio: "Visionary leader with 10+ years of experience in digital innovation and service industry transformation. Youness leads the company with a mission to revolutionize how people connect with service providers.",
-    image: "👨‍💼",
+    lastName: "El Badraoui",
+    role: "Président de SOBOL Digital",
+    bio: "Président de l'association SOBOL Digital, engagé dans le développement communautaire et les initiatives numériques. Il œuvre pour l'autonomisation des jeunes à travers la technologie et l'innovation.",
+    image: "assets/images/team/youness.jpg",
     email: "youness@example.com",
     social: {
       linkedin: "#",
@@ -176,10 +176,10 @@ export const teamData = [
   {
     id: 2,
     firstName: "Hamza",
-    lastName: "Belqaid",
-    role: "CTO",
-    bio: "Tech innovator passionate about building scalable solutions for the service provider ecosystem. Hamza oversees all technical infrastructure and drives the platform's technological advancement.",
-    image: "👨‍💻",
+    lastName: "Maach",
+    role: "DevOps / Développeur",
+    bio: "Développeur orienté DevOps avec un fort intérêt pour l'architecture des systèmes, l'automatisation et les infrastructures scalables. Axé sur la conception de systèmes backend fiables et performants.",
+    image: "assets/images/team/hamza_maach.jpeg",
     email: "hamza@example.com",
     social: {
       linkedin: "#",
@@ -189,10 +189,10 @@ export const teamData = [
   {
     id: 3,
     firstName: "Amine",
-    lastName: "Boutaleb",
-    role: "Head of Operations",
-    bio: "Operations expert focused on delivering exceptional user experience and customer success. Amine ensures smooth operations and maintains the highest standards of service quality.",
-    image: "👨‍💼",
+    lastName: "Mejjati",
+    role: "Développeur",
+    bio: "Développeur logiciel spécialisé dans la création d'applications propres, efficaces et maintenables. Contribue au développement produit avec de bonnes pratiques de code et des compétences en résolution de problèmes.",
+    image: "assets/images/team/amine_mejjati.jpeg",
     email: "amine@example.com",
     social: {
       linkedin: "#",

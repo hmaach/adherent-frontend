@@ -19,8 +19,10 @@ const AboutSection = () => {
               className="team-card"
               onClick={() => setSelectedMember(member)}
             >
-              <div className="team-image">{member.image}</div>
-              <div className="team-name">{member.firstName} {member.lastName}</div>
+              <img src={member.image} className="team-image" />
+              <div className="team-name">
+                {member.firstName} {member.lastName}
+              </div>
               <div className="team-role">{member.role}</div>
               <p className="team-bio">{member.bio}</p>
               <button className="team-btn">{t.about.viewMore}</button>

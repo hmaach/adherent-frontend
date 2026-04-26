@@ -16,7 +16,7 @@ const LandingPage = () => {
   return (
     <div className="landing-page" dir={language === "ar" ? "rtl" : "ltr"}>
       <LandingNavbar />
-      <main>
+      <main className="landing-main">
         <HeroSection />
         <StatisticsSection />
         <ActivitySectorsSection />

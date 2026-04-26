@@ -63,19 +63,19 @@ export const translations = {
     // Team Members
     team: {
       youness: {
-        name: "Youness Boutahar",
-        role: "Founder & CEO",
-        bio: "Visionary leader with 10+ years of experience in digital innovation and service industry transformation.",
+        name: "Youness El Badraoui",
+        role: "President of SOBOL Digital",
+        bio: "President of SOBOL Digital association, actively engaged in community development and digital initiatives. Focused on empowering youth through technology and innovation.",
       },
       hamza: {
-        name: "Hamza Belqaid",
-        role: "CTO",
-        bio: "Tech innovator passionate about building scalable solutions for the service provider ecosystem.",
+        name: "Hamza Maach",
+        role: "DevOps / Developer",
+        bio: "DevOps-oriented developer with a strong interest in system architecture, automation, and scalable infrastructure. Focused on building reliable and efficient backend systems.",
       },
       amine: {
-        name: "Amine Boutaleb",
-        role: "Head of Operations",
-        bio: "Operations expert focused on delivering exceptional user experience and customer success.",
+        name: "Amine Mejjati",
+        role: "Developer",
+        bio: "Software developer focused on building clean, efficient, and maintainable applications. Contributes to product development with solid coding practices and problem-solving skills.",
       },
     },
   },
@@ -123,14 +123,16 @@ export const translations = {
     // About Section
     about: {
       title: "Rencontrez Notre Équipe",
-      description: "Des professionnels dédiés passionnés par la connexion des gens",
+      description:
+        "Des professionnels dédiés passionnés par la connexion des gens",
       viewMore: "Voir Plus",
       role: "Rôle",
       bio: "Biographie",
     },
     // Footer
     footer: {
-      description: "Votre plateforme de confiance pour la découverte de services",
+      description:
+        "Votre plateforme de confiance pour la découverte de services",
       quickLinks: "Liens Rapides",
       services: "Services",
       providers: "Prestataires",
@@ -140,21 +142,22 @@ export const translations = {
       followUs: "Suivez-nous",
     },
     // Team Members
+    // Team Members
     team: {
       youness: {
-        name: "Youness Boutahar",
-        role: "Fondateur & PDG",
-        bio: "Leader visionnaire avec plus de 10 ans d'expérience en innovation numérique et transformation du secteur des services.",
+        name: "Youness El Badraoui",
+        role: "Président de SOBOL Digital",
+        bio: "Président de l'association SOBOL Digital, engagé dans le développement communautaire et les initiatives numériques. Il œuvre pour l'autonomisation des jeunes à travers la technologie et l'innovation.",
       },
       hamza: {
-        name: "Hamza Belqaid",
-        role: "Directeur Technique",
-        bio: "Innovateur technologique passionné par la création de solutions évolutives pour l'écosystème des prestataires.",
+        name: "Hamza Maach",
+        role: "DevOps / Développeur",
+        bio: "Développeur orienté DevOps avec un fort intérêt pour l'architecture des systèmes, l'automatisation et les infrastructures scalables. Axé sur la conception de systèmes backend fiables et performants.",
       },
       amine: {
-        name: "Amine Boutaleb",
-        role: "Responsable des Opérations",
-        bio: "Expert en opérations concentré sur la fourniture d'une expérience utilisateur exceptionnelle et du succès client.",
+        name: "Amine Mejjati",
+        role: "Développeur",
+        bio: "Développeur logiciel spécialisé dans la création d'applications propres, efficaces et maintenables. Contribue au développement produit avec de bonnes pratiques de code et des compétences en résolution de problèmes.",
       },
     },
   },
@@ -219,21 +222,22 @@ export const translations = {
       followUs: "تابعنا",
     },
     // Team Members
+    // Team Members
     team: {
       youness: {
-        name: "يونس بوطاهر",
-        role: "المؤسس والرئيس التنفيذي",
-        bio: "قائد رؤيوي يتمتع بأكثر من 10 سنوات من الخبرة في الابتكار الرقمي وتحويل قطاع الخدمات.",
+        name: "Youness El Badraoui",
+        role: "رئيس SOBOL Digital",
+        bio: "رئيس جمعية SOBOL Digital، منخرط في تنمية المجتمع والمبادرات الرقمية. يعمل على تمكين الشباب من خلال التكنولوجيا والابتكار.",
       },
       hamza: {
-        name: "حمزة بلقايد",
-        role: "مدير التكنولوجيا",
-        bio: "مبتكر تكنولوجي متحمس لبناء حلول قابلة للتوسع لنظام مزودي الخدمات.",
+        name: "Hamza Maach",
+        role: "DevOps / مطور",
+        bio: "مطور موجه نحو DevOps مع اهتمام قوي بهندسة الأنظمة، الأتمتة، والبنى التحتية القابلة للتوسع. يركز على بناء أنظمة خلفية موثوقة وفعالة.",
       },
       amine: {
-        name: "أمين بوطالب",
-        role: "مدير العمليات",
-        bio: "خبير في العمليات يركز على تقديم تجربة مستخدم استثنائية ونجاح العملاء.",
+        name: "Amine Mejjati",
+        role: "مطور",
+        bio: "مطور برمجيات يركز على بناء تطبيقات نظيفة، فعالة، وسهلة الصيانة. يساهم في تطوير المنتجات من خلال ممارسات برمجية جيدة ومهارات حل المشكلات.",
       },
     },
   },

@@ -23,7 +23,7 @@ const Login2 = () => {
 
   };
   return (
-    <main className={isSignUpMode ? "sign-up-mode" : ""}>
+    <main className="login-main" className={isSignUpMode ? "sign-up-mode" : ""}>
       <div className="box">
         <div className="inner-box">
           <div className="forms-wrap">
