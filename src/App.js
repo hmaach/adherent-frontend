@@ -10,6 +10,7 @@ import "./App.css";
 import NavBar from "./components/navBar/navbar";
 import Header from "./components/header/Header";
 import Accueil from "./components/accueil/Accueil";
+import LandingPage from "./components/landing/LandingPage";
 import Stagiaire from "./components/stagiaire/Stagiaire";
 import Login from "./features/auth/Login";
 import Layout from "./features/auth/Layout";
@@ -143,9 +144,9 @@ const App = () => {
       {/* <HeaderWrapper /> */}
       <NavBarWrapper />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route element={<Layout />}>
           {/* public routes */}
-          <Route path="/" element={<Accueil />} />
           <Route index path="/accueil" element={<Accueil />} />
           <Route index path="/recherche" element={<SearchAccueil />} />
           <Route path="/login" element={<Login />} />
@@ -198,13 +199,10 @@ const NavBarWrapper = () => {
   const isLoginRoute = location.pathname === "/login";
   const is404Route = location.pathname === "/404";
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isLandingRoute = location.pathname === "/";
   const cur_user = useSelector(selectCurrentUser);
-  if (isLoginRoute || is404Route) {
-    return (
-      <div className="unableNav" id="nav-box">
-        <NavBar />
-      </div>
-    );
+  if (isLoginRoute || is404Route || isLandingRoute) {
+    return null;
   }
   return (
     <>

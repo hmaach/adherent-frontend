@@ -9,17 +9,20 @@ import {Provider} from 'react-redux';
 import {store} from './app/store';
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
+import { LanguageProvider } from './context/LanguageContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
         <Provider store={store}>
-            <BrowserRouter>
-                <DevSupport ComponentPreviews={ComponentPreviews}
-                            useInitialHook={useInitial}
-                >
-                    <App/>
-                </DevSupport>
-            </BrowserRouter>
+            <LanguageProvider>
+                <BrowserRouter>
+                    <DevSupport ComponentPreviews={ComponentPreviews}
+                                useInitialHook={useInitial}
+                    >
+                        <App/>
+                    </DevSupport>
+                </BrowserRouter>
+            </LanguageProvider>
         </Provider>
 );
 
