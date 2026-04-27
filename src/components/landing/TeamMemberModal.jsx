@@ -3,14 +3,15 @@ import { useLanguage } from "../../context/LanguageContext";
 
 const TeamMemberModal = ({ member, onClose }) => {
   const { t } = useLanguage();
+  const initial =
+    member.firstName?.[0]?.toUpperCase() ||
+    member.lastName?.[0]?.toUpperCase() ||
+    "T";
 
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === "Escape") {
-        onClose();
-      }
+      if (e.key === "Escape") onClose();
     };
-
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
   }, [onClose]);
@@ -18,10 +19,28 @@ const TeamMemberModal = ({ member, onClose }) => {
   return (
     <div className="modal-overlay active" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>
+        <button className="modal-close" onClick={onClose} aria-label="Close">
           ✕
         </button>
-        <img src={member.image} className="modal-image" />
+
+        {member.image ? (
+          <img
+            src={member.image}
+            className="modal-image"
+            alt={`${member.firstName} ${member.lastName}`}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+              e.currentTarget.nextSibling.style.display = "flex";
+            }}
+          />
+        ) : null}
+        <div
+          className="modal-avatar-placeholder"
+          style={{ display: member.image ? "none" : "flex" }}
+        >
+          {initial}
+        </div>
+
         <h3 className="modal-title">
           {member.firstName} {member.lastName}
         </h3>
@@ -31,7 +50,7 @@ const TeamMemberModal = ({ member, onClose }) => {
 
         <div className="modal-actions">
           <button className="modal-action-close" onClick={onClose}>
-            {t.footer.contact}
+            {t.footer.contact || "Close"}
           </button>
           <a
             href={`mailto:${member.email}`}
