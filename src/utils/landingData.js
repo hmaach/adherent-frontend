@@ -22,37 +22,37 @@ export const activitySectorsData = [
   {
     id: 1,
     name: "Construction & Building",
-    icon: "🏗️",
+    icon: "assets/images/services/brickwall.png",
     count: 120,
   },
   {
     id: 2,
     name: "Plumbing & Water Systems",
-    icon: "🔧",
+    icon: "assets/images/services/repairing.png",
     count: 95,
   },
   {
     id: 3,
     name: "Electrical Services",
-    icon: "⚡",
+    icon: "assets/images/services/repair.png",
     count: 110,
   },
   {
     id: 4,
     name: "Painting & Decoration",
-    icon: "🎨",
+    icon: "assets/images/services/lamp.png",
     count: 85,
   },
   {
     id: 5,
     name: "Carpentry & Furniture",
-    icon: "🪵",
+    icon: "assets/images/services/construction.png",
     count: 102,
   },
   {
     id: 6,
     name: "Heating & Cooling",
-    icon: "❄️",
+    icon: "assets/images/services/ac.png",
     count: 78,
   },
 ];
