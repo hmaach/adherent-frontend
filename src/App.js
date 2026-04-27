@@ -51,6 +51,8 @@ import GetCookie from "./cookies/JWT/GetCookie";
 const { localStorage } = window;
 
 const App = () => {
+  const PUBLIC_ROUTES = ["/", "/login"];
+
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
@@ -118,14 +120,19 @@ const App = () => {
   }
 
   useEffect(() => {
-    if (!cookie_token) {
+    const isPublicRoute = PUBLIC_ROUTES.some((route) =>
+      location.pathname.startsWith(route),
+    );
+
+    if (!cookie_token && !isPublicRoute) {
       dispatch(logOut());
       RemoveCookie("jwt");
       localStorage.removeItem("credentials");
       localStorage.removeItem("token");
+
       navigate("/login");
     }
-  }, []);
+  }, [cookie_token, location.pathname, dispatch, navigate]);
 
   return (
     <div id={containerId} style={containerStyle}>
