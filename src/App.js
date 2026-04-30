@@ -10,6 +10,7 @@ import "./App.css";
 import NavBar from "./components/navBar/navbar";
 import Header from "./components/header/Header";
 import Accueil from "./components/accueil/Accueil";
+import LandingPage from "./components/landing/LandingPage";
 import Stagiaire from "./components/stagiaire/Stagiaire";
 import Login from "./features/auth/Login";
 import Layout from "./features/auth/Layout";
@@ -49,6 +50,8 @@ import GetCookie from "./cookies/JWT/GetCookie";
 const { localStorage } = window;
 
 const App = () => {
+  const PUBLIC_ROUTES = ["/", "/login"];
+
   const dispatch = useDispatch();
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
@@ -116,14 +119,19 @@ const App = () => {
   }
 
   useEffect(() => {
-    if (!cookie_token) {
+    const isPublicRoute = PUBLIC_ROUTES.some((route) =>
+      location.pathname.startsWith(route),
+    );
+
+    if (!cookie_token && !isPublicRoute) {
       dispatch(logOut());
       RemoveCookie("jwt");
       localStorage.removeItem("credentials");
       localStorage.removeItem("token");
+
       navigate("/login");
     }
-  }, []);
+  }, [cookie_token, location.pathname, dispatch, navigate]);
 
   return (
     <div id={containerId} style={containerStyle}>
@@ -142,9 +150,9 @@ const App = () => {
       {/* <HeaderWrapper /> */}
       <NavBarWrapper />
       <Routes>
-        <Route path="/" element={<Layout />}>
+        <Route path="/" element={<LandingPage />} />
+        <Route element={<Layout />}>
           {/* public routes */}
-          <Route path="/" element={<Accueil />} />
           <Route index path="/accueil" element={<Accueil />} />
           <Route index path="/recherche" element={<SearchAccueil />} />
           <Route path="/login" element={<Login />} />
@@ -198,10 +206,11 @@ const NavBarWrapper = () => {
   const isLoginRoute = location.pathname === "/login";
   const is404Route = location.pathname === "/404";
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isLandingRoute = location.pathname === "/";
   const isPostAgentRoute = location.pathname.startsWith("/post-agent");
   const cur_user = useSelector(selectCurrentUser);
   
-  if (isLoginRoute || is404Route || isAdminRoute || isPostAgentRoute) {
+  if (isLoginRoute || is404Route || isAdminRoute || isPostAgentRoute || isLandingRoute) {
     return null;
   }
   return (

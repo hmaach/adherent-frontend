@@ -265,7 +265,7 @@ main.sign-up-mode .carousel {
 }
 
 .carousel {
-  position: absolute;
+  position: absolute !important;
   height: 100%;
   width: 55%;
   left: 45%;
@@ -291,7 +291,9 @@ main.sign-up-mode .carousel {
   grid-column: 1/2;
   grid-row: 1/2;
   opacity: 0;
-  transition: opacity 0.3s, transform 0.5s;
+  transition:
+    opacity 0.3s,
+    transform 0.5s;
 }
 
 .img-1 {
@@ -385,7 +387,9 @@ main.sign-up-mode .carousel {
   form {
     max-width: revert;
     padding: 1.5rem 2.5rem 2rem;
-    transition: transform 0.8s ease-in-out, opacity 0.45s linear;
+    transition:
+      transform 0.8s ease-in-out,
+      opacity 0.45s linear;
   }
 
   .heading {

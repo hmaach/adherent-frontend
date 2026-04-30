@@ -36,19 +36,7 @@ const InfoAlert = (props) => {
         return (
           <DialogContent style={{ direction: "rtl" }}>
             أهلا أيها الزائر ،<br /> مرحبا بك في موقعنا، هذه المنصة قيد الإنشاء،
-            قد تواجهك بعض المشاكل في رؤية الصور أو في بعض الخاصيات، وذلك قد يكون
-            إما بسبب الخادم الذي المستضيف للمنصة ، أو بسبب إشكاليات تتعلق
-            بالتواصل بين الواجهة والخلفية.
-            <br /> للإستفسار أو التواصل معنا يمكنكم التواصل عبر:
-            <br /> الواتساب :{" "}
-            <a
-              href="https://wa.me/+212706265024"
-              style={{ unicodeBidi: "plaintext", direction: "ltr" }}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              +212 7062-65024
-            </a>
+            قد تواجهك بعض المشاكل في رؤية الصور أو في بعض الخاصيات.
           </DialogContent>
         );
       case "english":
@@ -57,16 +45,7 @@ const InfoAlert = (props) => {
             Hello, dear visitor!
             <br /> Welcome to our site. This platform is currently under
             construction. You may encounter issues with image display or certain
-            features. This could be due to the server hosting the backend or
-            CORS problems. To contact us or inquire, you can reach us via:{" "}
-            <br /> WhatsApp :{" "}
-            <a
-              href="https://wa.me/+212706265024"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              +212 7062-65024
-            </a>
+            features.
           </DialogContent>
         );
       default:
@@ -75,17 +54,7 @@ const InfoAlert = (props) => {
             Bonjour cher visiteur, <br />
             Bienvenue sur notre site. Cette plateforme est actuellement en
             construction. Vous pourriez rencontrer des problèmes d'affichage
-            d'images ou de certaines fonctionnalités. Cela pourrait être dû soit
-            au serveur hébergeant de Back-End, soit à des problèmes CORS. Pour
-            nous contacter ou vous renseigner, vous pouvez le faire via : <br />{" "}
-            WhatsApp :{" "}
-            <a
-              href="https://wa.me/+212706265024"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              +212 7062-65024
-            </a>
+            d'images ou de certaines fonctionnalités.
           </DialogContent>
         );
     }
