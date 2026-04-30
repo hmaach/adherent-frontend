@@ -66,7 +66,13 @@ const SingIn = ({ handleToggleClick, firstLogin, loginData }) => {
       }
       setEmail("");
       setPassword("");
-      navigate("/accueil");
+      if (userData.user?.role === "admin") {
+        navigate("/admin");
+      } else if (userData.user?.role === "post_agent") {
+        navigate("/post-agent");
+      } else {
+        navigate("/accueil");
+      }
     } catch (err) {
       console.log(err);
       if (err.data.error === "email") {

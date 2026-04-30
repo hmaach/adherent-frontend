@@ -43,6 +43,7 @@ import Forum from "./components/forum/Forum";
 import InfoAlert from "./components/InfoAlert";
 import Page404 from "./components/404/Page404";
 import AdminPanel from "./components/admin-panel/AdminPanel";
+import PostAgentPanel from "./components/post-agent-panel/PostAgentPanel";
 import GetCookie from "./cookies/JWT/GetCookie";
 // import Login2 from "./features/auth/Login1";
 const { localStorage } = window;
@@ -53,9 +54,10 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isPostAgentRoute = location.pathname.startsWith("/post-agent");
 
-  const containerId = isAdminRoute ? "container-admin" : "container";
-  const containerStyle = isAdminRoute ? { display: "flex" } : {};
+  const containerId = (isAdminRoute || isPostAgentRoute) ? "container-admin" : "container";
+  const containerStyle = (isAdminRoute || isPostAgentRoute) ? { display: "flex" } : {};
 
   const localToken = localStorage.getItem("token");
   const token = typeof localToken === 'string' ? localToken.replace(/\"/g, "") : null;
@@ -151,6 +153,7 @@ const App = () => {
           <Route path="/archives" element={<Archives />} />
           <Route path="/calendrier" element={<Calendar />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/post-agent" element={<PostAgentPanel />} />
           {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
 
           <Route path="/c" element={<Calendar />} />
@@ -195,9 +198,10 @@ const NavBarWrapper = () => {
   const isLoginRoute = location.pathname === "/login";
   const is404Route = location.pathname === "/404";
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isPostAgentRoute = location.pathname.startsWith("/post-agent");
   const cur_user = useSelector(selectCurrentUser);
   
-  if (isLoginRoute || is404Route || isAdminRoute) {
+  if (isLoginRoute || is404Route || isAdminRoute || isPostAgentRoute) {
     return null;
   }
   return (
