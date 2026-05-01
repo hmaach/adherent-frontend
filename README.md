@@ -72,4 +72,4 @@ npm run build
 
 ## License
 
-This project is developed in collaboration with **Sobol Digital** association.
+This project is developed in collaboration with **Sobol Digital Berkane** association.
