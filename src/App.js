@@ -46,6 +46,8 @@ import Page404 from "./components/404/Page404";
 import AdminPanel from "./components/admin-panel/AdminPanel";
 import PostAgentPanel from "./components/post-agent-panel/PostAgentPanel";
 import GetCookie from "./cookies/JWT/GetCookie";
+import Marketplace from "./components/marketplace/Marketplace";
+import MyJobs from "./components/marketplace/MyJobs";
 // import Login2 from "./features/auth/Login1";
 const { localStorage } = window;
 
@@ -162,6 +164,8 @@ const App = () => {
           <Route path="/calendrier" element={<Calendar />} />
           <Route path="/admin" element={<AdminPanel />} />
           <Route path="/post-agent" element={<PostAgentPanel />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/mes-demandes" element={<MyJobs />} />
           {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
 
           <Route path="/c" element={<Calendar />} />

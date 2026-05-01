@@ -20,10 +20,12 @@ import GetCookie from "../../../cookies/JWT/GetCookie";
 import "./main.css";
 import Evenement from "./Evenement";
 import { LoadingButton } from "@mui/lab";
+import JobModal from "../../JobModal";
 
 const Main = () => {
   const [announces, setAnnounces] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [openJobModal, setOpenJobModal] = useState(false);
   const [page, setPage] = useState(1);
   const [searchPage, setSearchPage] = useState(1);
   const [lastPage, setLastPage] = useState(null);
@@ -178,7 +180,27 @@ const Main = () => {
             Chercher
           </Button>
         </div>
+        <Button 
+            variant="outlined" 
+            onClick={() => setOpenJobModal(true)}
+            sx={{ 
+              borderRadius: "20px", 
+              borderColor: "#e86928", 
+              color: "#e86928",
+              textTransform: "none",
+              padding: "6px 20px",
+              height: "40px",
+              width: "100%",
+              marginTop: "10px",
+              fontWeight: 'bold',
+              "&:hover": { bgcolor: "#fff3ec", borderColor: "#d46025" } 
+            }}
+          >
+            + Publier une demande
+        </Button>
       </div>
+
+      <JobModal open={openJobModal} handleClose={() => setOpenJobModal(false)} />
 
       {isLoading ? (
         <LoadingSpinner />

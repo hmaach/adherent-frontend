@@ -5,9 +5,11 @@ import { fr } from "date-fns/locale";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import url from "../../../../app/api/url";
 import { Link } from "react-router-dom";
+import ContactModal from "../../../ContactModal";
 
 const Announce = ({ announce, searchValue }) => {
   const [showFullContent, setShowFullContent] = useState(false);
+  const [contactModalOpen, setContactModalOpen] = useState(false);
 
   const handleToggleContent = () => {
     setShowFullContent(!showFullContent);
@@ -58,14 +60,7 @@ const Announce = ({ announce, searchValue }) => {
         <div id="name-id">
           <div style={{ display: "flex" }}>
             <div id="profile-tweet">
-              {/* {
-                post.profile ? (
-                  <img src="ayadi.jpeg" alt="profile" id="image-profile" />
-                ) : ( */}
               <img alt="Image de profil" src={`https://ui-avatars.com/api/?name=${announce?.user?.prenom || 'S'}&background=random`} id="image-profile" style={{ borderRadius: '50%' }} />
-              {/* ) */}
-              {/* // <Avatar id="image-profile" {...stringAvatar(`${post.prenom} ${post.nom}`)} /> */}
-              {/* } */}
             </div>
             <div className="publieur">
               <span id="flex-tweet">
@@ -102,25 +97,22 @@ const Announce = ({ announce, searchValue }) => {
 
       {/* Action Bar */}
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '15px', borderTop: '1px solid #eee', paddingTop: '15px', paddingBottom: '15px', paddingRight: '10px' }}>
-        <Link 
-          to={`/profil/${announce?.user_id}`}
-          style={{ padding: '8px 20px', borderRadius: '20px', backgroundColor: '#1976d2', color: 'white', textDecoration: 'none', fontWeight: 'bold', display: 'inline-block', transition: 'background-color 0.2s' }}
+        <button 
+          onClick={() => setContactModalOpen(true)}
+          style={{ padding: '8px 20px', borderRadius: '20px', backgroundColor: '#1976d2', color: 'white', textDecoration: 'none', fontWeight: 'bold', display: 'inline-block', transition: 'background-color 0.2s', border: 'none', cursor: 'pointer' }}
           onMouseOver={(e) => e.target.style.backgroundColor = '#1565c0'}
           onMouseOut={(e) => e.target.style.backgroundColor = '#1976d2'}
         >
           Contacter {announce?.user?.prenom || 'le freelance'}
-        </Link>
+        </button>
       </div>
 
-      {/* {post.imgs?.map((img, index) => (
-        <div key={index}>
-          <img
-            src={URL.createObjectURL(img)}
-            alt={`Image ${index}`}
-            className="img_post"
-          />
-        </div>
-      ))} */}
+      <ContactModal 
+        open={contactModalOpen} 
+        handleClose={() => setContactModalOpen(false)} 
+        adherentId={announce?.user_id}
+        adherentName={announce?.user?.prenom || 'le freelance'}
+      />
     </div>
   );
 };

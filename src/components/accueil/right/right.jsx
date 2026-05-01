@@ -4,6 +4,8 @@ import AccountMight from "./accountMight/accountMight";
 import { Link } from "react-router-dom";
 import NotificationSide from "./notifications/NotificationSide";
 import axios from "axios";
+import GetCookie from "../../../cookies/JWT/GetCookie";
+import baseURL from "../../../app/api/baseURL";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import MiniCalendar from "../../calandar/MiniCalendar";
@@ -20,9 +22,11 @@ const Right = () => {
 
   const fetchNotifs = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/notifs`);
+      const token = GetCookie("jwt");
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const response = await baseURL.get(`/notifications`, { headers });
       const data = response.data;
-      setNotifs(data.notifs);
+      setNotifs(data.notifications || []);
       setIsLoadingNotif(false);
     } catch (error) {
       console.log(error);
@@ -53,11 +57,32 @@ const Right = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleNotifClick = async (notifId) => {
+    try {
+      const token = GetCookie("jwt");
+      if (!token) return;
+      await baseURL.post(`/notifications/${notifId}/read`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      // Update local state to mark as read
+      setNotifs(notifs.map(n => n.id === notifId ? { ...n, is_read: 1 } : n));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div id="container-right">
       {notifs && (
         <div id="might-like-box">
-          <h2 id="title-might" style={{ marginBottom: "15px" }}>Notifications</h2>
+          <h2 id="title-might" style={{ marginBottom: "15px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            Notifications
+            {notifs.some(n => n.is_read === 0) && (
+              <span style={{ fontSize: '12px', background: '#e86928', color: 'white', padding: '2px 6px', borderRadius: '10px' }}>
+                {notifs.filter(n => n.is_read === 0).length} nouvelle(s)
+              </span>
+            )}
+          </h2>
           {isLoadingNotif
             ?
             <div className="right_loading">
@@ -67,15 +92,18 @@ const Right = () => {
                 <Skeleton animation={false} />
               </Box>
             </div>
-            : (
+            : notifs.length > 0 ? (
               notifs.map(notif => {
                 return (
-                  <NotificationSide
-                    key={notif.id}
-                    notif={notif} />
+                  <div key={notif.id} onClick={() => handleNotifClick(notif.id)}>
+                    <NotificationSide notif={notif} />
+                  </div>
                 )
-              }
-              )
+              })
+            ) : (
+              <p style={{ color: "#6c757d", fontSize: "14px", fontStyle: "italic", textAlign: "center" }}>
+                Aucune notification pour le moment.
+              </p>
             )
           }
           <h2 id="title-might" style={{ marginTop: "20px", marginBottom: "15px" }}>Calendrier</h2>
