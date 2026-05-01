@@ -329,6 +329,7 @@ const AddUser = ({ open, handleclose, refetch, setRefetch }) => {
             >
               <MenuItem value="user">Utilisateurs</MenuItem>
               <MenuItem value="adherent">Adhérents</MenuItem>
+              <MenuItem value="post_agent">Agent de publication</MenuItem>
               <MenuItem value="admin">Admins</MenuItem>
             </Select>
           </FormControl>

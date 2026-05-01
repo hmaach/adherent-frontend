@@ -47,6 +47,18 @@ const NavBar = () => {
             Accueil
           </p>
         </NavLink>
+        <NavLink to="/marketplace" activeclassname="active" id="row">
+          <ForumIcon id="home-icon" />
+          <p id="nav-title" className="bold">
+            Marketplace
+          </p>
+        </NavLink>
+        <NavLink to="/mes-demandes" activeclassname="active" id="row">
+          <AssignmentIndIcon id="home-icon" />
+          <p id="nav-title" className="bold">
+            Mes Demandes
+          </p>
+        </NavLink>
         {user?.role === "admin" && (
           <NavLink to="/admin" activeclassname="active" id="row">
             <AdminPanelSettingsIcon id="home-icon" />
@@ -117,7 +129,7 @@ const NavBar = () => {
             </p>
           </NavLink>
         )}
-        {user?.role === "adherent" && (
+        {user && (
           <NavLink to={`/profil/${user.id}`} activeclassname="active" id="row">
             <CgProfile id="home-icon" />
             <p className="bold" id="nav-title">

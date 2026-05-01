@@ -117,12 +117,16 @@
 #might-like-box {
   width: 90%;
   height: auto;
-  transition: var(--transition);
+  transition: all 0.3s ease;
   border-radius: 16px;
-  background: rgb(255, 255, 255);
-  box-shadow: #e2e2e2c4 0px 0px 4px;
-  border:#e2e2e2c4 solid 1px ;
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   margin-top: 20px;
+  overflow: hidden;
+}
+#might-like-box:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 #title-might {
   font-size: 20px;
@@ -413,19 +417,26 @@
 }
 
 .type_notif{
- 
-  font-size: 0.7rem;
-  margin-left: 14px;
+  font-size: 0.75rem;
+  margin-left: 0;
+  color: #888;
 }
 
 .notif{
   border: transparent;
-  padding: 7px 0 !important;
-  font-size: 0.8rem;
-  border-top: #e2e2e2c4 solid 1px;
+  padding: 12px 16px !important;
+  font-size: 0.85rem;
+  border-top: 1px solid rgba(0,0,0,0.05);
+  transition: background 0.3s ease;
+  cursor: pointer;
 }
+.notif:hover {
+  background: #f8f9fa;
+}
+
 .lib_notif{
   margin-bottom: 0 !important;
   font-weight: 500 !important;
-  margin:7px 7px 14px 14px;
+  margin: 4px 0 0 0;
+  color: #333;
 }

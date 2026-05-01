@@ -170,7 +170,7 @@ const Users = () => {
   }, [rowsPerPage, role, refetch]);
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
+    <div style={{ width: "100%" }}>
       <div style={{ display: "flex", justifyContent: "space-around" }}>
         <OutlinedInput
           sx={{ maxHeight: 40, minWidth: 300 }}
@@ -199,6 +199,7 @@ const Users = () => {
         >
           <MenuItem value="all">- Tous -</MenuItem>
           <MenuItem value="adherent">Adhérents</MenuItem>
+          <MenuItem value="post_agent">Agents de publication</MenuItem>
           <MenuItem value="admin">Admins</MenuItem>
           <MenuItem value="user">Utilisateurs</MenuItem>
         </Select>
@@ -308,6 +309,8 @@ const Users = () => {
                                 ? "error"
                                 : row.role === "adherent"
                                 ? "warning"
+                                : row.role === "post_agent"
+                                ? "secondary"
                                 : "primary"
                             }
                             badgeContent={
@@ -317,6 +320,8 @@ const Users = () => {
                                 ? "Admin"
                                 : row.role === "adherent"
                                 ? "Adhérent"
+                                : row.role === "post_agent"
+                                ? "Agent pub."
                                 : ""
                             }
                           />

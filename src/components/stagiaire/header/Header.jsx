@@ -30,6 +30,8 @@ import ImageAlert from "./ImageAlert";
 import url from "../../../app/api/url";
 import { useNavigate, useParams } from "react-router";
 import domain from "../../../app/api/domain";
+import ContactModal from "../../ContactModal";
+import UpgradeModal from "./UpgradeModal";
 
 const Header = () => {
   const [data, setData] = useState({});
@@ -42,6 +44,8 @@ const Header = () => {
   const [showproposAlert, setShowproposAlert] = useState(false);
   const [showRatingAlert, setShowRatingAlert] = useState(false);
   const [showBadgeAlert, setShowBadgeAlert] = useState(false);
+  const [showContactModal, setShowContactModal] = useState(false);
+  const [openUpgradeModal, setOpenUpgradeModal] = useState(false);
   const token = GetCookie("jwt");
   // rating of the adherent
   const [rating, setRating] = useState(null);
@@ -62,6 +66,8 @@ const Header = () => {
             setRatingValue(data.myRating);
             setLoading(false);
             setShowRatingAlert(false);
+          } else {
+            setLoading(false);
           }
         })
         .catch((error) => {
@@ -230,7 +236,7 @@ const Header = () => {
                     setShowImg(true);
                   }}
                   alt="Image de profil"
-                  src={url + "/storage/" + data?.img_path}
+                  src={data?.img_path?.startsWith('http') ? data.img_path : url + "/storage/" + data?.img_path}
                   style={{ cursor: "pointer" }}
                   width="200"
                   height="200"
@@ -241,8 +247,8 @@ const Header = () => {
                     setShowImg(true);
                   }}
                   alt="Image de profil"
-                  src="/no-img.jpg"
-                  style={{ cursor: "pointer" }}
+                  src={`https://ui-avatars.com/api/?name=${data?.user?.prenom || 'Utilisateur'}&background=random`}
+                  style={{ cursor: "pointer", borderRadius: '5px' }}
                   width="200"
                   height="200"
                 />
@@ -250,13 +256,13 @@ const Header = () => {
             </div>
           </div>
           <div className="col-lg-7 col-md-7 text-center text-md-start">
-            {data.id ? (
+            {data.user_id ? (
               <h2 className="h1 mt-2" data-aos="fade-left" data-aos-delay="0">
-                {data.id}
+                {data?.user?.prenom} {data?.user?.nom}
               </h2>
             ) : (
               <Typography className="h1 mt-2" variant="h2">
-                {loading ? <Skeleton /> : "h2"}
+                {loading ? <Skeleton /> : "Utilisateur Introuvable"}
               </Typography>
             )}
             {data.profession ? (
@@ -272,35 +278,66 @@ const Header = () => {
                 {loading ? <Skeleton /> : null}
               </Typography>
             )}
-            <div style={{ display: "flex" }} className="rating-ad">
-              <Rating
-                name="text-feedback"
-                value={rating}
-                readOnly
-                style={{ color: "white" }}
-                precision={0.5}
-                emptyIcon={
-                  <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
-                }
-              />
-              <Box sx={{ ml: 2, color: "white" }}>{rating}</Box>
-            </div>
-            {user?.id === data?.user_id ? null : (
-              <Button
-                variant="contained"
-                sx={{
-                  marginTop: "6px",
-                  bgcolor: "white",
-                  color: "#e86928",
-                  "&:hover": {
-                    bgcolor: "#ebebeb",
-                  },
-                }}
-                size="small"
-                onClick={handleOpenRatingAlert}
-              >
-                Votre avis
-              </Button>
+            {data.is_only_user ? (
+               <Typography variant="body1" color="textSecondary" mt={1}>Utilisateur Standard</Typography>
+            ) : (
+              <div style={{ display: "flex" }} className="rating-ad mt-2">
+                <Rating
+                  name="text-feedback"
+                  value={rating}
+                  readOnly
+                  style={{ color: "white" }}
+                  precision={0.5}
+                  emptyIcon={
+                    <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+                  }
+                />
+                <Box sx={{ ml: 2, color: "white" }}>{rating}</Box>
+              </div>
+            )}
+            
+            {user?.id === data?.user_id && data.is_only_user && (
+               <Button 
+                 variant="contained" 
+                 color="success" 
+                 sx={{ mt: 2, borderRadius: 2 }}
+                 onClick={() => setOpenUpgradeModal(true)}
+               >
+                 Devenir Adhérent (Vendre des services)
+               </Button>
+            )}
+
+            {user?.id === data?.user_id || data.is_only_user ? null : (
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'center' }} className="justify-content-md-start mt-2">
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "white",
+                    color: "#e86928",
+                    "&:hover": {
+                      bgcolor: "#ebebeb",
+                    },
+                  }}
+                  size="small"
+                  onClick={handleOpenRatingAlert}
+                >
+                  Votre avis
+                </Button>
+                <Button
+                  variant="contained"
+                  sx={{
+                    bgcolor: "#1976d2",
+                    color: "white",
+                    "&:hover": {
+                      bgcolor: "#1565c0",
+                    },
+                  }}
+                  size="small"
+                  onClick={() => setShowContactModal(true)}
+                >
+                  Contacter
+                </Button>
+              </div>
             )}
           </div>
           <div
@@ -311,18 +348,20 @@ const Header = () => {
               alignItems: "center",
             }}
           >
-            <QRCodeReact
-              onClick={() => {
-                setShowBadgeAlert(true);
-              }}
-              value={`${domain}/profil/${id}`}
-              style={{
-                cursor: "pointer",
-                padding: "8px",
-                background: "white",
-                borderRadius: "10px",
-              }}
-            />
+            {!data.is_only_user && (
+              <QRCodeReact
+                onClick={() => {
+                  setShowBadgeAlert(true);
+                }}
+                value={`${domain}/profil/${id}`}
+                style={{
+                  cursor: "pointer",
+                  padding: "8px",
+                  background: "white",
+                  borderRadius: "10px",
+                }}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -465,6 +504,18 @@ const Header = () => {
           handleClose={() => setShowBadgeAlert(false)}
         />
       )}
+      {showContactModal && (
+        <ContactModal
+          open={showContactModal}
+          handleClose={() => setShowContactModal(false)}
+          adherentId={data?.user_id}
+          adherentName={data?.user?.prenom || 'Adhérent'}
+        />
+      )}
+      <UpgradeModal 
+        open={openUpgradeModal} 
+        handleClose={() => setOpenUpgradeModal(false)} 
+      />
     </div>
   );
 };

@@ -29,9 +29,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ForumIcon from "@mui/icons-material/Forum";
 import Cookies from "js-cookie";
-import RestoreIcon from "@mui/icons-material/Restore";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+
 import Archives from "./components/archives/Archives";
 import Calendar from "./components/calandar/calendar";
 import { getFilieres } from "./app/api/filiereAxios";
@@ -46,7 +44,10 @@ import Forum from "./components/forum/Forum";
 import InfoAlert from "./components/InfoAlert";
 import Page404 from "./components/404/Page404";
 import AdminPanel from "./components/admin-panel/AdminPanel";
+import PostAgentPanel from "./components/post-agent-panel/PostAgentPanel";
 import GetCookie from "./cookies/JWT/GetCookie";
+import Marketplace from "./components/marketplace/Marketplace";
+import MyJobs from "./components/marketplace/MyJobs";
 // import Login2 from "./features/auth/Login1";
 const { localStorage } = window;
 
@@ -58,13 +59,13 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const isAdminRoute = location.pathname.startsWith("/admin");
+  const isPostAgentRoute = location.pathname.startsWith("/post-agent");
 
-  const containerId = isAdminRoute ? "container-admin" : "container";
-  const containerStyle = isAdminRoute ? { display: "flex" } : {};
+  const containerId = (isAdminRoute || isPostAgentRoute) ? "container-admin" : "container";
+  const containerStyle = (isAdminRoute || isPostAgentRoute) ? { display: "flex" } : {};
 
   const localToken = localStorage.getItem("token");
-  const token1 = localToken ? localToken.replace(`\"`, "") : null;
-  const token = token1 ? token1.replace(`\"`, "") : null;
+  const token = typeof localToken === 'string' ? localToken.replace(/\"/g, "") : null;
   const cookie_token = GetCookie("jwt");
   const [showDialog, setShowDialog] = useState(true);
 
@@ -162,6 +163,9 @@ const App = () => {
           <Route path="/archives" element={<Archives />} />
           <Route path="/calendrier" element={<Calendar />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/post-agent" element={<PostAgentPanel />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/mes-demandes" element={<MyJobs />} />
           {/* <Route path="/admin/*" element={<AdminRoutes />} /> */}
 
           <Route path="/c" element={<Calendar />} />
@@ -207,8 +211,10 @@ const NavBarWrapper = () => {
   const is404Route = location.pathname === "/404";
   const isAdminRoute = location.pathname.startsWith("/admin");
   const isLandingRoute = location.pathname === "/";
+  const isPostAgentRoute = location.pathname.startsWith("/post-agent");
   const cur_user = useSelector(selectCurrentUser);
-  if (isLoginRoute || is404Route || isLandingRoute) {
+  
+  if (isLoginRoute || is404Route || isAdminRoute || isPostAgentRoute || isLandingRoute) {
     return null;
   }
   return (

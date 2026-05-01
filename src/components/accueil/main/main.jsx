@@ -20,10 +20,12 @@ import GetCookie from "../../../cookies/JWT/GetCookie";
 import "./main.css";
 import Evenement from "./Evenement";
 import { LoadingButton } from "@mui/lab";
+import JobModal from "../../JobModal";
 
 const Main = () => {
   const [announces, setAnnounces] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [openJobModal, setOpenJobModal] = useState(false);
   const [page, setPage] = useState(1);
   const [searchPage, setSearchPage] = useState(1);
   const [lastPage, setLastPage] = useState(null);
@@ -139,27 +141,66 @@ const Main = () => {
   return (
     <div id="container-main">
       <div className="main-post-header">
-        <TextField
-          className="main-post-search"
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          size="small"
-          id="outlined-search"
-          label="Chercher publications..."
-          type="search"
-          InputProps={{
-            style: { borderRadius: "20px" },
-            endAdornment: (
-              <InputAdornment position="end">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-          sx={{
-            color: "#1DA1F2",
-          }}
-        />
+        <div style={{ display: "flex", gap: "10px", alignItems: "center", width: "100%", justifyContent: "center" }}>
+          <TextField
+            className="main-post-search"
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            size="small"
+            id="outlined-search"
+            label="Chercher publications..."
+            type="search"
+            style={{ width: "70%" }}
+            InputProps={{
+              style: { borderRadius: "20px" },
+              endAdornment: (
+                <InputAdornment position="end">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              color: "#1DA1F2",
+            }}
+          />
+          <Button 
+            variant="contained" 
+            onClick={() => searchAnnounces(searchValue, searchPage, true)}
+            sx={{ 
+              borderRadius: "20px", 
+              bgcolor: "#e86928", 
+              color: "white",
+              textTransform: "none",
+              padding: "6px 20px",
+              height: "40px",
+              boxShadow: "none",
+              "&:hover": { bgcolor: "#d46025", boxShadow: "none" } 
+            }}
+          >
+            Chercher
+          </Button>
+        </div>
+        <Button 
+            variant="outlined" 
+            onClick={() => setOpenJobModal(true)}
+            sx={{ 
+              borderRadius: "20px", 
+              borderColor: "#e86928", 
+              color: "#e86928",
+              textTransform: "none",
+              padding: "6px 20px",
+              height: "40px",
+              width: "100%",
+              marginTop: "10px",
+              fontWeight: 'bold',
+              "&:hover": { bgcolor: "#fff3ec", borderColor: "#d46025" } 
+            }}
+          >
+            + Publier une demande
+        </Button>
       </div>
+
+      <JobModal open={openJobModal} handleClose={() => setOpenJobModal(false)} />
 
       {isLoading ? (
         <LoadingSpinner />

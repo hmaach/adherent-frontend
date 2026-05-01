@@ -47,20 +47,22 @@ const AccountMight = (props) => {
             adherent.img_path ? (
               <img
                 id="personr"
-                src={url + "/storage/" + adherent?.img_path}
+                src={adherent.img_path.startsWith('http') ? adherent.img_path : url + "/storage/" + adherent.img_path}
                 alt="profile"
+                onError={(e) => { e.target.onerror = null; e.target.src = `https://ui-avatars.com/api/?name=${adherent?.user?.prenom || 'U'}&background=random` }}
+                style={{ borderRadius: '50%' }}
               />
             ) : (
-              // :null
-              <img src="no-img.jpg" alt="profil" id="personr" />
+              <img src={`https://ui-avatars.com/api/?name=${adherent?.user?.prenom || 'U'}&background=random`} alt="profil" id="personr" style={{ borderRadius: '50%' }} />
             )
-            // : <Avatar id="personr" {...stringAvatar(`${adherent?.prenom} ${adherent?.nom}`)} />
           }
 
           <span className="four_stagiaires">
             {/* <p id="name"><span className='first-letter'>{prenom}</span> <span className='first-letter'>{nom}</span></p> */}
             <p id="namer">
-              <span className="first-letter">{adherent?.id}</span>
+              <span className="first-letter" style={{ fontWeight: 'bold' }}>
+                {adherent?.user?.prenom} {adherent?.user?.nom}
+              </span>
             </p>
             <p id="idr" className="first-letter">
               {adherent?.profession}

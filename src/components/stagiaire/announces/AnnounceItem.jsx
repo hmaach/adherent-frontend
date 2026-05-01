@@ -12,8 +12,8 @@ import url from "../../../app/api/url";
 
 const AnnounceItem = ({ announce, onDelete }) => {
   
-  const startDate = new Date(announce.debut);
-  const endDate = new Date(announce.fin);
+  const startDate = new Date(announce.debut ? announce.debut.replace(' ', 'T') : announce.debut);
+  const endDate = new Date(announce.fin ? announce.fin.replace(' ', 'T') : announce.fin);
 
   const formattedStartDate = format(startDate, "HH:mm 'le' EEEE dd MMMM yyyy", {
     locale: fr,
@@ -35,8 +35,14 @@ const AnnounceItem = ({ announce, onDelete }) => {
         />
       )}
       <CardContent sx={{ minWidth: "71%" }}>
+        <h3 className="titre-annoounce-edit" style={{ margin: "0 0 10px 0", fontSize: "1.1rem" }}>
+          {announce.titre || "Sans Titre"} 
+          <span style={{ float: 'right', color: '#1976d2', fontWeight: 'bold' }}>
+            {announce.prix ? `${announce.prix}$` : 'Sur demande'}
+          </span>
+        </h3>
         <p className="desc-annoounce-edit">
-          {announce.desc.substring(0, 100)}...
+          {announce.desc && announce.desc.substring(0, 100)}...
         </p>
         <p className="date-annoounce-edit">
           Depuis {formattedStartDate} à {formattedEndDate}

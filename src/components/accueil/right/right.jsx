@@ -4,6 +4,8 @@ import AccountMight from "./accountMight/accountMight";
 import { Link } from "react-router-dom";
 import NotificationSide from "./notifications/NotificationSide";
 import axios from "axios";
+import GetCookie from "../../../cookies/JWT/GetCookie";
+import baseURL from "../../../app/api/baseURL";
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
 import MiniCalendar from "../../calandar/MiniCalendar";
@@ -12,56 +14,7 @@ import { getRandomFourAdherents } from "../../../app/api/adherentAxios";
 
 const Right = () => {
   const [notifs, setNotifs] = useState([]);
-  const [fourAdherents, setFourAdherents] = useState([
-    {
-      id: 9,
-      user_id: 46,
-      secteur_id: 3,
-      propos:
-        "Itaque ut earum ea omnis et ut. Sed delectus expedita voluptatem vitae eligendi.",
-      profession: "Enim unde facere.",
-      ville: "Rabat",
-      created_at: "2023-10-25T11:38:05.000000Z",
-      updated_at: "2023-10-25T11:38:05.000000Z",
-      img_path: null,
-    },
-    {
-      id: 3,
-      user_id: 82,
-      secteur_id: 1,
-      propos:
-        "Voluptas amet iste sit harum molestiae. Non itaque ipsam molestiae consequatur voluptatem.",
-      profession: "Ea dolorem magnam.",
-      ville: "Nador",
-      created_at: "2023-10-25T11:38:04.000000Z",
-      updated_at: "2023-11-02T11:53:57.000000Z",
-      img_path: "adherents/Ps2KzYq2YaVAzkZN97VSga8kh0cWFbcxAxeFzCwT.jpg",
-    },
-    {
-      id: 4,
-      user_id: 34,
-      secteur_id: 2,
-      propos:
-        "Cumque ea aperiam eius est nemo et vero. Pariatur velit aut est. Amet quia quae enim.",
-      profession: "Dolores fugit sequi.",
-      ville: "Oujda",
-      created_at: "2023-10-25T11:38:04.000000Z",
-      updated_at: "2023-11-02T11:54:44.000000Z",
-      img_path: "adherents/tJCMqXiTu7i18rTSrRzWIOfE6PrATWRqujMRoRfQ.jpg",
-    },
-    {
-      id: 1,
-      user_id: 6,
-      secteur_id: 2,
-      propos:
-        "aaHamzaaaVolupsssssssssssssssssssssssstatem iure aliquam occaecati. Doloribus facere quia minus quod deserunt.fffffffffffffffffffffffffffff--6666fffffffffffffffffffffffff",
-      profession: "a",
-      ville: "Berkane",
-      created_at: "2023-10-25T11:38:03.000000Z",
-      updated_at: "2023-11-10T16:23:08.000000Z",
-      img_path: null,
-    },
-  ]);
+  const [fourAdherents, setFourAdherents] = useState([]);
   const [isLoadingNotif, setIsLoadingNotif] = useState(true);
   const [isLoadingStag, setIsLoadingStag] = useState(false);
   const [errNotif, setErrNotif] = useState();
@@ -69,9 +22,11 @@ const Right = () => {
 
   const fetchNotifs = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:8000/api/notifs`);
+      const token = GetCookie("jwt");
+      const headers = token ? { Authorization: `Bearer ${token}` } : {};
+      const response = await baseURL.get(`/notifications`, { headers });
       const data = response.data;
-      setNotifs(data.notifs);
+      setNotifs(data.notifications || []);
       setIsLoadingNotif(false);
     } catch (error) {
       console.log(error);
@@ -80,41 +35,55 @@ const Right = () => {
     }
   };
 
-  // const fetchRandomFourAdherents = async () => {
-  //   try {
-  //     getRandomFourAdherents().then((data) => {
-  //       setFourAdherents(data);
-  //       setIsLoadingStag(false);
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     setErrStag(error);
-  //     setIsLoadingStag(false);
-  //   }
-  // };
+  const fetchRandomFourAdherents = async () => {
+    try {
+      getRandomFourAdherents().then((data) => {
+        setFourAdherents(data);
+        setIsLoadingStag(false);
+      });
+    } catch (error) {
+      console.log(error);
+      setErrStag(error);
+      setIsLoadingStag(false);
+    }
+  };
 
-  const events = [
-    { id: 1, date: "2023-06-15", color: "red" },
-    { id: 2, date: "2023-06-20", color: "blue" },
-    { id: 3, date: "2023-06-25", color: "green" },
-    // ... add more events here
-  ];
-  // useEffect(() => {
-  //   // fetchNotifs();
-  //   fetchRandomFourAdherents();
-  //   const interval = setInterval(() => {
-  //     // fetchNotifs();
-  //   }, 5 * 60 * 1000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    fetchNotifs();
+    fetchRandomFourAdherents();
+    const interval = setInterval(() => {
+      fetchNotifs();
+    }, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleNotifClick = async (notifId) => {
+    try {
+      const token = GetCookie("jwt");
+      if (!token) return;
+      await baseURL.post(`/notifications/${notifId}/read`, {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      // Update local state to mark as read
+      setNotifs(notifs.map(n => n.id === notifId ? { ...n, is_read: 1 } : n));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div id="container-right">
       {notifs && (
         <div id="might-like-box">
-          <h2 id="title-might">Calendrier</h2>
-          {/* {isLoadingNotif
-            // ? (<LoadingSpinner/>)
+          <h2 id="title-might" style={{ marginBottom: "15px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            Notifications
+            {notifs.some(n => n.is_read === 0) && (
+              <span style={{ fontSize: '12px', background: '#e86928', color: 'white', padding: '2px 6px', borderRadius: '10px' }}>
+                {notifs.filter(n => n.is_read === 0).length} nouvelle(s)
+              </span>
+            )}
+          </h2>
+          {isLoadingNotif
             ?
             <div className="right_loading">
               <Box sx={{ width: 300 }}>
@@ -123,19 +92,23 @@ const Right = () => {
                 <Skeleton animation={false} />
               </Box>
             </div>
-            : (
+            : notifs.length > 0 ? (
               notifs.map(notif => {
                 return (
-                  <NotificationSide
-                    key={notif.id}
-                    notif={notif} />
+                  <div key={notif.id} onClick={() => handleNotifClick(notif.id)}>
+                    <NotificationSide notif={notif} />
+                  </div>
                 )
-              }
-              )
+              })
+            ) : (
+              <p style={{ color: "#6c757d", fontSize: "14px", fontStyle: "italic", textAlign: "center" }}>
+                Aucune notification pour le moment.
+              </p>
             )
-          } */}
+          }
+          <h2 id="title-might" style={{ marginTop: "20px", marginBottom: "15px" }}>Calendrier</h2>
           <div className="miniCalandar">
-            <MiniCalendar events={events} />
+            <MiniCalendar />
           </div>
           <div to="/stagiaires" id="show-more-box">
             <Link id="show-more-btn">Voir plus...</Link>

@@ -6,7 +6,7 @@ const Logo2 = () => {
   return (
     <div className="logo_div2">
     <NavLink to="/" className="logo2">
-      <img src="/Logo_ofppt.png" alt="logo" />
+      <img src="/logo.png" alt="logo" />
     </NavLink>
     <hr className="hr" />
   </div>

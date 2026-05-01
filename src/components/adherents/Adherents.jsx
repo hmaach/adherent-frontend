@@ -238,9 +238,13 @@ const Adherents = () => {
                 className="custom-link-style adherents-item"
               >
                 <div className="adherent-img-info">
-                  <img src={item.img} className="adherent-img" alt="" />
+                  {item.img_path ? (
+                    <img src={item.img_path.startsWith('http') ? item.img_path : "http://127.0.0.1:8000/storage/" + item.img_path} className="adherent-img" alt="" onError={(e) => { e.target.onerror = null; e.target.src = `https://ui-avatars.com/api/?name=${item?.user?.prenom || 'U'}&background=random` }} />
+                  ) : (
+                    <img src={`https://ui-avatars.com/api/?name=${item?.user?.prenom || 'U'}&background=random`} className="adherent-img" alt="" />
+                  )}
                   <div className="adherents-info">
-                    <span className="adherent-id">{item.id}</span>
+                    <span className="adherent-id" style={{ fontWeight: 'bold' }}>{item?.user?.prenom} {item?.user?.nom}</span>
                     <span className="adherent-profession">
                       <WorkIcon sx={{ fontSize: 14 }} /> {item.profession}
                     </span>

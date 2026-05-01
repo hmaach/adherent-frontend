@@ -169,6 +169,8 @@ const ManageUser = ({ open, handleclose, user, setRefetch, refetch }) => {
                 ? "Admin"
                 : user.role === "adherent"
                 ? "Adhérent"
+                : user.role === "post_agent"
+                ? "Agent de publication"
                 : ""}
             </p>
             <div>
@@ -200,22 +202,16 @@ const ManageUser = ({ open, handleclose, user, setRefetch, refetch }) => {
                   color="warning"
                   value={user.role}
                 >
-                  <MenuItem
-                    value="user"
-                    disabled={user.role === "user" ? true : false}
-                  >
+                  <MenuItem value="user" disabled={user.role === "user"}>
                     Utilisateur
                   </MenuItem>
-                  <MenuItem
-                    value="adherent"
-                    disabled={user.role === "adherent" ? true : false}
-                  >
+                  <MenuItem value="adherent" disabled={user.role === "adherent"}>
                     Adhérent
                   </MenuItem>
-                  <MenuItem
-                    value="admin"
-                    disabled={user.role === "admin" ? true : false}
-                  >
+                  <MenuItem value="post_agent" disabled={user.role === "post_agent"}>
+                    Agent de publication
+                  </MenuItem>
+                  <MenuItem value="admin" disabled={user.role === "admin"}>
                     Admin
                   </MenuItem>
                 </Select>
@@ -233,25 +229,17 @@ const ManageUser = ({ open, handleclose, user, setRefetch, refetch }) => {
                   value={newRole}
                   onChange={(e) => setNewRole(e.target.value)}
                 >
-                  <MenuItem value="" disabled>
-                    -selectionez-
-                  </MenuItem>
-                  <MenuItem
-                    value="user"
-                    disabled={user.role === "user" ? true : false}
-                  >
+                  <MenuItem value="" disabled>-selectionez-</MenuItem>
+                  <MenuItem value="user" disabled={user.role === "user"}>
                     Utilisateur
                   </MenuItem>
-                  <MenuItem
-                    value="adherent"
-                    disabled={user.role === "adherent" ? true : false}
-                  >
+                  <MenuItem value="adherent" disabled={user.role === "adherent"}>
                     Adhérent
                   </MenuItem>
-                  <MenuItem
-                    value="admin"
-                    disabled={user.role === "admin" ? true : false}
-                  >
+                  <MenuItem value="post_agent" disabled={user.role === "post_agent"}>
+                    Agent de publication
+                  </MenuItem>
+                  <MenuItem value="admin" disabled={user.role === "admin"}>
                     Admin
                   </MenuItem>
                 </Select>
