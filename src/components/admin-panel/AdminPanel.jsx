@@ -58,14 +58,36 @@ const AdminPanel = () => {
 
   const drawer = (
     <Box sx={{ backgroundColor: "#343a40", height: "100%", color: "#c2c7d0", display: 'flex', flexDirection: 'column' }}>
-      <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', borderBottom: '1px solid #4b545c', minHeight: '64px !important' }}>
-         <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white', letterSpacing: 1 }}>
-            AdminLTE 4
-         </Typography>
+      <Toolbar sx={{
+        display: "flex", alignItems: "center", justifyContent: "center",
+        borderBottom: "1px solid #4b545c", minHeight: "64px !important",
+        gap: 1.2, flexDirection: "row",
+      }}>
+        <img src="/logo.png" alt="SOBOL logo" style={{ height: 38, width: 38, objectFit: "contain" }} />
+        <Box>
+          <Typography sx={{
+            fontFamily: "'Handlee', cursive",
+            fontWeight: "bolder",
+            color: "#e86928",
+            fontSize: 17,
+            lineHeight: 1.1,
+          }}>
+            SOBOL
+          </Typography>
+          <Typography sx={{
+            fontFamily: "'Handlee', cursive",
+            fontWeight: 500,
+            color: "#c2c7d0",
+            fontSize: 12,
+            lineHeight: 1,
+          }}>
+            Numérique
+          </Typography>
+        </Box>
       </Toolbar>
       
       <Box sx={{ p: 2, display: 'flex', alignItems: 'center', borderBottom: '1px solid #4b545c' }}>
-          <Box sx={{ width: 35, height: 35, borderRadius: '50%', backgroundColor: '#007bff', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontWeight: 'bold', mr: 2 }}>
+          <Box sx={{ width: 35, height: 35, borderRadius: '50%', backgroundColor: '#e86928', display: 'flex', justifyContent: 'center', alignItems: 'center', color: 'white', fontWeight: 'bold', mr: 2 }}>
              SA
           </Box>
           <Typography sx={{ color: '#d0d4db', fontWeight: 500 }}>Super Admin</Typography>
@@ -83,10 +105,10 @@ const AdminPanel = () => {
                 onClick={() => setActiveTab(item.id)}
                 sx={{
                   borderRadius: '5px',
-                  backgroundColor: isActive ? "#007bff" : "transparent",
+                  backgroundColor: isActive ? "#e86928" : "transparent",
                   color: isActive ? "white" : "#c2c7d0",
                   "&:hover": {
-                    backgroundColor: isActive ? "#007bff" : "rgba(255,255,255,0.1)",
+                    backgroundColor: isActive ? "#e86928" : "rgba(255,255,255,0.1)",
                     color: "white"
                   },
                 }}
@@ -214,7 +236,7 @@ const AdminPanel = () => {
         <Box sx={{ mb: 3, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
            <Typography variant="h5" sx={{ fontWeight: 400, color: '#212529', m: 1 }}>{getActiveLabel()}</Typography>
            <Typography variant="body2" sx={{ color: '#6c757d', m: 1 }}>
-               <span style={{ color: '#007bff', cursor: 'pointer' }} onClick={() => navigate('/accueil')}>Accueil</span> / Admin / {getActiveLabel()}
+               <span style={{ color: '#e86928', cursor: 'pointer' }} onClick={() => navigate('/accueil')}>Accueil</span> / Admin / {getActiveLabel()}
            </Typography>
         </Box>
 

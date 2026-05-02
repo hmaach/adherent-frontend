@@ -193,20 +193,23 @@ footer a:not(.nav-link) {
 }
 
 #cv {
-  /* border: red solid 1px; */
-  margin-top: 4rem;
+  margin-top: 2rem;
+  margin-left: 260px;
+  width: calc(100% - 260px);
   margin-bottom: 4rem;
-  padding-bottom: 3rem;
-  width: 80%;
-  float: right;
-  margin-right: 1rem;
+  padding: 0 2rem 3rem 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card-wrapper {
+  width: 100%;
+  max-width: 860px;
 }
 @media screen and (min-width: 200px) and (max-width: 499px) {
   #cv {
-    /* border: rgb(30, 255, 0) solid 1px; */
     width: 100%;
-    float: right;
-    margin-right: 0;
+    margin: 0;
   }
   .mb-3 {
     margin-top: 0.6rem !important;
@@ -219,24 +222,20 @@ footer a:not(.nav-link) {
     margin-top: 1rem !important;
   }
   .apropos-detail {
-    margin-top: "1rem";
+    margin-top: 1rem;
     font-size: small;
   }
 }
 @media screen and (min-width: 500px) and (max-width: 1005px) {
   #cv {
-    /* border: rgb(38, 0, 255) solid 1px; */
-    max-width: 89%;
-    float: right;
-    margin-right: 0;
+    width: 100%;
+    margin: 0 auto;
   }
 }
 
 @media screen and (min-width: 1005px) and (max-width: 1281px) {
   #cv {
-    /* border: rgb(255, 0, 242) solid 1px; */
-    max-width: 89%;
-    /* float: right; */
-    margin-right: 0;
+    width: 100%;
+    margin: 0 auto;
   }
 }

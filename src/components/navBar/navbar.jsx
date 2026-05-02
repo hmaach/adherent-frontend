@@ -73,7 +73,7 @@ const NavBar = () => {
             Forum
           </p>
         </NavLink> */}
-        <div
+        {/* <div
           id="row"
           title="Cette section est en cours de développement"
           style={{ color: "gray" }}
@@ -82,7 +82,7 @@ const NavBar = () => {
           <p id="nav-title" className="bold">
             Forum
           </p>
-        </div>
+        </div> */}
         <NavLink to="/adherents" activeclassname="active" id="row">
           <HailIcon id="home-icon" />
           <p id="nav-title" className="bold">
@@ -111,7 +111,7 @@ const NavBar = () => {
             Archives
           </p>
         </NavLink> */}
-        <div
+        {/* <div
           id="row"
           title="Cette section est en cours de développement"
           style={{ color: "gray" }}
@@ -120,7 +120,7 @@ const NavBar = () => {
           <p id="nav-title" className="bold">
             Archives
           </p>
-        </div>
+        </div> */}
         {user?.role === "stagiaire" && (
           <NavLink to={`/profile/${user.id}`} activeclassname="active" id="row">
             <AssignmentIndIcon id="home-icon" />
