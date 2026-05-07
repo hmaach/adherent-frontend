@@ -225,32 +225,30 @@ const Header = () => {
       <div className="cover-bg p-3 p-lg-4 text-white">
         <div className="row">
           <div className="col-lg-3 col-md-5">
-            <div className="avatar hover-effect bg-white shadow-sm p-1">
+            <div style={{
+              width: 130,
+              height: 130,
+              borderRadius: '50%',
+              border: '4px solid white',
+              boxShadow: '0 4px 16px rgba(0,0,0,0.18)',
+              overflow: 'hidden',
+              backgroundColor: 'white',
+              flexShrink: 0,
+              cursor: 'pointer',
+            }} onClick={() => setShowImg(true)}>
               {loading ? (
-                <div style={{ width: "208px", height: "200px" }}>
-                  <Skeleton variant="rounded" width="100%" height="100%" />
-                </div>
+                <Skeleton variant="circular" width={130} height={130} />
               ) : data.img_path ? (
                 <img
-                  onClick={() => {
-                    setShowImg(true);
-                  }}
                   alt="Image de profil"
                   src={data?.img_path?.startsWith('http') ? data.img_path : url + "/storage/" + data?.img_path}
-                  style={{ cursor: "pointer" }}
-                  width="200"
-                  height="200"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />
               ) : (
                 <img
-                  onClick={() => {
-                    setShowImg(true);
-                  }}
                   alt="Image de profil"
-                  src={`https://ui-avatars.com/api/?name=${data?.user?.prenom || 'Utilisateur'}&background=random`}
-                  style={{ cursor: "pointer", borderRadius: '5px' }}
-                  width="200"
-                  height="200"
+                  src={`https://ui-avatars.com/api/?name=${data?.user?.prenom || 'U'}&background=e86928&color=fff&bold=true&size=130`}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                 />
               )}
             </div>

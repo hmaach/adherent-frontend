@@ -4,15 +4,14 @@ import { NavLink } from 'react-router-dom'
 
 const Logo = () => {
   return (
-    <div className="logo_div">
+    <div className="logo_nav">
       <NavLink to="/" className="logo">
         <img src="/logo.png" alt="logo" />
-        <span>
-          <span className="sobol">SOBOL </span>
+        <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1 }}>
+          <span className="sobol">SOBOL</span>
           <span className='digital'>Numérique</span>
-        </span>
+        </div>
       </NavLink>
-      <hr className="hr" />
     </div>
   )
 }

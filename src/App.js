@@ -135,6 +135,7 @@ const App = () => {
     }
   }, [cookie_token, location.pathname, dispatch, navigate]);
 
+
   return (
     <div id={containerId} style={containerStyle}>
       <ToastContainer
@@ -207,11 +208,13 @@ const App = () => {
 const NavBarWrapper = () => {
   const location = useLocation();
   const [value, setValue] = useState(0);
-  const isLoginRoute = location.pathname === "/login";
-  const is404Route = location.pathname === "/404";
-  const isAdminRoute = location.pathname.startsWith("/admin");
-  const isLandingRoute = location.pathname === "/";
-  const isPostAgentRoute = location.pathname.startsWith("/post-agent");
+  const path = location.pathname.toLowerCase();
+  
+  const isLoginRoute = path.startsWith("/login");
+  const is404Route = path === "/404";
+  const isAdminRoute = path.startsWith("/admin");
+  const isLandingRoute = path === "/";
+  const isPostAgentRoute = path.startsWith("/post-agent");
   const cur_user = useSelector(selectCurrentUser);
   
   if (isLoginRoute || is404Route || isAdminRoute || isPostAgentRoute || isLandingRoute) {

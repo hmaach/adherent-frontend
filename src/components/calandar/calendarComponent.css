@@ -1,6 +1,8 @@
 .CalendarComponent {
   text-align: center;
-  margin-top: 4rem;
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  padding: 2rem;
 }
 
 .App-logo {

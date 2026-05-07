@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import GetCookie from "../../../cookies/JWT/GetCookie";
 import api from "../../../app/api/baseURL";
+import url from "../../../app/api/url";
 import SearchIcon from "@mui/icons-material/Search";
 import EditIcon from "@mui/icons-material/Edit";
 import {
@@ -43,6 +44,8 @@ const Abonnements = () => {
   const [selectedAdherent, setSelectedAdherent] = useState(null);
   const [editStatus, setEditStatus] = useState("");
   const [editEndDate, setEditEndDate] = useState("");
+  const [editPaymentReference, setEditPaymentReference] = useState("");
+  const [editAdminNotes, setEditAdminNotes] = useState("");
 
   const token = GetCookie("jwt");
 
@@ -72,6 +75,8 @@ const Abonnements = () => {
     setSelectedAdherent(adherent);
     setEditStatus(adherent.subscription_status || "pending");
     setEditEndDate(adherent.subscription_end_date ? adherent.subscription_end_date.split('T')[0] : "");
+    setEditPaymentReference(adherent.payment_reference || "");
+    setEditAdminNotes(adherent.payment_admin_notes || "");
     setOpenDialog(true);
   };
 
@@ -80,7 +85,9 @@ const Abonnements = () => {
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
       await api.put(`/admin/abonnement/update/${selectedAdherent.id}`, {
         status: editStatus,
-        end_date: editEndDate
+        end_date: editEndDate,
+        payment_reference: editPaymentReference,
+        payment_admin_notes: editAdminNotes
       }, { headers });
       setOpenDialog(false);
       setRefetch(!refetch);
@@ -95,6 +102,9 @@ const Abonnements = () => {
     { id: "profession", label: "Profession", minWidth: 150 },
     { id: "subscription_status", align: "center", label: "Statut", minWidth: 100 },
     { id: "subscription_end_date", label: "Date d'expiration", minWidth: 120, format: (val) => val ? new Date(val).toLocaleDateString() : 'N/A' },
+    { id: "payment_method", label: "Paiement", minWidth: 120 },
+    { id: "payment_reference", label: "Référence", minWidth: 120 },
+    { id: "payment_proof_path", label: "Preuve", minWidth: 100 },
     {
       id: "actions",
       label: "Actions",
@@ -199,6 +209,17 @@ const Abonnements = () => {
                           }
                           sx={{ '& .MuiBadge-badge': { position: 'static', transform: 'none' } }}
                         />
+                      ) : column.id === "payment_proof_path" ? (
+                        row.payment_proof_path ? (
+                          <Button
+                            size="small"
+                            href={`${url}/storage/${row.payment_proof_path}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Voir
+                          </Button>
+                        ) : 'N/A'
                       ) : column.id === "actions" ? (
                         <IconButton onClick={() => handleEditClick(row)} size="small" color="primary">
                           <EditIcon fontSize="small" />
@@ -260,6 +281,24 @@ const Abonnements = () => {
                   InputLabelProps={{ shrink: true }}
                   value={editEndDate}
                   onChange={(e) => setEditEndDate(e.target.value)}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Référence du paiement"
+                  value={editPaymentReference}
+                  onChange={(e) => setEditPaymentReference(e.target.value)}
+                  sx={{ mt: 2 }}
+                />
+
+                <TextField
+                  fullWidth
+                  label="Notes admin"
+                  value={editAdminNotes}
+                  onChange={(e) => setEditAdminNotes(e.target.value)}
+                  multiline
+                  rows={3}
+                  sx={{ mt: 2 }}
                 />
              </div>
           )}

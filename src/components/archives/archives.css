@@ -1,8 +1,7 @@
 .archives {
-  /* border: red 1px solid; */
-  margin-top: 4rem;
-  width: 85%;
-  margin-right: 1rem;
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  padding: 2rem;
 }
 
 .archive-table {

@@ -1,7 +1,11 @@
 .adherents {
-  /* border: red 1px solid; */
-  width: 80%;
-  margin-top: 6rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  margin-left: 260px;
+  width: calc(100% - 260px);
+  padding: 2rem;
+  background-color: var(--color-bg);
 }
 
 .adherents-list {
@@ -15,12 +19,14 @@
 }
 
 .adherents-list-header {
-  /* border: red solid 1px; */
   display: flex;
   justify-content: space-between;
   margin-bottom: 1rem;
-  width: 60%;
+  width: 100%;
+  max-width: 680px;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 .adherents-sorting {
   border-radius: 20px;
@@ -28,8 +34,8 @@
   max-height: 40px;
 }
 .adherents-pagination {
-  /* border: red solid 1px; */
-  width: 60%;
+  width: 100%;
+  max-width: 680px;
   display: flex;
   justify-content: center;
   margin: 15px 0;
@@ -40,26 +46,26 @@
 }
 
 .adherents-item {
-  min-height: 40px;
-  border-radius: 10px;
-  background-color: white;
-  margin-bottom: 8px;
+  min-height: 56px;
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-white);
+  margin-bottom: 10px;
   width: 95%;
+  max-width: 680px;
   overflow: hidden;
-  border: 0.3px solid #e2e2e2c4;
-  box-shadow: #e2e2e2c4 3px 2px 4px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow);
   display: flex;
   justify-content: space-between;
-  padding: 5px;
-  max-width: 60%;
+  padding: 10px 14px;
   align-items: center;
-  padding-bottom: 5px;
   transition: var(--transition);
 }
 
 .adherents-item:hover {
-  background-color: #f1f1f1da;
-  box-shadow: #e2e2e2c4 4px 3px 4px;
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(232,105,40,0.10);
+  transform: translateY(-1px);
 }
 
 .custom-link-style {
@@ -108,16 +114,18 @@
 } */
 
 .adherents-filrage-pc {
-  border-radius: 10px;
-  background-color: white;
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-white);
   overflow: hidden;
-  border: 0.3px solid #e2e2e2c4;
-  box-shadow: #e2e2e2c4 3px 2px 4px;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--box-shadow);
   transition: var(--transition);
-  width: 29%;
-  position: fixed;
-  top: 6rem;
-  right: 2rem;
+  width: 280px;
+  flex-shrink: 0;
+  position: sticky;
+  top: 2rem;
+  align-self: flex-start;
+  margin-left: 2rem;
 }
 .adherents-filrage-pc h4 {
   padding: 9px 9px;

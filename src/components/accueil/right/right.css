@@ -1,12 +1,16 @@
 #container-right {
-  width: 28%;
-  text-align: center;
+  width: 280px;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  position: fixed;
-  right: 2rem;
-  top: 4rem;
+  align-items: stretch;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  scrollbar-width: none;
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
+  padding-left: 1rem;
 }
 #personr {
   width: 35px;
@@ -115,24 +119,26 @@
   background-position: center;
 }
 #might-like-box {
-  width: 90%;
+  width: 100%;
   height: auto;
-  transition: all 0.3s ease;
-  border-radius: 16px;
-  background: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-  margin-top: 20px;
+  transition: all 0.2s ease;
+  border-radius: var(--border-radius-lg);
+  background: var(--color-white);
+  box-shadow: var(--box-shadow);
+  border: 1px solid var(--color-border);
+  margin-top: 16px;
   overflow: hidden;
 }
 #might-like-box:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--box-shadow-hover);
 }
 #title-might {
-  font-size: 20px;
+  font-size: 15px;
+  font-weight: 700;
   text-align: left;
-  padding: 6px 12px 1px;
-  flex-direction: column;
+  padding: 14px 16px 8px;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
 }
 #container-might {
   display: flex;

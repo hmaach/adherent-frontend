@@ -21,18 +21,17 @@ const Stagiaire = () => {
   };
 
   return (
-    <div className="cover shadow-lg bg-white" id="cv">
-      <Header />
-      <hr className="d-print-none" />
-      <Announces />
-      <hr className="d-print-none" />
-      <div
-        style={{
-          //  border: "red solid 1px",
-          overflow: "hidden",
-        }}
-      >
-        <Location />
+    <div id="cv">
+      <div className="profile-card-wrapper">
+        <div className="cover shadow-lg bg-white" style={{ borderRadius: '15px', overflow: 'hidden' }}>
+          <Header />
+          <hr className="d-print-none" />
+          <Announces />
+          <hr className="d-print-none" />
+          <div style={{ overflow: "hidden" }}>
+            <Location />
+          </div>
+        </div>
       </div>
       <Backdrop
         sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
